@@ -53,7 +53,7 @@ public class RegistroChofer {
             return;
         }
 
-        // Imprimir detalles del chofer y vehículo
+        
         System.out.println("Detalles del chofer:");
         System.out.println("ID: " + chofer.getId());
         System.out.println("Nombre: " + chofer.getNombre());
@@ -62,7 +62,7 @@ public class RegistroChofer {
         System.out.println("Placa del Vehículo: " + vehiculo.getIdPlaca());
         System.out.println("Tipo de Vehículo: " + vehiculo.getTipoVehiculo());
 
-        // Registrar fecha y hora de ingreso
+        
         boolean successEstado = registroEstadosDAO.registrarIngreso(idChofer, "Sobrio", true);
         if (successEstado) {
             System.out.println("Fecha y hora de ingreso registradas: " + java.time.LocalDate.now() + " " + java.time.LocalTime.now());
@@ -71,7 +71,7 @@ public class RegistroChofer {
             return;
         }
 
-        // Realizar test de alcohol
+        
         System.out.print("¿Desea realizar el test de alcohol? (si/no): ");
         String realizarTest = scanner.nextLine();
 
