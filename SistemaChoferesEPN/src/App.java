@@ -1,5 +1,15 @@
+
+import funcionesGestiosChoferes.RegistroChofer;
+import funcionesGestiosChoferes.RegistroIngreso;
+
 public class App {
     public static void main(String[] args) throws Exception {
-        System.out.println("Hello, World!");
+        RegistroChofer registroChofer = new RegistroChofer();
+        RegistroIngreso registroIngreso = new RegistroIngreso();
+
+
+        registroIngreso.validarHuellaYRegistrarIngreso();
+
+
     }
 }

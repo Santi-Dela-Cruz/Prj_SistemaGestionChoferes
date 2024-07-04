@@ -30,9 +30,9 @@
 #### Subgrupo 2: Base de Datos y Lógica del Sistema
 
 4. ***Desarrollo de la Base de Datos***:
-   - [ ] Creación del esquema de la base de datos en MySQL.
-   - [ ] Creación de tablas para choferes, registros de test, horas de llegada, datos personales, y strikes.
-   - [ ] Configuración de conexiones y consultas SQL básicas.
+   - [x] Creación del esquema de la base de datos en MySQL.
+   - [x] Creación de tablas para choferes, registros de test, horas de llegada, datos personales, y strikes.
+   - [x] Configuración de conexiones y consultas SQL básicas.
 
 5. ***Desarrollo de la Lógica de funcionamiento en Java***:
    - [ ] Implementación de funciones para la autenticación del chofer.
