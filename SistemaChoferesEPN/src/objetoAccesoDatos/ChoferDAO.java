@@ -32,7 +32,7 @@ public class ChoferDAO {
         return choferes;
     }
 
-    public boolean insertChofer(Chofer chofer) {
+    public boolean insertarChofer(Chofer chofer) {
         if (existeChoferId(chofer.getId())) {
             System.out.println("El ID del chofer ya existe.");
             return false;
@@ -69,7 +69,7 @@ public class ChoferDAO {
         return false;
     }
 
-    public Chofer getChoferById(String idChofer) {
+    public Chofer getChoferId(String idChofer) {
         String sql = "SELECT * FROM choferes WHERE id = ?";
         try (Connection conn = Conexion.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {

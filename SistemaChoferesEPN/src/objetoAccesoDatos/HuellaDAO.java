@@ -30,7 +30,7 @@ public class HuellaDAO {
         return huellas;
     }
 
-    public boolean existsHuellaByChoferId(String choferId) {
+    public boolean existeHuellaChoferId(String choferId) {
         String sql = "SELECT COUNT(*) FROM huella WHERE id_Chofer = ?";
         try (Connection conn = Conexion.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -45,8 +45,8 @@ public class HuellaDAO {
         return false;
     }
 
-    public boolean insertHuella(Huella huella) {
-        if (existsHuellaByChoferId(huella.getIdChofer())) {
+    public boolean insertarHuella(Huella huella) {
+        if (existeHuellaChoferId(huella.getIdChofer())) {
             System.out.println("El chofer ya tiene una huella registrada.");
             return false;
         }
@@ -65,7 +65,7 @@ public class HuellaDAO {
         return false;
     }
 
-    public Huella getHuellaById(String idHuella) {
+    public Huella getHuellaId(String idHuella) {
         String sql = "SELECT * FROM huella WHERE id_Huella = ?";
         try (Connection conn = Conexion.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {

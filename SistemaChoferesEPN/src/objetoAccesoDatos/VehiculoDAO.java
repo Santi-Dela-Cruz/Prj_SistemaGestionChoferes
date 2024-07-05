@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VehiculoDAO {
+
     public List<Vehiculo> getAllVehiculos() throws SQLException {
         List<Vehiculo> vehiculos = new ArrayList<>();
         String sql = "SELECT * FROM vehiculo";
@@ -31,7 +32,7 @@ public class VehiculoDAO {
         return vehiculos;
     }
 
-    public boolean existsVehiculoByChoferId(String choferId) {
+    public boolean existeVehiculoChoferId(String choferId) {
         String sql = "SELECT COUNT(*) FROM vehiculo WHERE id_Chofer = ?";
         try (Connection conn = Conexion.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -46,8 +47,8 @@ public class VehiculoDAO {
         return false;
     }
 
-    public boolean insertVehiculo(Vehiculo vehiculo) {
-        if (existsVehiculoByChoferId(vehiculo.getIdChofer())) {
+    public boolean insertarVehiculo(Vehiculo vehiculo) {
+        if (existeVehiculoChoferId(vehiculo.getIdChofer())) {
             System.out.println("El chofer ya tiene un vehículo registrado.");
             return false;
         }
@@ -67,7 +68,7 @@ public class VehiculoDAO {
         return false;
     }
 
-    public Vehiculo getVehiculoByChoferId(String idChofer) {
+    public Vehiculo getVehiculoChoferId(String idChofer) {
         String sql = "SELECT * FROM vehiculo WHERE id_Chofer = ?";
         try (Connection conn = Conexion.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {

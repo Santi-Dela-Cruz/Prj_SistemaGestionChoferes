@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class LimpiarTabla {
+    
     private void limpiarTabla(String nombreTabla) {
         String sql = "DELETE FROM " + nombreTabla;
         try (Connection conn = Conexion.conectar();
@@ -17,7 +18,6 @@ public class LimpiarTabla {
         }
     }
 
-    // Método para limpiar todas las tablas
     public void limpiarTodasTablas() {
         limpiarTabla("registro_penalizaciones");
         limpiarTabla("registro_estados");
