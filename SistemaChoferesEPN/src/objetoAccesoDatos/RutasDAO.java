@@ -1,4 +1,5 @@
 package objetoAccesoDatos;
+
 import clasesEntidades.Rutas;
 import conexionBaseDatos.Conexion;
 import java.sql.Connection;
@@ -9,11 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RutasDAO {
-    public boolean existsRutaById(String idRuta) {
-        String sql = "SELECT COUNT(*) FROM rutas WHERE id_Ruta = ?";
+
+    public boolean existeRutaNombre(String nombreRuta) {
+        String sql = "SELECT COUNT(*) FROM rutas WHERE nombre_Ruta = ?";
         try (Connection conn = Conexion.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, idRuta);
+            stmt.setString(1, nombreRuta);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 return rs.getInt(1) > 0;
@@ -24,13 +26,12 @@ public class RutasDAO {
         return false;
     }
 
-    public boolean insertRuta(Rutas ruta) {
-        String sql = "INSERT INTO rutas (id_Ruta, nombre_Ruta, id_Chofer) VALUES (?, ?, ?)";
+    public boolean insertarRuta(Rutas ruta) {
+        String sql = "INSERT INTO rutas (nombre_Ruta, id_Chofer) VALUES (?, ?)";
         try (Connection conn = Conexion.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, ruta.getIdRuta());
-            stmt.setString(2, ruta.getNombreRuta());
-            stmt.setString(3, ruta.getIdChofer());
+            stmt.setString(1, ruta.getNombreRuta());
+            stmt.setString(2, ruta.getIdChofer());
 
             int rowsInserted = stmt.executeUpdate();
             return rowsInserted > 0;
@@ -49,7 +50,6 @@ public class RutasDAO {
 
             while (rs.next()) {
                 Rutas ruta = new Rutas();
-                ruta.setIdRuta(rs.getString("id_Ruta"));
                 ruta.setNombreRuta(rs.getString("nombre_Ruta"));
                 ruta.setIdChofer(rs.getString("id_Chofer"));
                 rutas.add(ruta);
@@ -60,7 +60,7 @@ public class RutasDAO {
         return rutas;
     }
 
-    public Rutas getRutaByChoferId(String idChofer) {
+    public Rutas getRutaChoferId(String idChofer) {
         String sql = "SELECT * FROM rutas WHERE id_Chofer = ?";
         try (Connection conn = Conexion.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {

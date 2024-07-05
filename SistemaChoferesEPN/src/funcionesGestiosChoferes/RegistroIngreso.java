@@ -38,28 +38,28 @@ public class RegistroIngreso {
         System.out.print("Ingrese el ID de la huella: ");
         String idHuella = scanner.nextLine();
 
-        Huella huella = huellaDAO.getHuellaById(idHuella);
+        Huella huella = huellaDAO.getHuellaId(idHuella);
         if (huella == null) {
             System.out.println("Huella no encontrada.");
             return;
         }
 
         String idChofer = huella.getIdChofer();
-        Chofer chofer = choferDAO.getChoferById(idChofer);
+        Chofer chofer = choferDAO.getChoferId(idChofer);
 
         if (chofer == null) {
             System.out.println("Chofer no encontrado.");
             return;
         }
 
-        Vehiculo vehiculo = vehiculoDAO.getVehiculoByChoferId(idChofer);
+        Vehiculo vehiculo = vehiculoDAO.getVehiculoChoferId(idChofer);
 
         if (vehiculo == null) {
             System.out.println("Vehículo no encontrado.");
             return;
         }
 
-        Rutas ruta = rutaDAO.getRutaByChoferId(idChofer);
+        Rutas ruta = rutaDAO.getRutaChoferId(idChofer);
 
         if (ruta == null) {
             System.out.println("Ruta no encontrada.");
@@ -70,7 +70,6 @@ public class RegistroIngreso {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String fechaHoraIngreso = ahora.format(formatter);
 
-        // Imprimir detalles del chofer, vehículo y ruta
         System.out.println("Detalles del chofer:");
         System.out.println("ID: " + chofer.getId());
         System.out.println("Nombre: " + chofer.getNombre());
@@ -81,7 +80,6 @@ public class RegistroIngreso {
         System.out.println("Ruta: " + ruta.getNombreRuta());
         System.out.println("Fecha y Hora de Ingreso: " + fechaHoraIngreso);
 
-        // Realizar test de alcohol
         System.out.print("¿Desea realizar el test de alcohol? (si/no): ");
         String realizarTest = scanner.nextLine();
 
@@ -93,7 +91,6 @@ public class RegistroIngreso {
         String respuesta = scanner.nextLine();
         boolean autorizacion = !respuesta.equalsIgnoreCase("si");
 
-        // Registrar el estado y autorización del chofer en un solo registro
         boolean successEstado = registroEstadosDAO.registrarIngreso(idChofer, respuesta.equalsIgnoreCase("si") ? "Borracho" : "Sobrio", autorizacion);
         if (successEstado) {
             System.out.println("Estado registrado correctamente.");
@@ -111,7 +108,6 @@ public class RegistroIngreso {
             }
         }
 
-        // Imprimir el resultado del test de alcohol
         System.out.println("Resultado del test de alcohol:");
         System.out.println("Nombre: " + chofer.getNombre());
         System.out.println("Autorización: " + (autorizacion ? "Autorizado" : "No autorizado"));

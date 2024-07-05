@@ -2,106 +2,87 @@ package funcionesGestiosChoferes;
 
 import clasesEntidades.Chofer;
 import clasesEntidades.Huella;
+import clasesEntidades.Rutas;
 import clasesEntidades.Vehiculo;
 import java.util.Scanner;
 import objetoAccesoDatos.ChoferDAO;
 import objetoAccesoDatos.HuellaDAO;
-import objetoAccesoDatos.RegistroEstadosDAO;
-import objetoAccesoDatos.RegistroPenalizacionesDAO;
+import objetoAccesoDatos.RutasDAO;
 import objetoAccesoDatos.VehiculoDAO;
 
 public class RegistroChofer {
 
-    private HuellaDAO huellaDAO;
-    private ChoferDAO choferDAO;
-    private VehiculoDAO vehiculoDAO;
-    private RegistroEstadosDAO registroEstadosDAO;
-    private RegistroPenalizacionesDAO registroPenalizacionesDAO;
+    private HuellaDAO huellaDAO = new HuellaDAO();
+    private ChoferDAO choferDAO = new ChoferDAO();
+    private VehiculoDAO vehiculoDAO = new VehiculoDAO();
+    private RutasDAO rutasDAO = new RutasDAO();
 
-    public RegistroChofer() {
-        huellaDAO = new HuellaDAO();
-        choferDAO = new ChoferDAO();
-        vehiculoDAO = new VehiculoDAO();
-        registroEstadosDAO = new RegistroEstadosDAO();
-        registroPenalizacionesDAO = new RegistroPenalizacionesDAO();
-    }
-
-    public void validarHuellaYRegistrarIngreso() {
+    public void registrarNuevoChofer() {
         Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Ingrese el ID del chofer: ");
+        String idChofer = scanner.nextLine();
+
+        System.out.print("Ingrese el nombre del chofer: ");
+        String nombre = scanner.nextLine();
+
+        System.out.print("Ingrese el apellido del chofer: ");
+        String apellido = scanner.nextLine();
+
+        System.out.print("Ingrese el teléfono del chofer: ");
+        String telefono = scanner.nextLine();
 
         System.out.print("Ingrese el ID de la huella: ");
         String idHuella = scanner.nextLine();
-
-        Huella huella = huellaDAO.getHuellaById(idHuella);
-        if (huella == null) {
-            System.out.println("Huella no encontrada.");
-            return;
-        }
-
-        String idChofer = huella.getIdChofer();
-        Chofer chofer = choferDAO.getChoferById(idChofer);
-
-        if (chofer == null) {
-            System.out.println("Chofer no encontrado.");
-            return;
-        }
-
-        Vehiculo vehiculo = vehiculoDAO.getVehiculoByChoferId(idChofer);
-
-        if (vehiculo == null) {
-            System.out.println("Vehículo no encontrado.");
-            return;
-        }
-
         
-        System.out.println("Detalles del chofer:");
-        System.out.println("ID: " + chofer.getId());
-        System.out.println("Nombre: " + chofer.getNombre());
-        System.out.println("Apellido: " + chofer.getApellido());
-        System.out.println("Teléfono: " + chofer.getTelefono());
-        System.out.println("Placa del Vehículo: " + vehiculo.getIdPlaca());
-        System.out.println("Tipo de Vehículo: " + vehiculo.getTipoVehiculo());
+        System.out.print("Ingrese la placa del vehículo: ");
+        String idPlaca = scanner.nextLine();
 
-        
-        boolean successEstado = registroEstadosDAO.registrarIngreso(idChofer, "Sobrio", true);
-        if (successEstado) {
-            System.out.println("Fecha y hora de ingreso registradas: " + java.time.LocalDate.now() + " " + java.time.LocalTime.now());
-        } else {
-            System.out.println("Error al registrar fecha y hora de ingreso.");
+        System.out.print("Ingrese el tipo de vehículo: ");
+        String tipoVehiculo = scanner.nextLine();
+
+        System.out.print("Ingrese la ruta del vehículo: ");
+        String nombreRuta = scanner.nextLine();
+
+
+        if (choferDAO.existeChoferId(idChofer) || vehiculoDAO.existeVehiculoChoferId(idChofer) || huellaDAO.existeHuellaChoferId(idChofer) || rutasDAO.existeRutaNombre(nombreRuta)) {
+            System.out.println("Error: Existen registros duplicados para el chofer, vehículo, huella o ruta.");
             return;
         }
 
-        
-        System.out.print("¿Desea realizar el test de alcohol? (si/no): ");
-        String realizarTest = scanner.nextLine();
+        Chofer chofer = new Chofer();
+        chofer.setId(idChofer);
+        chofer.setNombre(nombre);
+        chofer.setApellido(apellido);
+        chofer.setTelefono(telefono);
 
-        if (!realizarTest.equalsIgnoreCase("si")) {
-            return;
-        }
+        Vehiculo vehiculo = new Vehiculo();
+        vehiculo.setIdPlaca(idPlaca);
+        vehiculo.setTipoVehiculo(tipoVehiculo);
+        vehiculo.setIdChofer(idChofer);
 
-        System.out.print("¿Está borracho? (si/no): ");
-        String respuesta = scanner.nextLine();
-        boolean autorizacion = !respuesta.equalsIgnoreCase("si");
+        Huella huella = new Huella();
+        huella.setIdHuella(idHuella);
+        huella.setIdChofer(idChofer);
 
-        successEstado = registroEstadosDAO.registrarIngreso(idChofer, respuesta.equalsIgnoreCase("si") ? "Borracho" : "Sobrio", autorizacion);
-        if (successEstado) {
-            System.out.println("Estado registrado correctamente.");
-        } else {
-            System.out.println("Error al registrar el estado.");
-            return;
-        }
+        Rutas ruta = new Rutas();
+        ruta.setNombreRuta(nombreRuta);
+        ruta.setIdChofer(idChofer);
 
-        if (!autorizacion) {
-            boolean despedido = registroPenalizacionesDAO.actualizarPenalizaciones(idChofer, "Infracción");
-            if (despedido) {
-                System.out.println("El chofer ha sido despedido.");
+        try {
+            boolean choferGuardado = choferDAO.insertarChofer(chofer);
+            boolean vehiculoGuardado = vehiculoDAO.insertarVehiculo(vehiculo);
+            boolean huellaGuardada = huellaDAO.insertarHuella(huella);
+            boolean rutaGuardada = rutasDAO.insertarRuta(ruta);
+
+            if (choferGuardado && vehiculoGuardado && huellaGuardada && rutaGuardada) {
+                System.out.println("Chofer, vehículo, huella y ruta registrados exitosamente.");
             } else {
-                System.out.println("Penalización registrada.");
+                System.out.println("Error al registrar el chofer, vehículo, huella o ruta.");
             }
+        } catch (Exception e) {
+            System.out.println("Ocurrió un error: " + e.getMessage());
+            e.printStackTrace();
         }
-
-        System.out.println("Resultado del test de alcohol:");
-        System.out.println("Nombre: " + chofer.getNombre());
-        System.out.println("Autorización: " + (autorizacion ? "Autorizado" : "No autorizado"));
     }
 }
