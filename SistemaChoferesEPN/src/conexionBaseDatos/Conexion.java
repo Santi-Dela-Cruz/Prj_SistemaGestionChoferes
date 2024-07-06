@@ -5,9 +5,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Conexion {
-    private static final String URL = "jdbc:mysql://localhost:3306/Gestion_Choferes";
+    private static final String URL = "jdbc:mysql://monorail.proxy.rlwy.net:54924/Gestion_Choferes_RDB";
     private static final String USER = "root";
-    private static final String PASSWORD = "";
+    private static final String PASSWORD = "jXZnZxfAqSlbFjeZjFiwljbFdkcAYTlQ";
     private static Connection connection = null;
 
     public static Connection conectar() {
