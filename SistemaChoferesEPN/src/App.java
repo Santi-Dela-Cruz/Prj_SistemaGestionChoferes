@@ -9,6 +9,6 @@ public class App {
         RegistroIngreso registroIngreso = new RegistroIngreso();
         LimpiarTabla limpiarTabla = new LimpiarTabla();
 
-        limpiarTabla.limpiarTodasTablas();
+        registroChofer.registrarNuevoChofer();
     }
 }
