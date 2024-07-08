@@ -41,11 +41,11 @@
    - [ ] Implementación de funciones para la evaluación del estado del chofer.
 
 6. ***Conexión de la Lógica del Servidor a la Base de Datos***:
-   - [ ] Implementación de la lógica para guardar y recuperar datos del chofer.
+   - [ ] Implementación de la lógica para guardar.
 
 #### Subgrupo 3: GUI
 
-7. ***Desarrollo de la GUI con JavaFX***:
+7. ***Desarrollo de la GUI con JavaFX o cualquier otro IDE***:
    - ***Pantalla de Autenticación***:
      - [ ] Diseño de la interfaz para la lectura de huella digital.
      - [ ] Implementación de la lógica de autenticación.
@@ -60,3 +60,11 @@
      - [ ] Implementación de la lógica para evaluar y mostrar el estado del chofer.
    - ***Integración de la GUI con la Lógica del Servidor***:
      - [ ] Conexión de la GUI con las funciones del servidor.
+8. ***Documentacion***
+   - ***Diagramas***
+      - [ ] Diagrama de caso de uso
+      - [ ] Diagrama de clases
+   - ***Documentacion de codigo***
+      - [ ] Documentar todo los codigos(clases)
+   - ***Documnetacion uso***
+      - Documentar el funcionamiento, variables, librerias usadas
