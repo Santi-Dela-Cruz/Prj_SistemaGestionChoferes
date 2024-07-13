@@ -38,28 +38,28 @@ public class RegistroIngreso {
         System.out.print("Ingrese el ID de la huella: ");
         String idHuella = scanner.nextLine();
 
-        Huella huella = huellaDAO.getHuellaId(idHuella);
+        Huella huella = huellaDAO.obtenerHuellaPorId(Integer.parseInt(idHuella));
         if (huella == null) {
             System.out.println("Huella no encontrada.");
             return;
         }
 
-        String idChofer = huella.getIdChofer();
-        Chofer chofer = choferDAO.getChoferId(idChofer);
+        int idChofer = huella.getIdChofer();
+        Chofer chofer = choferDAO.obtenerChoferPorId(idChofer);
 
         if (chofer == null) {
             System.out.println("Chofer no encontrado.");
             return;
         }
 
-        Vehiculo vehiculo = vehiculoDAO.getVehiculoChoferId(idChofer);
+        Vehiculo vehiculo = vehiculoDAO.obtenerVehiculoPorId(idChofer);
 
         if (vehiculo == null) {
             System.out.println("Vehículo no encontrado.");
             return;
         }
 
-        Rutas ruta = rutaDAO.getRutaChoferId(idChofer);
+        Rutas ruta = rutaDAO.obtenerRutaPorId(idChofer);
 
         if (ruta == null) {
             System.out.println("Ruta no encontrada.");
@@ -71,7 +71,7 @@ public class RegistroIngreso {
         String fechaHoraIngreso = ahora.format(formatter);
 
         System.out.println("Detalles del chofer:");
-        System.out.println("ID: " + chofer.getId());
+        System.out.println("ID: " + chofer.getIdChofer());
         System.out.println("Nombre: " + chofer.getNombre());
         System.out.println("Apellido: " + chofer.getApellido());
         System.out.println("Teléfono: " + chofer.getTelefono());

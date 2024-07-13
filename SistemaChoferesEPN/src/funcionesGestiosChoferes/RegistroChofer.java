@@ -20,8 +20,8 @@ public class RegistroChofer {
     public void registrarNuevoChofer() {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Ingrese el ID del chofer: ");
-        String idChofer = scanner.nextLine();
+        System.out.print("Ingrese el ID de la cédula del chofer: ");
+        String idCedula = scanner.nextLine();
 
         System.out.print("Ingrese el nombre del chofer: ");
         String nombre = scanner.nextLine();
@@ -33,7 +33,7 @@ public class RegistroChofer {
         String telefono = scanner.nextLine();
 
         System.out.print("Ingrese el ID de la huella: ");
-        String idHuella = scanner.nextLine();
+        String idCodigoHuella = scanner.nextLine();
         
         System.out.print("Ingrese la placa del vehículo: ");
         String idPlaca = scanner.nextLine();
@@ -44,45 +44,43 @@ public class RegistroChofer {
         System.out.print("Ingrese la ruta del vehículo: ");
         String nombreRuta = scanner.nextLine();
 
+        Chofer chofer = new Chofer();
+        chofer.setIdCedula(idCedula);
+        chofer.setNombre(nombre);
+        chofer.setApellido(apellido);
+        chofer.setTelefono(telefono);
 
-        if (choferDAO.existeChoferId(idChofer) || vehiculoDAO.existeVehiculoChoferId(idChofer) || huellaDAO.existeHuellaChoferId(idChofer) || rutasDAO.existeRutaNombre(nombreRuta)) {
+        choferDAO.agregarChofer(chofer);
+
+        int idChofer = choferDAO.obtenerTodoChoferes().stream()
+                .filter(c -> c.getIdCedula().equals(idCedula))
+                .findFirst()
+                .get()
+                .getIdChofer();
+
+        if (huellaDAO.existeHuella(idChofer) || 
+            vehiculoDAO.existeVehiculo(idChofer) || 
+            rutasDAO.existeRuta(idChofer)) {
             System.out.println("Error: Existen registros duplicados para el chofer, vehículo, huella o ruta.");
             return;
         }
 
-        Chofer chofer = new Chofer();
-        chofer.setId(idChofer);
-        chofer.setNombre(nombre);
-        chofer.setApellido(apellido);
-        chofer.setTelefono(telefono);
+        Huella huella = new Huella();
+        huella.setIdCodigoHuella(idCodigoHuella);
+        huella.setIdChofer(idChofer);
+        huellaDAO.agregarHuella(huella);
 
         Vehiculo vehiculo = new Vehiculo();
         vehiculo.setIdPlaca(idPlaca);
         vehiculo.setTipoVehiculo(tipoVehiculo);
         vehiculo.setIdChofer(idChofer);
-
-        Huella huella = new Huella();
-        huella.setIdHuella(idHuella);
-        huella.setIdChofer(idChofer);
+        vehiculoDAO.agregarVehiculo(vehiculo);
 
         Rutas ruta = new Rutas();
         ruta.setNombreRuta(nombreRuta);
         ruta.setIdChofer(idChofer);
+        rutasDAO.agregarRuta(ruta);
 
-        try {
-            boolean choferGuardado = choferDAO.insertarChofer(chofer);
-            boolean vehiculoGuardado = vehiculoDAO.insertarVehiculo(vehiculo);
-            boolean huellaGuardada = huellaDAO.insertarHuella(huella);
-            boolean rutaGuardada = rutasDAO.insertarRuta(ruta);
-
-            if (choferGuardado && vehiculoGuardado && huellaGuardada && rutaGuardada) {
-                System.out.println("Chofer, vehículo, huella y ruta registrados exitosamente.");
-            } else {
-                System.out.println("Error al registrar el chofer, vehículo, huella o ruta.");
-            }
-        } catch (Exception e) {
-            System.out.println("Ocurrió un error: " + e.getMessage());
-            e.printStackTrace();
-        }
+        System.out.println("Registro completado con éxito.");
     }
 }

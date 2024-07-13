@@ -1,4 +1,5 @@
 package objetoAccesoDatos;
+
 import clasesEntidades.Chofer;
 import conexionBaseDatos.Conexion;
 import java.sql.Connection;
@@ -9,85 +10,102 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChoferDAO {
-    public List<Chofer> getAllChoferes() throws SQLException {
-        List<Chofer> choferes = new ArrayList<>();
-        String sql = "SELECT * FROM choferes";
+    private Connection connection;
 
-        try (Connection conn = Conexion.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
+    public ChoferDAO() {
+        connection = Conexion.conectar();
+    }
 
+    public void agregarChofer(Chofer chofer) {
+        try {
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("INSERT INTO choferes (id_Cedula, nombre, apellido, telefono) VALUES (?, ?, ?, ?)");
+            preparedStatement.setString(1, chofer.getIdCedula());
+            preparedStatement.setString(2, chofer.getNombre());
+            preparedStatement.setString(3, chofer.getApellido());
+            preparedStatement.setString(4, chofer.getTelefono());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void eliminarChofer(int idChofer) {
+        if (!existeChofer(idChofer)) {
+            System.out.println("Error: El chofer con el ID " + idChofer + " no existe.");
+            return;
+        }
+        try {
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("DELETE FROM choferes WHERE id_Chofer=?");
+            preparedStatement.setInt(1, idChofer);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void actualizarChofer(Chofer chofer) {
+        if (!existeChofer(chofer.getIdChofer())) {
+            System.out.println("Error: El chofer con el ID " + chofer.getIdChofer() + " no existe.");
+            return;
+        }
+        try {
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("UPDATE choferes SET id_Cedula=?, nombre=?, apellido=?, telefono=? WHERE id_Chofer=?");
+            preparedStatement.setString(1, chofer.getIdCedula());
+            preparedStatement.setString(2, chofer.getNombre());
+            preparedStatement.setString(3, chofer.getApellido());
+            preparedStatement.setString(4, chofer.getTelefono());
+            preparedStatement.setInt(5, chofer.getIdChofer());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<Chofer> obtenerTodoChoferes() {
+        List<Chofer> choferes = new ArrayList<Chofer>();
+        try {
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("SELECT * FROM choferes");
+            ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 Chofer chofer = new Chofer();
-                chofer.setId(rs.getString("id"));
+                chofer.setIdChofer(rs.getInt("id_Chofer"));
+                chofer.setIdCedula(rs.getString("id_Cedula"));
                 chofer.setNombre(rs.getString("nombre"));
                 chofer.setApellido(rs.getString("apellido"));
                 chofer.setTelefono(rs.getString("telefono"));
                 choferes.add(chofer);
             }
-        } finally {
-            Conexion.desconectar();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-
         return choferes;
     }
 
-    public boolean insertarChofer(Chofer chofer) {
-        if (existeChoferId(chofer.getId())) {
-            System.out.println("El ID del chofer ya existe.");
-            return false;
-        }
-
-        String sql = "INSERT INTO choferes (id, nombre, apellido, telefono) VALUES (?, ?, ?, ?)";
-        try (Connection conn = Conexion.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, chofer.getId());
-            stmt.setString(2, chofer.getNombre());
-            stmt.setString(3, chofer.getApellido());
-            stmt.setString(4, chofer.getTelefono());
-
-            int rowsInserted = stmt.executeUpdate();
-            return rowsInserted > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    public boolean existeChoferId(String id) {
-        String sql = "SELECT COUNT(*) FROM choferes WHERE id = ?";
-        try (Connection conn = Conexion.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, id);
-            ResultSet rs = stmt.executeQuery();
+    public Chofer obtenerChoferPorId(int idChofer) {
+        Chofer chofer = new Chofer();
+        try {
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("SELECT * FROM choferes WHERE id_Chofer=?");
+            preparedStatement.setInt(1, idChofer);
+            ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
-                return rs.getInt(1) > 0;
+                chofer.setIdChofer(rs.getInt("id_Chofer"));
+                chofer.setIdCedula(rs.getString("id_Cedula"));
+                chofer.setNombre(rs.getString("nombre"));
+                chofer.setApellido(rs.getString("apellido"));
+                chofer.setTelefono(rs.getString("telefono"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+        return chofer;
     }
 
-    public Chofer getChoferId(String idChofer) {
-        String sql = "SELECT * FROM choferes WHERE id = ?";
-        try (Connection conn = Conexion.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, idChofer);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    Chofer chofer = new Chofer();
-                    chofer.setId(rs.getString("id"));
-                    chofer.setNombre(rs.getString("nombre"));
-                    chofer.setApellido(rs.getString("apellido"));
-                    chofer.setTelefono(rs.getString("telefono"));
-                    return chofer;
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public boolean existeChofer(int idChofer) {
+        return obtenerChoferPorId(idChofer) != null;
     }
 }
-

@@ -1,16 +1,17 @@
 package clasesEntidades;
 
 public class RegistroPenalizaciones {
-    private String idChofer;
+    private int idRegPen;
     private int nInfracciones;
     private String penalizacionChofer;
+    private int idChofer;
 
-    public String getIdChofer() {
-        return idChofer;
+    public int getIdRegPen() {
+        return idRegPen;
     }
 
-    public void setIdChofer(String idChofer) {
-        this.idChofer = idChofer;
+    public void setIdRegPen(int idRegPen) {
+        this.idRegPen = idRegPen;
     }
 
     public int getNInfracciones() {
@@ -28,5 +29,12 @@ public class RegistroPenalizaciones {
     public void setPenalizacionChofer(String penalizacionChofer) {
         this.penalizacionChofer = penalizacionChofer;
     }
-}
 
+    public int getIdChofer() {
+        return idChofer;
+    }
+
+    public void setIdChofer(int idChofer) {
+        this.idChofer = idChofer;
+    }
+}

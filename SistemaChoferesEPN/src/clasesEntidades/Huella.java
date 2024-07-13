@@ -1,23 +1,43 @@
 package clasesEntidades;
+import java.util.Date;
 
 public class Huella {
-    private String idHuella;
-    private String idChofer;
+    private int idHuella;
+    private String idCodigoHuella;
+    private Date fechaRegHuella;
+    private int idChofer;
 
-    public String getIdHuella() {
+    public int getIdHuella() {
         return idHuella;
     }
 
-    public void setIdHuella(String idHuella) {
+    public void setIdHuella(int idHuella) {
         this.idHuella = idHuella;
     }
 
-    public String getIdChofer() {
+    public String getIdCodigoHuella() {
+        return idCodigoHuella;
+    }
+
+    public void setIdCodigoHuella(String idCodigoHuella) {
+        this.idCodigoHuella = idCodigoHuella;
+    }
+
+    public Date getFechaRegHuella() {
+        return fechaRegHuella;
+    }
+
+    public void setFechaRegHuella(Date fechaRegHuella) {
+        this.fechaRegHuella = fechaRegHuella;
+    }
+
+    public int getIdChofer() {
         return idChofer;
     }
 
-    public void setIdChofer(String idChofer) {
+    public void setIdChofer(int idChofer) {
         this.idChofer = idChofer;
     }
 }
+
 

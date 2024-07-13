@@ -1,17 +1,25 @@
 package clasesEntidades;
-
 public class Chofer {
-    private String id;
+    private int idChofer;
+    private String idCedula;
     private String nombre;
     private String apellido;
     private String telefono;
 
-    public String getId() {
-        return id;
+    public int getIdChofer() {
+        return idChofer;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setIdChofer(int idChofer) {
+        this.idChofer = idChofer;
+    }
+
+    public String getIdCedula() {
+        return idCedula;
+    }
+
+    public void setIdCedula(String idCedula) {
+        this.idCedula = idCedula;
     }
 
     public String getNombre() {
@@ -38,4 +46,3 @@ public class Chofer {
         this.telefono = telefono;
     }
 }
-

@@ -1,4 +1,5 @@
 package objetoAccesoDatos;
+
 import clasesEntidades.Vehiculo;
 import conexionBaseDatos.Conexion;
 import java.sql.Connection;
@@ -9,84 +10,124 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VehiculoDAO {
+    private Connection connection;
 
-    public List<Vehiculo> getAllVehiculos() throws SQLException {
-        List<Vehiculo> vehiculos = new ArrayList<>();
-        String sql = "SELECT * FROM vehiculo";
+    public VehiculoDAO() {
+        connection = Conexion.conectar();
+    }
 
-        try (Connection conn = Conexion.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
+    public void agregarVehiculo(Vehiculo vehiculo) {
+        if (existeVehiculoPorPlaca(vehiculo.getIdPlaca())) {
+            System.out.println("Error: El vehículo con la placa " + vehiculo.getIdPlaca() + " ya existe.");
+            return;
+        }
+        try {
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("INSERT INTO vehiculo (id_Placa, tipo_Vehiculo, id_Chofer) VALUES (?, ?, ?)");
+            preparedStatement.setString(1, vehiculo.getIdPlaca());
+            preparedStatement.setString(2, vehiculo.getTipoVehiculo());
+            preparedStatement.setInt(3, vehiculo.getIdChofer());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
+    public void eliminarVehiculo(int idVehiculo) {
+        if (!existeVehiculo(idVehiculo)) {
+            System.out.println("Error: El vehículo con el ID " + idVehiculo + " no existe.");
+            return;
+        }
+        try {
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("DELETE FROM vehiculo WHERE id_Vehiculo=?");
+            preparedStatement.setInt(1, idVehiculo);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void actualizarVehiculo(Vehiculo vehiculo) {
+        if (!existeVehiculo(vehiculo.getIdVehiculo())) {
+            System.out.println("Error: El vehículo con el ID " + vehiculo.getIdVehiculo() + " no existe.");
+            return;
+        }
+        try {
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("UPDATE vehiculo SET id_Placa=?, tipo_Vehiculo=?, id_Chofer=? WHERE id_Vehiculo=?");
+            preparedStatement.setString(1, vehiculo.getIdPlaca());
+            preparedStatement.setString(2, vehiculo.getTipoVehiculo());
+            preparedStatement.setInt(3, vehiculo.getIdChofer());
+            preparedStatement.setInt(4, vehiculo.getIdVehiculo());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<Vehiculo> obtenerTodoVehiculos() {
+        List<Vehiculo> vehiculos = new ArrayList<Vehiculo>();
+        try {
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("SELECT * FROM vehiculo");
+            ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 Vehiculo vehiculo = new Vehiculo();
+                vehiculo.setIdVehiculo(rs.getInt("id_Vehiculo"));
                 vehiculo.setIdPlaca(rs.getString("id_Placa"));
                 vehiculo.setTipoVehiculo(rs.getString("tipo_Vehiculo"));
-                vehiculo.setIdChofer(rs.getString("id_Chofer"));
+                vehiculo.setIdChofer(rs.getInt("id_Chofer"));
                 vehiculos.add(vehiculo);
             }
-        } finally {
-            Conexion.desconectar();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-
         return vehiculos;
     }
 
-    public boolean existeVehiculoChoferId(String choferId) {
-        String sql = "SELECT COUNT(*) FROM vehiculo WHERE id_Chofer = ?";
-        try (Connection conn = Conexion.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, choferId);
-            ResultSet rs = stmt.executeQuery();
+    public Vehiculo obtenerVehiculoPorId(int idVehiculo) {
+        Vehiculo vehiculo = new Vehiculo();
+        try {
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("SELECT * FROM vehiculo WHERE id_Vehiculo=?");
+            preparedStatement.setInt(1, idVehiculo);
+            ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
-                return rs.getInt(1) > 0;
+                vehiculo.setIdVehiculo(rs.getInt("id_Vehiculo"));
+                vehiculo.setIdPlaca(rs.getString("id_Placa"));
+                vehiculo.setTipoVehiculo(rs.getString("tipo_Vehiculo"));
+                vehiculo.setIdChofer(rs.getInt("id_Chofer"));
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return vehiculo;
+    }
+
+    public boolean existeVehiculo(int idVehiculo) {
+        try {
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("SELECT * FROM vehiculo WHERE id_Vehiculo=?");
+            preparedStatement.setInt(1, idVehiculo);
+            ResultSet rs = preparedStatement.executeQuery();
+            return rs.next();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
     }
 
-    public boolean insertarVehiculo(Vehiculo vehiculo) {
-        if (existeVehiculoChoferId(vehiculo.getIdChofer())) {
-            System.out.println("El chofer ya tiene un vehículo registrado.");
-            return false;
-        }
-
-        String sql = "INSERT INTO vehiculo (id_Placa, tipo_Vehiculo, id_Chofer) VALUES (?, ?, ?)";
-        try (Connection conn = Conexion.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, vehiculo.getIdPlaca());
-            stmt.setString(2, vehiculo.getTipoVehiculo());
-            stmt.setString(3, vehiculo.getIdChofer());
-
-            int rowsInserted = stmt.executeUpdate();
-            return rowsInserted > 0;
+    public boolean existeVehiculoPorPlaca(String idPlaca) {
+        try {
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("SELECT * FROM vehiculo WHERE id_Placa=?");
+            preparedStatement.setString(1, idPlaca);
+            ResultSet rs = preparedStatement.executeQuery();
+            return rs.next();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
     }
-
-    public Vehiculo getVehiculoChoferId(String idChofer) {
-        String sql = "SELECT * FROM vehiculo WHERE id_Chofer = ?";
-        try (Connection conn = Conexion.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, idChofer);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    Vehiculo vehiculo = new Vehiculo();
-                    vehiculo.setIdPlaca(rs.getString("id_Placa"));
-                    vehiculo.setTipoVehiculo(rs.getString("tipo_Vehiculo"));
-                    vehiculo.setIdChofer(rs.getString("id_Chofer"));
-                    return vehiculo;
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
 }
-
