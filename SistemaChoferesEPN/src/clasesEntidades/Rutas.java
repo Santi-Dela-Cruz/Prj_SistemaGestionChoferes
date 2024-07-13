@@ -1,16 +1,16 @@
 package clasesEntidades;
 
 public class Rutas {
-    private String idRuta;
+    private int idRuta;
     private String nombreRuta;
-    private String idChofer;
+    private int idChofer;
 
-    // Getters y setters
-    public String getIdRuta() {
+    // Getters y Setters
+    public int getIdRuta() {
         return idRuta;
     }
 
-    public void setIdRuta(String idRuta) {
+    public void setIdRuta(int idRuta) {
         this.idRuta = idRuta;
     }
 
@@ -22,13 +22,14 @@ public class Rutas {
         this.nombreRuta = nombreRuta;
     }
 
-    public String getIdChofer() {
+    public int getIdChofer() {
         return idChofer;
     }
 
-    public void setIdChofer(String idChofer) {
+    public void setIdChofer(int idChofer) {
         this.idChofer = idChofer;
     }
 }
+
 
 

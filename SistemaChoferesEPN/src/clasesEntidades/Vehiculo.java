@@ -1,9 +1,18 @@
 package clasesEntidades;
 
 public class Vehiculo {
+    private int idVehiculo;
     private String idPlaca;
     private String tipoVehiculo;
-    private String idChofer;
+    private int idChofer;
+
+    public int getIdVehiculo() {
+        return idVehiculo;
+    }
+
+    public void setIdVehiculo(int idVehiculo) {
+        this.idVehiculo = idVehiculo;
+    }
 
     public String getIdPlaca() {
         return idPlaca;
@@ -21,12 +30,13 @@ public class Vehiculo {
         this.tipoVehiculo = tipoVehiculo;
     }
 
-    public String getIdChofer() {
+    public int getIdChofer() {
         return idChofer;
     }
 
-    public void setIdChofer(String idChofer) {
+    public void setIdChofer(int idChofer) {
         this.idChofer = idChofer;
     }
 }
+
 

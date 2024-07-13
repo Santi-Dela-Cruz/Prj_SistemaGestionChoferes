@@ -10,48 +10,71 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RutasDAO {
+    private Connection connection;
 
-    public boolean existeRutaNombre(String nombreRuta) {
-        String sql = "SELECT COUNT(*) FROM rutas WHERE nombre_Ruta = ?";
-        try (Connection conn = Conexion.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, nombreRuta);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                return rs.getInt(1) > 0;
-            }
+    public RutasDAO() {
+        connection = Conexion.conectar();
+    }
+
+    public void agregarRuta(Rutas ruta) {
+        if (existeRuta(ruta.getIdRuta())) {
+            System.out.println("Error: La ruta con el ID " + ruta.getIdRuta() + " ya existe.");
+            return;
+        }
+        try {
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("INSERT INTO rutas (nombre_Ruta, id_Chofer) VALUES (?, ?)");
+            preparedStatement.setString(1, ruta.getNombreRuta());
+            preparedStatement.setInt(2, ruta.getIdChofer());
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
     }
 
-    public boolean insertarRuta(Rutas ruta) {
-        String sql = "INSERT INTO rutas (nombre_Ruta, id_Chofer) VALUES (?, ?)";
-        try (Connection conn = Conexion.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, ruta.getNombreRuta());
-            stmt.setString(2, ruta.getIdChofer());
-
-            int rowsInserted = stmt.executeUpdate();
-            return rowsInserted > 0;
+    public void eliminarRuta(int idRuta) {
+        if (!existeRuta(idRuta)) {
+            System.out.println("Error: La ruta con el ID " + idRuta + " no existe.");
+            return;
+        }
+        try {
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("DELETE FROM rutas WHERE id_Ruta=?");
+            preparedStatement.setInt(1, idRuta);
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
     }
 
-    public List<Rutas> getAllRutas() {
-        List<Rutas> rutas = new ArrayList<>();
-        String sql = "SELECT * FROM rutas";
-        try (Connection conn = Conexion.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
+    public void actualizarRuta(Rutas ruta) {
+        if (!existeRuta(ruta.getIdRuta())) {
+            System.out.println("Error: La ruta con el ID " + ruta.getIdRuta() + " no existe.");
+            return;
+        }
+        try {
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("UPDATE rutas SET nombre_Ruta=?, id_Chofer=? WHERE id_Ruta=?");
+            preparedStatement.setString(1, ruta.getNombreRuta());
+            preparedStatement.setInt(2, ruta.getIdChofer());
+            preparedStatement.setInt(3, ruta.getIdRuta());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
+    public List<Rutas> obtenerTodoRutas() {
+        List<Rutas> rutas = new ArrayList<Rutas>();
+        try {
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("SELECT * FROM rutas");
+            ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 Rutas ruta = new Rutas();
+                ruta.setIdRuta(rs.getInt("id_Ruta"));
                 ruta.setNombreRuta(rs.getString("nombre_Ruta"));
-                ruta.setIdChofer(rs.getString("id_Chofer"));
+                ruta.setIdChofer(rs.getInt("id_Chofer"));
                 rutas.add(ruta);
             }
         } catch (SQLException e) {
@@ -60,22 +83,34 @@ public class RutasDAO {
         return rutas;
     }
 
-    public Rutas getRutaChoferId(String idChofer) {
-        String sql = "SELECT * FROM rutas WHERE id_Chofer = ?";
-        try (Connection conn = Conexion.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, idChofer);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    Rutas ruta = new Rutas();
-                    ruta.setNombreRuta(rs.getString("nombre_Ruta"));
-                    ruta.setIdChofer(rs.getString("id_Chofer"));
-                    return ruta;
-                }
+    public Rutas obtenerRutaPorId(int idRuta) {
+        Rutas ruta = new Rutas();
+        try {
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("SELECT * FROM rutas WHERE id_Ruta=?");
+            preparedStatement.setInt(1, idRuta);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                ruta.setIdRuta(rs.getInt("id_Ruta"));
+                ruta.setNombreRuta(rs.getString("nombre_Ruta"));
+                ruta.setIdChofer(rs.getInt("id_Chofer"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return ruta;
+    }
+
+    public boolean existeRuta(int idRuta) {
+        try {
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("SELECT * FROM rutas WHERE id_Ruta=?");
+            preparedStatement.setInt(1, idRuta);
+            ResultSet rs = preparedStatement.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
