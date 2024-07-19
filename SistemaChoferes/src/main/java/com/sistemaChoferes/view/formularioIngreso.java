@@ -3,7 +3,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.sistemaChoferes.view;
+import com.sistemaChoferes.model.src.clasesEntidades.Chofer;
+import com.sistemaChoferes.model.src.clasesEntidades.Huella;
+import com.sistemaChoferes.model.src.clasesEntidades.Rutas;
+import com.sistemaChoferes.model.src.clasesEntidades.Vehiculo;
 import com.sistemaChoferes.model.src.funcionesGestiosChoferes.RegistroChofer;
+import com.sistemaChoferes.model.src.objetoAccesoDatos.ChoferDAO;
+import com.sistemaChoferes.model.src.objetoAccesoDatos.HuellaDAO;
+import com.sistemaChoferes.model.src.objetoAccesoDatos.RutasDAO;
+import com.sistemaChoferes.model.src.objetoAccesoDatos.VehiculoDAO;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -13,16 +21,36 @@ import javax.swing.UnsupportedLookAndFeelException;
  * @author pc-win10
  */
 public class formularioIngreso extends javax.swing.JFrame {
+    private Chofer chofer = new Chofer();
     private RegistroChofer registroChofer;
+    private ChoferDAO chofeDAO;
+    private HuellaDAO huellaDAO;
+    private VehiculoDAO vehiculoDAO;
+    private RutasDAO rutasDAO;
+    private int idChofer;
 
     /**
      * Creates new form Form_Ingreso
      */
     public formularioIngreso() {
         initComponents();
+        setLocationRelativeTo(null); // Asegúrate de centrar la ventana
         registroChofer = new RegistroChofer();
+        btnActualizar.setVisible(false);
     }
-
+    
+    public formularioIngreso(int idChofer) {
+        this.idChofer = idChofer;
+        initComponents();
+        setLocationRelativeTo(null); // Asegúrate de centrar la ventana
+        registroChofer = new RegistroChofer();
+        chofeDAO = new ChoferDAO();
+        huellaDAO = new HuellaDAO();
+        vehiculoDAO = new VehiculoDAO();
+        rutasDAO = new RutasDAO();
+        mostarDatos(idChofer);
+        btnGuardar.setVisible(false);// Cargar los datos del chofer en el formulario
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -51,11 +79,13 @@ public class formularioIngreso extends javax.swing.JFrame {
         txtPlaca = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder("REGISTRO CHOFER")));
+        jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         txtCedula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -182,6 +212,7 @@ public class formularioIngreso extends javax.swing.JFrame {
                 .addContainerGap(13, Short.MAX_VALUE))
         );
 
+        btnGuardar.setBackground(new java.awt.Color(204, 255, 204));
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -189,10 +220,19 @@ public class formularioIngreso extends javax.swing.JFrame {
             }
         });
 
+        btnCancelar.setBackground(new java.awt.Color(255, 153, 153));
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
+            }
+        });
+
+        btnActualizar.setBackground(new java.awt.Color(204, 255, 255));
+        btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
             }
         });
 
@@ -201,13 +241,17 @@ public class formularioIngreso extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(160, 160, 160)
+                        .addComponent(btnActualizar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnGuardar)))
+                        .addComponent(btnGuardar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -218,7 +262,8 @@ public class formularioIngreso extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
-                    .addComponent(btnCancelar))
+                    .addComponent(btnCancelar)
+                    .addComponent(btnActualizar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -242,26 +287,55 @@ public class formularioIngreso extends javax.swing.JFrame {
     }//GEN-LAST:event_txtHuellaActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        try {
-            String idCedula = txtCedula.getText();
-            String nombre = txtNombres.getText();
-            String apellido = txtApellidos.getText();
-            String telefono = txtTelefono.getText();
-            String idCodigoHuella = txtHuella.getText();
-            String idPlaca = txtPlaca.getText();
-            String tipoVehiculo = txtVehiculo.getText();
-            String nombreRuta = txtRuta.getText();
-            
-            registroChofer.registrarNuevoChofer(idCedula, nombre, apellido, telefono, idCodigoHuella, idPlaca, tipoVehiculo, nombreRuta);
-            JOptionPane.showMessageDialog(this, "Chofer registrado con éxito.");
-            limpiarCampos();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al registrar el chofer: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        String cedula = txtCedula.getText();
+        String nombres = txtNombres.getText();
+        String apellidos = txtApellidos.getText();
+        String telefono = txtTelefono.getText();
+        String placa = txtPlaca.getText();
+        String vehiculo = txtVehiculo.getText();
+        String ruta = txtRuta.getText();
+        String huella = txtHuella.getText();
+
+        // Validar campos vacíos
+        if (cedula.isEmpty() || nombres.isEmpty() || apellidos.isEmpty() || telefono.isEmpty() ||
+            placa.isEmpty() || vehiculo.isEmpty() || ruta.isEmpty() || huella.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Todos los campos deben ser llenados.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-        
-        
+
+        try {
+            // Llamada al método para registrar el chofer
+            registroChofer.registrarNuevoChofer(cedula, nombres, apellidos, telefono, huella, placa, vehiculo, ruta);
+            JOptionPane.showMessageDialog(this, "Registro guardado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            limpiarCampos();
+            new listadoChoferesCRUD().setVisible(rootPaneCheckingEnabled);
+            this.dispose();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al guardar el registro: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+    public void mostarDatos(int idc){
+        Chofer chofer = chofeDAO.obtenerChoferPorId(idc);
+        Vehiculo vehiculo = vehiculoDAO.obtenerVehiculoPorChoferId(idc);
+        Huella huella = huellaDAO.obtenerHuellaPorId(idc);
+        Rutas rutas = rutasDAO.obtenerRutaPorChoferId(idc);
+        
+        if (chofer != null) {
+            txtNombres.setText(chofer.getNombre());
+            txtApellidos.setText(chofer.getApellido());
+            txtCedula.setText(chofer.getIdCedula());
+            txtTelefono.setText(chofer.getTelefono());
+            txtPlaca.setText(vehiculo.getIdPlaca());
+            txtVehiculo.setText(vehiculo.getTipoVehiculo());
+            txtRuta.setText(rutas.getNombreRuta());
+            txtHuella.setText(huella.getIdCodigoHuella());
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al cargar los datos del chofer", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    
     private void txtCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCedulaActionPerformed
@@ -274,6 +348,35 @@ public class formularioIngreso extends javax.swing.JFrame {
         this.limpiarCampos();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        String cedula = txtCedula.getText();
+        String nombres = txtNombres.getText();
+        String apellidos = txtApellidos.getText();
+        String telefono = txtTelefono.getText();
+        String placa = txtPlaca.getText();
+        String vehiculo = txtVehiculo.getText();
+        String ruta = txtRuta.getText();
+        String huella = txtHuella.getText();
+
+        // Validar campos vacíos
+        if (cedula.isEmpty() || nombres.isEmpty() || apellidos.isEmpty() || telefono.isEmpty() ||
+            placa.isEmpty() || vehiculo.isEmpty() || ruta.isEmpty() || huella.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Todos los campos deben ser llenados.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            // Llamada al método para actualizar el chofer
+            registroChofer.actualizarChofer(idChofer, cedula, nombres, apellidos, telefono, huella, placa, vehiculo, ruta);
+            JOptionPane.showMessageDialog(this, "Registro actualizado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            limpiarCampos();
+            this.dispose();
+            listadoChoferesCRUD.listadoChoferesInstance.actualizarTabla();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al actualizar el registro: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnActualizarActionPerformed
+  
     private void limpiarCampos(){
         txtCedula.setText("");
         txtNombres.setText("");
@@ -364,6 +467,7 @@ public class formularioIngreso extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JLabel in_Apellido;

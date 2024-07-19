@@ -136,4 +136,21 @@ public class VehiculoDAO {
         }
         return false;
     }
+    
+    public boolean existeVehiculoPorPlaca(String id_Placa) {
+        String sql = "SELECT COUNT(*) FROM vehiculo WHERE id_Placa = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, id_Placa);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error al verificar la placa del chofer: " + e.getMessage());
+        }
+        return false;
+    }
 }

@@ -6,7 +6,10 @@ package com.sistemaChoferes.controller;
 
 //import com.sistemaChoferes.model.src.objetoAccesoDatos.LimpiarTabla;
 
-import com.sistemaChoferes.view.formularioIngreso;
+import com.sistemaChoferes.view.listadoChoferesCRUD;
+
+
+//import com.sistemaChoferes.view.formularioIngreso;
 
 
 /**
@@ -15,7 +18,8 @@ import com.sistemaChoferes.view.formularioIngreso;
  */
 public class SistemaChoferes {
     public static void main(String[] args) {
-        new formularioIngreso().setVisible(true);
+        new listadoChoferesCRUD().setVisible(true);
+        //new formularioIngreso().setVisible(true);
         //LimpiarTabla limpiarDb = new LimpiarTabla();
         
         //limpiarDb.limpiarTodasTablas();
