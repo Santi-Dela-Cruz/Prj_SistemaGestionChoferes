@@ -25,6 +25,10 @@ public class RegistroChofer {
             if (choferDAO.existeChoferPorTelefono(telefono)) {
                 throw new RuntimeException("Error: El teléfono ya existe en el sistema.");
             }
+            
+            if (vehiculoDAO.existeVehiculoPorPlaca(idPlaca)){
+                throw new RuntimeException("Error: La placa ya existe en el sistema.");
+            }
 
             Chofer chofer = new Chofer();
             chofer.setIdCedula(idCedula);
@@ -68,4 +72,66 @@ public class RegistroChofer {
             throw new RuntimeException("Error al registrar el chofer: " + e.getMessage());
         }
     }
+    
+    public void actualizarChofer(int idChofer, String idCedula, String nombre, String apellido, String telefono,
+                                 String idCodigoHuella, String idPlaca, String tipoVehiculo, String nombreRuta) {
+        try {
+            Chofer chofer = choferDAO.obtenerChoferPorId(idChofer);
+            if (chofer == null) {
+                throw new RuntimeException("Error: El chofer no existe.");
+            }
+
+            // Verificar si la nueva cédula ya existe en el sistema para otro chofer
+            if (!chofer.getIdCedula().equals(idCedula) && choferDAO.existeChoferPorCedula(idCedula)) {
+                throw new RuntimeException("Error: La cédula ya existe en el sistema.");
+            }
+
+            chofer.setIdCedula(idCedula);
+            chofer.setNombre(nombre);
+            chofer.setApellido(apellido);
+            chofer.setTelefono(telefono);
+            choferDAO.actualizarChofer(chofer);
+
+            Huella huella = huellaDAO.obtenerHuellaPorCodigo(idCodigoHuella);
+            if (huella == null) {
+                huella = new Huella();
+                huella.setIdCodigoHuella(idCodigoHuella);
+                huella.setIdChofer(idChofer);
+                huellaDAO.agregarHuella(huella);
+            } else {
+                huella.setIdCodigoHuella(idCodigoHuella);
+                huellaDAO.actualizarHuella(huella);
+            }
+
+            Vehiculo vehiculo = vehiculoDAO.obtenerVehiculoPorChoferId(idChofer);
+            if (vehiculo == null) {
+                vehiculo = new Vehiculo();
+                vehiculo.setIdPlaca(idPlaca);
+                vehiculo.setTipoVehiculo(tipoVehiculo);
+                vehiculo.setIdChofer(idChofer);
+                vehiculoDAO.agregarVehiculo(vehiculo);
+            } else {
+                vehiculo.setIdPlaca(idPlaca);
+                vehiculo.setTipoVehiculo(tipoVehiculo);
+                vehiculoDAO.actualizarVehiculo(vehiculo);
+            }
+
+            Rutas ruta = rutasDAO.obtenerRutaPorChoferId(idChofer);
+            if (ruta == null) {
+                ruta = new Rutas();
+                ruta.setNombreRuta(nombreRuta);
+                ruta.setIdChofer(idChofer);
+                rutasDAO.agregarRuta(ruta);
+            } else {
+                ruta.setNombreRuta(nombreRuta);
+                rutasDAO.actualizarRuta(ruta);
+            }
+
+            System.out.println("Actualización completada con éxito.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error al actualizar el chofer: " + e.getMessage());
+        }
+    }
 }
+

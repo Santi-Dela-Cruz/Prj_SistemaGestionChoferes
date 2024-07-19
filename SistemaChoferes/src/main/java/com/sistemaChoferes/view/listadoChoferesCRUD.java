@@ -4,17 +4,37 @@
  */
 package com.sistemaChoferes.view;
 
+import com.sistemaChoferes.model.src.conexionBaseDatos.Conexion;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author pc-win10
  */
 public class listadoChoferesCRUD extends javax.swing.JFrame {
+    
+    public static listadoChoferesCRUD listadoChoferesInstance;
+    
+    Conexion conexion;
+    Connection connection;
+    DefaultTableModel defTableMod;
+    Statement st;
+    ResultSet rs;
+    int idc;
+
 
     /**
      * Creates new form listadoChoferesCRUD
      */
     public listadoChoferesCRUD() {
         initComponents();
+        setLocationRelativeTo(null);
+        consultarTabla();
+        listadoChoferesInstance = this;
     }
 
     /**
@@ -26,21 +46,114 @@ public class listadoChoferesCRUD extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        btnAnadir = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
+        btnVisualizar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbDatosGenerales = new javax.swing.JTable();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setText("Panel de Control de Choferes");
+
+        btnAnadir.setBackground(new java.awt.Color(153, 255, 153));
+        btnAnadir.setText("Añadir");
+        btnAnadir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnadirActionPerformed(evt);
+            }
+        });
+
+        btnEditar.setBackground(new java.awt.Color(255, 255, 204));
+        btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
+
+        btnVisualizar.setBackground(new java.awt.Color(153, 255, 204));
+        btnVisualizar.setText("Visualizar");
+
+        btnEliminar.setBackground(new java.awt.Color(255, 153, 153));
+        btnEliminar.setText("Eliminar");
+
+        tbDatosGenerales.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "CEDULA", "NOMBRES", "APELLIDOS", "PLACA"
+            }
+        ));
+        tbDatosGenerales.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbDatosGeneralesMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tbDatosGenerales);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(16, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 744, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnAnadir)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnEditar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnVisualizar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnEliminar)))
+                .addGap(16, 16, 16))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(308, 308, 308)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAnadir)
+                    .addComponent(btnEditar)
+                    .addComponent(btnVisualizar)
+                    .addComponent(btnEliminar))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        if (idc == 0) {
+        JOptionPane.showMessageDialog(null, "Por favor, seleccione un registro para editar");
+        return;
+        }
+        formularioIngreso formIngreso = new formularioIngreso(idc);
+        formIngreso.setVisible(true);
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnAnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirActionPerformed
+        formularioIngreso formIngreso = new formularioIngreso();
+        formIngreso.setVisible(true);
+    }//GEN-LAST:event_btnAnadirActionPerformed
+
+    private void tbDatosGeneralesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbDatosGeneralesMouseClicked
+        int row = tbDatosGenerales.getSelectedRow();
+        idc = Integer.parseInt(tbDatosGenerales.getValueAt(row, 0).toString());
+    }//GEN-LAST:event_tbDatosGeneralesMouseClicked
 
     /**
      * @param args the command line arguments
@@ -76,7 +189,51 @@ public class listadoChoferesCRUD extends javax.swing.JFrame {
             }
         });
     }
+    private void consultarTabla() {
+        String sql = "SELECT c.id_Chofer, c.id_Cedula, c.nombre, c.apellido, v.id_Placa FROM choferes c LEFT JOIN vehiculo v ON c.id_Chofer = v.id_Chofer";
+        try {
+            connection = conexion.conectar();
+            st = connection.createStatement();
+            rs = st.executeQuery(sql);
+            Object[] datosChoferes = new Object[5];
+            defTableMod = (DefaultTableModel) tbDatosGenerales.getModel();
+            while (rs.next()) {
+                datosChoferes[0] = rs.getInt("id_Chofer");
+                datosChoferes[1] = rs.getString("id_Cedula");
+                datosChoferes[2] = rs.getString("nombre");
+                datosChoferes[3] = rs.getString("apellido");
+                datosChoferes[4] = rs.getString("id_Placa");
+
+                defTableMod.addRow(datosChoferes);
+            }
+            tbDatosGenerales.setModel(defTableMod);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (st != null) st.close();
+                if (connection != null) connection.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    public void actualizarTabla() {
+        defTableMod.setRowCount(0); // Limpiar la tabla
+        consultarTabla(); // Volver a cargar los datos
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAnadir;
+    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnVisualizar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tbDatosGenerales;
     // End of variables declaration//GEN-END:variables
+
+    
 }
