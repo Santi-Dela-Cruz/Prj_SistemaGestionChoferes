@@ -79,77 +79,97 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+              <Group type="102" attributes="0">
+                  <EmptySpace min="14" pref="14" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="in_Cedula" alignment="1" min="-2" pref="80" max="-2" attributes="0"/>
-                      <Component id="in_Nombre" alignment="1" min="-2" pref="80" max="-2" attributes="0"/>
-                      <Component id="in_Apellido" alignment="1" min="-2" pref="80" max="-2" attributes="0"/>
-                      <Component id="in_Telefono" alignment="1" min="-2" pref="80" max="-2" attributes="0"/>
-                      <Component id="in_Placa" alignment="1" min="-2" pref="80" max="-2" attributes="0"/>
-                      <Component id="in_Vehiculo" alignment="1" min="-2" pref="80" max="-2" attributes="0"/>
-                      <Component id="in_Ruta" alignment="1" min="-2" pref="80" max="-2" attributes="0"/>
-                      <Component id="in_Huella" alignment="1" min="-2" pref="80" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="in_Cedula" min="-2" pref="80" max="-2" attributes="0"/>
+                          <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                          <Component id="txtCedula" min="-2" pref="280" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="in_Nombre" min="-2" pref="80" max="-2" attributes="0"/>
+                          <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                          <Component id="txtNombres" min="-2" pref="280" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="in_Apellido" min="-2" pref="80" max="-2" attributes="0"/>
+                          <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                          <Component id="txtApellidos" min="-2" pref="280" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="in_Telefono" min="-2" pref="80" max="-2" attributes="0"/>
+                          <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                          <Component id="txtTelefono" min="-2" pref="280" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="in_Placa" min="-2" pref="80" max="-2" attributes="0"/>
+                          <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                          <Component id="txtPlaca" min="-2" pref="280" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="in_Vehiculo" min="-2" pref="80" max="-2" attributes="0"/>
+                          <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                          <Component id="txtVehiculo" min="-2" pref="280" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="in_Ruta" min="-2" pref="80" max="-2" attributes="0"/>
+                          <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                          <Component id="txtRuta" min="-2" pref="280" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="in_Huella" min="-2" pref="80" max="-2" attributes="0"/>
+                          <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                          <Component id="txtHuella" min="-2" pref="280" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="2" attributes="0">
-                      <Component id="txtCedula" alignment="2" min="-2" pref="280" max="-2" attributes="0"/>
-                      <Component id="txtNombres" alignment="2" min="-2" pref="280" max="-2" attributes="0"/>
-                      <Component id="txtApellidos" alignment="2" min="-2" pref="280" max="-2" attributes="0"/>
-                      <Component id="txtTelefono" alignment="2" min="-2" pref="280" max="-2" attributes="0"/>
-                      <Component id="txtPlaca" alignment="2" min="-2" pref="280" max="-2" attributes="0"/>
-                      <Component id="txtVehiculo" alignment="2" min="-2" pref="280" max="-2" attributes="0"/>
-                      <Component id="txtRuta" alignment="2" min="-2" pref="280" max="-2" attributes="0"/>
-                      <Component id="txtHuella" alignment="2" min="-2" pref="280" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace pref="12" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="in_Cedula" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                      <Component id="txtCedula" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="in_Nombre" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                      <Component id="txtNombres" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="in_Apellido" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                      <Component id="txtApellidos" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="in_Telefono" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                      <Component id="txtTelefono" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="in_Placa" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                      <Component id="txtPlaca" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="txtVehiculo" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="in_Cedula" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="txtCedula" min="-2" pref="25" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="in_Nombre" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="txtNombres" min="-2" pref="25" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="in_Apellido" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="txtApellidos" min="-2" pref="25" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="in_Telefono" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="txtTelefono" min="-2" pref="25" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="in_Placa" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="txtPlaca" min="-2" pref="25" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="in_Vehiculo" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="txtVehiculo" min="-2" pref="25" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="in_Ruta" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                      <Component id="txtRuta" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="txtHuella" min="-2" pref="25" max="-2" attributes="0"/>
-                      <Component id="in_Huella" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="in_Ruta" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="txtRuta" min="-2" pref="25" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="13" max="32767" attributes="0"/>
+                  <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="in_Huella" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="txtHuella" min="-2" pref="25" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="14" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
