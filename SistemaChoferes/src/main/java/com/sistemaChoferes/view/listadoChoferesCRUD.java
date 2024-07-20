@@ -76,6 +76,11 @@ public class listadoChoferesCRUD extends javax.swing.JFrame {
 
         btnVisualizar.setBackground(new java.awt.Color(153, 255, 204));
         btnVisualizar.setText("Visualizar");
+        btnVisualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVisualizarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setBackground(new java.awt.Color(255, 153, 153));
         btnEliminar.setText("Eliminar");
@@ -87,7 +92,15 @@ public class listadoChoferesCRUD extends javax.swing.JFrame {
             new String [] {
                 "ID", "CEDULA", "NOMBRES", "APELLIDOS", "PLACA"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tbDatosGenerales.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbDatosGeneralesMouseClicked(evt);
@@ -141,8 +154,11 @@ public class listadoChoferesCRUD extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Por favor, seleccione un registro para editar");
         return;
         }
+    
         formularioIngreso formIngreso = new formularioIngreso(idc);
         formIngreso.setVisible(true);
+        tbDatosGenerales.clearSelection();
+        idc = 0;
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnAnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirActionPerformed
@@ -152,9 +168,33 @@ public class listadoChoferesCRUD extends javax.swing.JFrame {
 
     private void tbDatosGeneralesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbDatosGeneralesMouseClicked
         int row = tbDatosGenerales.getSelectedRow();
-        idc = Integer.parseInt(tbDatosGenerales.getValueAt(row, 0).toString());
+        if (row == -1) {
+            idc = 0;
+        } else {
+            idc = Integer.parseInt(tbDatosGenerales.getValueAt(row, 0).toString());
+        }
     }//GEN-LAST:event_tbDatosGeneralesMouseClicked
 
+    private void btnVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizarActionPerformed
+        if (idc == 0) {
+        JOptionPane.showMessageDialog(null, "Por favor, seleccione un registro para visualizar");
+        return;
+        }
+    
+        viewDatosGenerales viewEstados= new viewDatosGenerales(idc);
+        viewEstados.setVisible(true);
+        tbDatosGenerales.clearSelection();
+        idc = 0;
+    }//GEN-LAST:event_btnVisualizarActionPerformed
+
+    
+    private void tbDatosGeneralesMouseReleased(java.awt.event.MouseEvent evt) {                                              
+        int row = tbDatosGenerales.getSelectedRow();
+        if (row == -1) {
+            idc = 0;
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */

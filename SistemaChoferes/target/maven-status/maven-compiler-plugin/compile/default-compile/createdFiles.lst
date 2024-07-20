@@ -1,4 +1,5 @@
 com\sistemaChoferes\model\src\clasesEntidades\Vehiculo.class
+com\sistemaChoferes\view\listadoChoferesCRUD$6.class
 com\sistemaChoferes\model\src\objetoAccesoDatos\RutasDAO.class
 com\sistemaChoferes\view\formularioIngreso$10.class
 com\sistemaChoferes\view\listadoChoferesCRUD$3.class
@@ -9,14 +10,18 @@ com\sistemaChoferes\model\src\funcionesGestiosChoferes\RegistroIngreso.class
 com\sistemaChoferes\controller\SistemaChoferes.class
 com\sistemaChoferes\model\src\clasesEntidades\Huella.class
 com\sistemaChoferes\model\src\clasesEntidades\RegistroPenalizaciones.class
+com\sistemaChoferes\view\listadoChoferesCRUD$5.class
+com\sistemaChoferes\view\viewDatosGenerales$2.class
 com\sistemaChoferes\model\src\clasesEntidades\RegistroEstados.class
 com\sistemaChoferes\model\src\objetoAccesoDatos\RegistroEstadosDAO.class
+com\sistemaChoferes\view\viewDatosGenerales.class
 com\sistemaChoferes\model\src\clasesEntidades\Chofer.class
 com\sistemaChoferes\model\src\objetoAccesoDatos\HuellaDAO.class
 com\sistemaChoferes\model\src\App.class
 com\sistemaChoferes\model\src\objetoAccesoDatos\VehiculoDAO.class
 com\sistemaChoferes\model\src\objetoAccesoDatos\ChoferDAO.class
 com\sistemaChoferes\view\listadoChoferesCRUD$2.class
+com\sistemaChoferes\view\viewDatosGenerales$1.class
 com\sistemaChoferes\model\src\objetoAccesoDatos\RegistroPenalizacionesDAO.class
 com\sistemaChoferes\view\listadoChoferesCRUD$4.class
 com\sistemaChoferes\model\src\funcionesGestiosChoferes\RegistroChofer.class
