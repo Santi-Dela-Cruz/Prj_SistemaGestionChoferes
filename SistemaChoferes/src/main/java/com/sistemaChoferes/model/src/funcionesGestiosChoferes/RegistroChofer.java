@@ -81,7 +81,6 @@ public class RegistroChofer {
                 throw new RuntimeException("Error: El chofer no existe.");
             }
 
-            // Verificar si la nueva cédula ya existe en el sistema para otro chofer
             if (!chofer.getIdCedula().equals(idCedula) && choferDAO.existeChoferPorCedula(idCedula)) {
                 throw new RuntimeException("Error: La cédula ya existe en el sistema.");
             }
@@ -92,13 +91,11 @@ public class RegistroChofer {
             chofer.setTelefono(telefono);
             choferDAO.actualizarChofer(chofer);
 
-            // Actualizar la huella existente
             Huella huellaExistente = huellaDAO.obtenerHuellaPorChoferId(idChofer);
             if (huellaExistente != null) {
                 huellaExistente.setIdCodigoHuella(idCodigoHuella);
                 huellaDAO.actualizarHuella(huellaExistente);
             } else {
-                // Si no existe la huella, crear una nueva
                 Huella huella = new Huella();
                 huella.setIdCodigoHuella(idCodigoHuella);
                 huella.setIdChofer(idChofer);

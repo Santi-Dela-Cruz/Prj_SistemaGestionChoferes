@@ -18,14 +18,12 @@ public class RegistroPenalizacionesDAO {
 
     public boolean actualizarPenalizaciones(int idChofer) {
         try {
-            // Verificar si ya existe un registro de penalizaciones para el chofer
             PreparedStatement checkPenalizaciones = connection
                     .prepareStatement("SELECT n_Infracciones FROM registro_penalizaciones WHERE id_Chofer=?");
             checkPenalizaciones.setInt(1, idChofer);
             ResultSet rs = checkPenalizaciones.executeQuery();
             
             if (rs.next()) {
-                // Si existe, incrementar el número de infracciones
                 int infracciones = rs.getInt("n_Infracciones") + 1;
                 PreparedStatement updatePenalizaciones = connection
                         .prepareStatement("UPDATE registro_penalizaciones SET n_Infracciones=?, penalizacion_Chofer=? WHERE id_Chofer=?");
@@ -34,10 +32,8 @@ public class RegistroPenalizacionesDAO {
                 updatePenalizaciones.setInt(3, idChofer);
                 updatePenalizaciones.executeUpdate();
                 
-                // Si el número de infracciones es 3 o más, indicar que el chofer debe ser despedido
                 return infracciones >= 3;
             } else {
-                // Si no existe, insertar un nuevo registro de penalización con una infracción
                 PreparedStatement insertPenalizacion = connection
                         .prepareStatement("INSERT INTO registro_penalizaciones (n_Infracciones, penalizacion_Chofer, id_Chofer) VALUES (?, ?, ?)");
                 insertPenalizacion.setInt(1, 1);
