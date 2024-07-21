@@ -34,7 +34,7 @@ public class formularioIngreso extends javax.swing.JFrame {
      */
     public formularioIngreso() {
         initComponents();
-        setLocationRelativeTo(null); // Asegúrate de centrar la ventana
+        setLocationRelativeTo(null);
         registroChofer = new RegistroChofer();
         btnActualizar.setVisible(false);
     }
@@ -42,14 +42,14 @@ public class formularioIngreso extends javax.swing.JFrame {
     public formularioIngreso(int idChofer) {
         this.idChofer = idChofer;
         initComponents();
-        setLocationRelativeTo(null); // Asegúrate de centrar la ventana
+        setLocationRelativeTo(null);
         registroChofer = new RegistroChofer();
         chofeDAO = new ChoferDAO();
         huellaDAO = new HuellaDAO();
         vehiculoDAO = new VehiculoDAO();
         rutasDAO = new RutasDAO();
         mostarDatos(idChofer);
-        btnGuardar.setVisible(false);// Cargar los datos del chofer en el formulario
+        btnGuardar.setVisible(false);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -309,7 +309,6 @@ public class formularioIngreso extends javax.swing.JFrame {
         String ruta = txtRuta.getText();
         String huella = txtHuella.getText();
 
-        // Validar campos vacíos
         if (cedula.isEmpty() || nombres.isEmpty() || apellidos.isEmpty() || telefono.isEmpty() ||
             placa.isEmpty() || vehiculo.isEmpty() || ruta.isEmpty() || huella.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Todos los campos deben ser llenados.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -317,7 +316,6 @@ public class formularioIngreso extends javax.swing.JFrame {
         }
 
         try {
-            // Llamada al método para registrar el chofer
             registroChofer.registrarNuevoChofer(cedula, nombres, apellidos, telefono, huella, placa, vehiculo, ruta);
             JOptionPane.showMessageDialog(this, "Registro guardado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             limpiarCampos();
@@ -383,7 +381,6 @@ public class formularioIngreso extends javax.swing.JFrame {
             String ruta = txtRuta.getText();
             String huella = txtHuella.getText();
 
-            // Validar campos vacíos
             if (cedula.isEmpty() || nombres.isEmpty() || apellidos.isEmpty() || telefono.isEmpty() ||
                 placa.isEmpty() || vehiculo.isEmpty() || ruta.isEmpty() || huella.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Todos los campos deben ser llenados.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -391,7 +388,6 @@ public class formularioIngreso extends javax.swing.JFrame {
             }
 
             try {
-                // Llamada al método para actualizar el chofer
                 registroChofer.actualizarChofer(idChofer, cedula, nombres, apellidos, telefono, huella, placa, vehiculo, ruta);
                 JOptionPane.showMessageDialog(this, "Registro actualizado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 limpiarCampos();

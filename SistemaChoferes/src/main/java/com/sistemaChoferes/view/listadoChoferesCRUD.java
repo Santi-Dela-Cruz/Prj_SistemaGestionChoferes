@@ -323,7 +323,7 @@ public class listadoChoferesCRUD extends javax.swing.JFrame {
     private void consultarTabla() {
     String sql = "SELECT c.id_Chofer, c.id_Cedula, c.nombre, c.apellido, v.id_Placa FROM choferes c LEFT JOIN vehiculo v ON c.id_Chofer = v.id_Chofer";
         try {
-            connection = conexion.conectar(); // Abre la conexión
+            connection = conexion.conectar();
             st = connection.createStatement();
             rs = st.executeQuery(sql);
             Object[] datosChoferes = new Object[5];
@@ -361,8 +361,8 @@ public class listadoChoferesCRUD extends javax.swing.JFrame {
 
     
     public void actualizarTabla() {
-        defTableMod.setRowCount(0); // Limpiar la tabla
-        consultarTabla(); // Volver a cargar los datos
+        defTableMod.setRowCount(0);
+        consultarTabla();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
