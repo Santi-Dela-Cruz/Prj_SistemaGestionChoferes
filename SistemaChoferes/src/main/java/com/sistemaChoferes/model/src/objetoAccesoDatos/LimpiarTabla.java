@@ -27,5 +27,7 @@ public class LimpiarTabla {
         truncarTabla("vehiculo");
         truncarTabla("huella");
         truncarTabla("choferes");
+        truncarTabla("administrador");
+        truncarTabla("modificaciones");
     }
 }

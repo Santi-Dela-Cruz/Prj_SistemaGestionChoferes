@@ -4,17 +4,25 @@
  */
 package com.sistemaChoferes.view;
 
+import com.sistemaChoferes.model.src.clasesEntidades.Administrador;
+import com.sistemaChoferes.model.src.objetoAccesoDatos.AdministradorDAO;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author pc-win10
  */
 public class loginAdministrador extends javax.swing.JFrame {
+    private Administrador administrador;
+    private AdministradorDAO administradorDAO;
 
     /**
      * Creates new form Login_Administrador
      */
     public loginAdministrador() {
         initComponents();
+        setLocationRelativeTo(null);
+        administradorDAO = new AdministradorDAO();
     }
 
     /**
@@ -26,21 +34,122 @@ public class loginAdministrador extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lbTitle1 = new javax.swing.JLabel();
+        lbTitle2 = new javax.swing.JLabel();
+        lbUserCorreo = new javax.swing.JLabel();
+        lbContrasena = new javax.swing.JLabel();
+        lbOlvidaste = new javax.swing.JLabel();
+        txtUserCorreo = new javax.swing.JTextField();
+        pswContrasena = new javax.swing.JPasswordField();
+        btnIniciar = new javax.swing.JButton();
+        lbAyuda = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        lbTitle1.setText("SISTEMA DE GESTIÓN DE CHOFERES");
+
+        lbTitle2.setText("Administración Escuela Politécnica Nacional");
+
+        lbUserCorreo.setText("Nombre de Usuario o Correo Electrónico:");
+
+        lbContrasena.setText("Contraseña:");
+
+        lbOlvidaste.setText("¿Olvidaste tu contraseña?");
+
+        txtUserCorreo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUserCorreoActionPerformed(evt);
+            }
+        });
+
+        btnIniciar.setText("Iniciar Sesión");
+        btnIniciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIniciarActionPerformed(evt);
+            }
+        });
+
+        lbAyuda.setText("¿Necesitas ayuda?");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(107, 107, 107)
+                        .addComponent(lbTitle1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(86, 86, 86)
+                        .addComponent(lbTitle2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(59, 59, 59)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbUserCorreo)
+                            .addComponent(txtUserCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbContrasena)
+                            .addComponent(pswContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbOlvidaste)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(139, 139, 139)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(lbAyuda))
+                            .addComponent(btnIniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(80, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbTitle1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lbTitle2)
+                .addGap(28, 28, 28)
+                .addComponent(lbUserCorreo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtUserCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lbContrasena)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pswContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lbOlvidaste)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnIniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lbAyuda)
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
+        String usuarioCorreo = txtUserCorreo.getText().trim();
+        String contrasena = new String(pswContrasena.getPassword());
+
+        if (usuarioCorreo.isEmpty() || contrasena.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor ingrese usuario y contraseña.", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        Administrador admin = administradorDAO.obtenerAdminUsuario(usuarioCorreo, contrasena);
+
+        if (admin != null) {
+            JOptionPane.showMessageDialog(this, "Bienvenido.", "Inicio de sesión", JOptionPane.INFORMATION_MESSAGE);
+            abrirListadoChoferesCRUD(admin);
+            dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Credenciales incorrectas.", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnIniciarActionPerformed
+
+    private void txtUserCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUserCorreoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUserCorreoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -71,6 +180,26 @@ public class loginAdministrador extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(loginAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(loginAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(loginAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(loginAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new loginAdministrador().setVisible(true);
@@ -79,5 +208,19 @@ public class loginAdministrador extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnIniciar;
+    private javax.swing.JLabel lbAyuda;
+    private javax.swing.JLabel lbContrasena;
+    private javax.swing.JLabel lbOlvidaste;
+    private javax.swing.JLabel lbTitle1;
+    private javax.swing.JLabel lbTitle2;
+    private javax.swing.JLabel lbUserCorreo;
+    private javax.swing.JPasswordField pswContrasena;
+    private javax.swing.JTextField txtUserCorreo;
     // End of variables declaration//GEN-END:variables
+
+    private void abrirListadoChoferesCRUD(Administrador admin) {
+        listadoChoferesCRUD listadoChoferes = new listadoChoferesCRUD(admin);
+        listadoChoferes.setVisible(true);
+    }
 }

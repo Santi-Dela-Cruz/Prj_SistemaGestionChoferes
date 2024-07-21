@@ -92,15 +92,17 @@ public class RegistroChofer {
             chofer.setTelefono(telefono);
             choferDAO.actualizarChofer(chofer);
 
-            Huella huella = huellaDAO.obtenerHuellaPorCodigo(idCodigoHuella);
-            if (huella == null) {
-                huella = new Huella();
+            // Actualizar la huella existente
+            Huella huellaExistente = huellaDAO.obtenerHuellaPorChoferId(idChofer);
+            if (huellaExistente != null) {
+                huellaExistente.setIdCodigoHuella(idCodigoHuella);
+                huellaDAO.actualizarHuella(huellaExistente);
+            } else {
+                // Si no existe la huella, crear una nueva
+                Huella huella = new Huella();
                 huella.setIdCodigoHuella(idCodigoHuella);
                 huella.setIdChofer(idChofer);
                 huellaDAO.agregarHuella(huella);
-            } else {
-                huella.setIdCodigoHuella(idCodigoHuella);
-                huellaDAO.actualizarHuella(huella);
             }
 
             Vehiculo vehiculo = vehiculoDAO.obtenerVehiculoPorChoferId(idChofer);
@@ -133,5 +135,6 @@ public class RegistroChofer {
             throw new RuntimeException("Error al actualizar el chofer: " + e.getMessage());
         }
     }
+
 }
 

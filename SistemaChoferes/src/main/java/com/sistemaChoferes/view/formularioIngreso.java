@@ -331,22 +331,29 @@ public class formularioIngreso extends javax.swing.JFrame {
     public void mostarDatos(int idc){
         Chofer chofer = chofeDAO.obtenerChoferPorId(idc);
         Vehiculo vehiculo = vehiculoDAO.obtenerVehiculoPorChoferId(idc);
-        Huella huella = huellaDAO.obtenerHuellaPorId(idc);
+        Huella huella = huellaDAO.obtenerHuellaPorChoferId(idc);
         Rutas rutas = rutasDAO.obtenerRutaPorChoferId(idc);
-        
+
         if (chofer != null) {
             txtNombres.setText(chofer.getNombre());
             txtApellidos.setText(chofer.getApellido());
             txtCedula.setText(chofer.getIdCedula());
             txtTelefono.setText(chofer.getTelefono());
-            txtPlaca.setText(vehiculo.getIdPlaca());
-            txtVehiculo.setText(vehiculo.getTipoVehiculo());
-            txtRuta.setText(rutas.getNombreRuta());
-            txtHuella.setText(huella.getIdCodigoHuella());
+            if (vehiculo != null) {
+                txtPlaca.setText(vehiculo.getIdPlaca());
+                txtVehiculo.setText(vehiculo.getTipoVehiculo());
+            }
+            if (rutas != null) {
+                txtRuta.setText(rutas.getNombreRuta());
+            }
+            if (huella != null) {
+                txtHuella.setText(huella.getIdCodigoHuella());
+            }
         } else {
             JOptionPane.showMessageDialog(this, "Error al cargar los datos del chofer", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
     
     
     private void txtCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaActionPerformed

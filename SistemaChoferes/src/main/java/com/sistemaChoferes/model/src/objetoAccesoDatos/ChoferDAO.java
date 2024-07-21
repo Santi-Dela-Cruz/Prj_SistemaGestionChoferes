@@ -143,4 +143,28 @@ public class ChoferDAO {
         }
         return false;
     }
+    
+    public Chofer obtenerChoferPorCedula(String cedula) {
+        Chofer chofer = null;
+        try {
+            if (connection == null || connection.isClosed()) {
+                connection = Conexion.conectar();
+            }
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("SELECT * FROM choferes WHERE id_Cedula=?");
+            preparedStatement.setString(1, cedula);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                chofer = new Chofer();
+                chofer.setIdChofer(rs.getInt("id_Chofer"));
+                chofer.setIdCedula(rs.getString("id_Cedula"));
+                chofer.setNombre(rs.getString("nombre"));
+                chofer.setApellido(rs.getString("apellido"));
+                chofer.setTelefono(rs.getString("telefono"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return chofer;
+    }
 }
