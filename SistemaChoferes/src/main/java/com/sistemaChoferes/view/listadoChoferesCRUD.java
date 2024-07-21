@@ -4,10 +4,16 @@
  */
 package com.sistemaChoferes.view;
 
+import com.sistemaChoferes.model.src.clasesEntidades.Administrador;
 import com.sistemaChoferes.model.src.conexionBaseDatos.Conexion;
+import com.sistemaChoferes.model.src.objetoAccesoDatos.AdministradorDAO;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -18,6 +24,8 @@ import javax.swing.table.DefaultTableModel;
 public class listadoChoferesCRUD extends javax.swing.JFrame {
     
     public static listadoChoferesCRUD listadoChoferesInstance;
+    private Administrador administrador;
+    private AdministradorDAO adminDAO;
     
     Conexion conexion;
     Connection connection;
@@ -36,6 +44,15 @@ public class listadoChoferesCRUD extends javax.swing.JFrame {
         consultarTabla();
         listadoChoferesInstance = this;
     }
+    
+    public listadoChoferesCRUD(Administrador admin) {
+        initComponents();
+        setLocationRelativeTo(null);
+        consultarTabla();
+        listadoChoferesInstance = this;
+        this.administrador = admin;
+        mostrarInformacionAdmin(administrador);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -53,6 +70,12 @@ public class listadoChoferesCRUD extends javax.swing.JFrame {
         btnEliminar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbDatosGenerales = new javax.swing.JTable();
+        ldAdmin = new javax.swing.JLabel();
+        lbEst = new javax.swing.JLabel();
+        lbCar = new javax.swing.JLabel();
+        lbAdministrador = new javax.swing.JLabel();
+        lbEstado = new javax.swing.JLabel();
+        lbCargo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -108,39 +131,78 @@ public class listadoChoferesCRUD extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tbDatosGenerales);
 
+        ldAdmin.setText("Administrador:");
+
+        lbEst.setText("Estado:");
+
+        lbCar.setText("Cargo:");
+
+        lbAdministrador.setText("jLabel5");
+
+        lbEstado.setText("jLabel6");
+
+        lbCargo.setText("jLabel7");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(16, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 744, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnAnadir)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnEditar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnVisualizar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnEliminar)))
-                .addGap(16, 16, 16))
             .addGroup(layout.createSequentialGroup()
-                .addGap(308, 308, 308)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 744, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lbCar)
+                                .addGap(50, 50, 50)
+                                .addComponent(lbCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 158, Short.MAX_VALUE)
+                                .addComponent(btnAnadir)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnEditar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnVisualizar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnEliminar)))
+                        .addGap(16, 16, 16))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ldAdmin)
+                            .addComponent(lbEst))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lbAdministrador, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                            .addComponent(lbEstado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(80, 80, 80)
+                        .addComponent(jLabel1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAnadir)
-                    .addComponent(btnEditar)
-                    .addComponent(btnVisualizar)
-                    .addComponent(btnEliminar))
+                    .addComponent(jLabel1)
+                    .addComponent(ldAdmin)
+                    .addComponent(lbAdministrador))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbEst)
+                    .addComponent(lbEstado))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnAnadir)
+                            .addComponent(btnEditar)
+                            .addComponent(btnVisualizar)
+                            .addComponent(btnEliminar)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbCar)
+                            .addComponent(lbCargo))))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(23, Short.MAX_VALUE))
@@ -154,16 +216,28 @@ public class listadoChoferesCRUD extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Por favor, seleccione un registro para editar");
         return;
         }
-    
+
         formularioIngreso formIngreso = new formularioIngreso(idc);
         formIngreso.setVisible(true);
         tbDatosGenerales.clearSelection();
+        try {
+            registrarModificacion("Editar");
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al registrar la modificación: " + e.getMessage());
+        }
         idc = 0;
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnAnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirActionPerformed
         formularioIngreso formIngreso = new formularioIngreso();
         formIngreso.setVisible(true);
+        try {
+            registrarModificacion("Agregar");
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al registrar la modificación: " + e.getMessage());
+        }
     }//GEN-LAST:event_btnAnadirActionPerformed
 
     private void tbDatosGeneralesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbDatosGeneralesMouseClicked
@@ -180,10 +254,16 @@ public class listadoChoferesCRUD extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Por favor, seleccione un registro para visualizar");
         return;
         }
-    
-        viewDatosGenerales viewEstados= new viewDatosGenerales(idc);
+
+        viewDatosGenerales viewEstados = new viewDatosGenerales(idc);
         viewEstados.setVisible(true);
         tbDatosGenerales.clearSelection();
+        try {
+            registrarModificacion("Visualizar");
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al registrar la modificación: " + e.getMessage());
+        }
         idc = 0;
     }//GEN-LAST:event_btnVisualizarActionPerformed
 
@@ -223,6 +303,17 @@ public class listadoChoferesCRUD extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(listadoChoferesCRUD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new listadoChoferesCRUD().setVisible(true);
@@ -230,9 +321,9 @@ public class listadoChoferesCRUD extends javax.swing.JFrame {
         });
     }
     private void consultarTabla() {
-        String sql = "SELECT c.id_Chofer, c.id_Cedula, c.nombre, c.apellido, v.id_Placa FROM choferes c LEFT JOIN vehiculo v ON c.id_Chofer = v.id_Chofer";
+    String sql = "SELECT c.id_Chofer, c.id_Cedula, c.nombre, c.apellido, v.id_Placa FROM choferes c LEFT JOIN vehiculo v ON c.id_Chofer = v.id_Chofer";
         try {
-            connection = conexion.conectar();
+            connection = conexion.conectar(); // Abre la conexión
             st = connection.createStatement();
             rs = st.executeQuery(sql);
             Object[] datosChoferes = new Object[5];
@@ -247,18 +338,27 @@ public class listadoChoferesCRUD extends javax.swing.JFrame {
                 defTableMod.addRow(datosChoferes);
             }
             tbDatosGenerales.setModel(defTableMod);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             try {
                 if (rs != null) rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
                 if (st != null) st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
                 if (connection != null) connection.close();
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
     }
+
     
     public void actualizarTabla() {
         defTableMod.setRowCount(0); // Limpiar la tabla
@@ -272,8 +372,62 @@ public class listadoChoferesCRUD extends javax.swing.JFrame {
     private javax.swing.JButton btnVisualizar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbAdministrador;
+    private javax.swing.JLabel lbCar;
+    private javax.swing.JLabel lbCargo;
+    private javax.swing.JLabel lbEst;
+    private javax.swing.JLabel lbEstado;
+    private javax.swing.JLabel ldAdmin;
     private javax.swing.JTable tbDatosGenerales;
     // End of variables declaration//GEN-END:variables
 
+    private void mostrarInformacionAdmin(Administrador administrador) {
+        if (administrador != null) {
+            lbAdministrador.setText(administrador.getNombres() + " " + administrador.getApellidos());
+            lbEstado.setText(administrador.getEstadoAdmin());
+            lbCargo.setText(administrador.getCargoAdmin());
+        }
+    }
     
+    private void registrarModificacion(String accion) {
+    if (administrador == null) {
+        throw new IllegalStateException("Administrador no inicializado.");
+    }
+
+    Connection connection = null;
+    PreparedStatement statement = null;
+    try {
+        connection = Conexion.conectar();
+        if (connection == null || connection.isClosed()) {
+            throw new SQLException("No se pudo establecer una conexión con la base de datos.");
+        }
+
+        String fechaActual = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        String horaActual = new SimpleDateFormat("HH:mm:ss").format(new Date());
+
+        String sql = "INSERT INTO modificaciones (id_Administrador, fechaModificacion, horaModificacion, accionAdmin) "
+                + "VALUES (?, ?, ?, ?)";
+        statement = connection.prepareStatement(sql);
+        statement.setInt(1, administrador.getIdAdministrador());
+        statement.setString(2, fechaActual);
+        statement.setString(3, horaActual);
+        statement.setString(4, accion);
+
+        statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error al registrar la modificación: " + e.getMessage());
+        } finally {
+            try {
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (connection != null && !connection.isClosed()) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
