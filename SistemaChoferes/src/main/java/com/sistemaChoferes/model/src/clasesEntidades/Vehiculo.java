@@ -5,6 +5,8 @@ public class Vehiculo {
     private String idPlaca;
     private String tipoVehiculo;
     private int idChofer;
+    private String marcaVehiculo;
+    private String modeloVehiculo;
 
     public int getIdVehiculo() {
         return idVehiculo;
@@ -36,6 +38,22 @@ public class Vehiculo {
 
     public void setIdChofer(int idChofer) {
         this.idChofer = idChofer;
+    }
+
+    public String getMarcaVehiculo() {
+        return marcaVehiculo;
+    }
+
+    public void setMarcaVehiculo(String marcaVehiculo) {
+        this.marcaVehiculo = marcaVehiculo;
+    }
+
+    public String getModeloVehiculo() {
+        return modeloVehiculo;
+    }
+
+    public void setModeloVehiculo(String modeloVehiculo) {
+        this.modeloVehiculo = modeloVehiculo;
     }
 }
 

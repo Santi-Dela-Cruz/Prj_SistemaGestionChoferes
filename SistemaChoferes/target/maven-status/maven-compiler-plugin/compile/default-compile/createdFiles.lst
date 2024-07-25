@@ -1,8 +1,10 @@
 com\sistemaChoferes\model\src\clasesEntidades\Administrador.class
 com\sistemaChoferes\model\src\objetoAccesoDatos\RutasDAO.class
+com\sistemaChoferes\view\formularioIngreso$15.class
 com\sistemaChoferes\view\listadoChoferesCRUD$1.class
 com\sistemaChoferes\view\loginAdministrador$2.class
 com\sistemaChoferes\view\formularioIngreso.class
+com\sistemaChoferes\view\formularioIngreso$12.class
 com\sistemaChoferes\model\src\conexionBaseDatos\Conexion.class
 com\sistemaChoferes\model\src\objetoAccesoDatos\LimpiarTabla.class
 com\sistemaChoferes\model\src\clasesEntidades\Huella.class
@@ -20,8 +22,10 @@ com\sistemaChoferes\model\src\objetoAccesoDatos\ChoferDAO.class
 com\sistemaChoferes\view\listadoChoferesCRUD$2.class
 com\sistemaChoferes\view\formularioIngreso$1.class
 com\sistemaChoferes\view\formularioIngreso$7.class
+com\sistemaChoferes\view\formularioIngreso$13.class
 com\sistemaChoferes\view\loginAdministrador$5.class
 com\sistemaChoferes\view\loginAdministrador$8.class
+com\sistemaChoferes\view\formularioIngreso$16.class
 com\sistemaChoferes\view\formularioIngreso$4.class
 com\sistemaChoferes\model\src\clasesEntidades\Vehiculo.class
 com\sistemaChoferes\view\listadoChoferesCRUD$6.class
@@ -43,10 +47,12 @@ com\sistemaChoferes\view\formularioIngreso$5.class
 com\sistemaChoferes\view\formularioIngreso$3.class
 com\sistemaChoferes\model\src\objetoAccesoDatos\HuellaDAO.class
 com\sistemaChoferes\view\loginAdministrador$6.class
+com\sistemaChoferes\view\formularioIngreso$14.class
 com\sistemaChoferes\model\src\objetoAccesoDatos\AdministradorDAO.class
 com\sistemaChoferes\view\viewDatosGenerales$1.class
 com\sistemaChoferes\view\loginAdministrador$3.class
 com\sistemaChoferes\model\src\objetoAccesoDatos\RegistroPenalizacionesDAO.class
+com\sistemaChoferes\view\formularioIngreso$11.class
 com\sistemaChoferes\view\formularioIngreso$9.class
 com\sistemaChoferes\view\listadoChoferesCRUD$4.class
 com\sistemaChoferes\model\src\funcionesGestiosChoferes\RegistroChofer.class

@@ -18,14 +18,18 @@ public class ChoferDAO {
 
     public void agregarChofer(Chofer chofer) {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(
-                "INSERT INTO choferes (id_Cedula, nombre, apellido, telefono) VALUES (?, ?, ?, ?)"
-            );
-            preparedStatement.setString(1, chofer.getIdCedula());
-            preparedStatement.setString(2, chofer.getNombre());
-            preparedStatement.setString(3, chofer.getApellido());
-            preparedStatement.setString(4, chofer.getTelefono());
-            preparedStatement.executeUpdate();
+        PreparedStatement preparedStatement = connection.prepareStatement(
+            "INSERT INTO choferes (id_Cedula, nombre, apellido, telefono, direccion, correo, categoriaLicencia, fechaVenciminetoLicencia) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+        );
+        preparedStatement.setString(1, chofer.getIdCedula());
+        preparedStatement.setString(2, chofer.getNombre());
+        preparedStatement.setString(3, chofer.getApellido());
+        preparedStatement.setString(4, chofer.getTelefono());
+        preparedStatement.setString(5, chofer.getDirreccion());
+        preparedStatement.setString(6, chofer.getCorreo());
+        preparedStatement.setString(7, chofer.getCategoriaLicencia());
+        preparedStatement.setDate(8, chofer.getFechaVenciminetoLicencia()); // Asegúrate de que este sea java.sql.Date
+        preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -48,17 +52,21 @@ public class ChoferDAO {
 
     public void actualizarChofer(Chofer chofer) {
         if (!existeChofer(chofer.getIdChofer())) {
-            System.out.println("Error: El chofer con el ID " + chofer.getIdChofer() + " no existe.");
-            return;
+        System.out.println("Error: El chofer con el ID " + chofer.getIdChofer() + " no existe.");
+        return;
         }
         try {
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("UPDATE choferes SET id_Cedula=?, nombre=?, apellido=?, telefono=? WHERE id_Chofer=?");
+            .prepareStatement("UPDATE choferes SET id_Cedula=?, nombre=?, apellido=?, telefono=?, direccion=?, correo=?, categoriaLicencia=?, fechaVenciminetoLicencia=? WHERE id_Chofer=?");
             preparedStatement.setString(1, chofer.getIdCedula());
             preparedStatement.setString(2, chofer.getNombre());
             preparedStatement.setString(3, chofer.getApellido());
             preparedStatement.setString(4, chofer.getTelefono());
-            preparedStatement.setInt(5, chofer.getIdChofer());
+            preparedStatement.setString(5, chofer.getDirreccion());
+            preparedStatement.setString(6, chofer.getCorreo());
+            preparedStatement.setString(7, chofer.getCategoriaLicencia());
+            preparedStatement.setDate(8, chofer.getFechaVenciminetoLicencia()); // Asegúrate de que este sea java.sql.Date
+            preparedStatement.setInt(9, chofer.getIdChofer());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -166,5 +174,22 @@ public class ChoferDAO {
             e.printStackTrace();
         }
         return chofer;
+    }
+
+    public boolean existeChoferPorCorreo(String correo) {
+        String sql = "SELECT COUNT(*) FROM choferes WHERE correo = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, correo);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error al verificar el correo del chofer: " + e.getMessage());
+        }
+        return false;
     }
 }

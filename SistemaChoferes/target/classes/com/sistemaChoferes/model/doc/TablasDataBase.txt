@@ -1,42 +1,17 @@
-CREATE TABLE `administrador` (
-	`id` INT(10) NOT NULL AUTO_INCREMENT,
-	`usuarioAdmin` VARCHAR(50) NOT NULL COLLATE 'utf8mb3_spanish_ci',
-	`nombreAdmin` VARCHAR(50) NOT NULL COLLATE 'utf8mb3_spanish_ci',
-	`apellidoAdmin` VARCHAR(50) NOT NULL COLLATE 'utf8mb3_spanish_ci',
-	`correoAdmin` VARCHAR(50) NOT NULL COLLATE 'utf8mb3_spanish_ci',
-	`contrasenaAdmin` VARCHAR(50) NOT NULL COLLATE 'utf8mb3_spanish_ci',
-	`fechaIngreso` DATE NOT NULL,
-	`horaIngreso` TIME NOT NULL,
-	`estadoAdmin` VARCHAR(50) NOT NULL COLLATE 'utf8mb3_spanish_ci',
-	`cargoAdmin` VARCHAR(50) NOT NULL COLLATE 'utf8mb3_spanish_ci',
-	`telefono` VARCHAR(50) NOT NULL COLLATE 'utf8mb3_spanish_ci',
-	`direccion` VARCHAR(50) NOT NULL COLLATE 'utf8mb3_spanish_ci',
-	PRIMARY KEY (`id`) USING BTREE,
-	UNIQUE INDEX `UNIQUE_CORREO` (`correoAdmin`, `contrasenaAdmin`, `usuarioAdmin`, `telefono`) USING BTREE
-)
-COLLATE='utf8mb3_spanish_ci'
-ENGINE=InnoDB
-AUTO_INCREMENT=2
-;
-
-
 CREATE TABLE `choferes` (
 	`id_Chofer` INT(10) NOT NULL AUTO_INCREMENT,
 	`id_Cedula` VARCHAR(10) NOT NULL COLLATE 'utf8mb4_spanish_ci',
 	`nombre` VARCHAR(100) NOT NULL COLLATE 'utf8mb4_unicode_ci',
 	`apellido` VARCHAR(100) NOT NULL COLLATE 'utf8mb4_unicode_ci',
 	`telefono` VARCHAR(10) NOT NULL COLLATE 'utf8mb4_spanish_ci',
-	`direccion` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
-	`correo` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
-	`categoriaLicencia` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
-	`fechaVenciminetoLicencia` DATE NOT NULL,
 	PRIMARY KEY (`id_Chofer`) USING BTREE,
-	UNIQUE INDEX `UNIQUE KEY` (`id_Cedula`, `telefono`, `correo`) USING BTREE
+	UNIQUE INDEX `UNIQUE KEY` (`id_Cedula`, `telefono`) USING BTREE
 )
 COLLATE='utf8mb4_0900_ai_ci'
 ENGINE=InnoDB
-AUTO_INCREMENT=5
+AUTO_INCREMENT=4
 ;
+
 
 CREATE TABLE `huella` (
 	`id_Huella` INT(10) NOT NULL AUTO_INCREMENT,
@@ -50,23 +25,9 @@ CREATE TABLE `huella` (
 )
 COLLATE='utf8mb4_0900_ai_ci'
 ENGINE=InnoDB
-AUTO_INCREMENT=5
+AUTO_INCREMENT=4
 ;
 
-CREATE TABLE `modificaciones` (
-	`id` INT(10) NOT NULL AUTO_INCREMENT,
-	`id_Administrador` INT(10) NOT NULL,
-	`fechaModificacion` VARCHAR(50) NOT NULL COLLATE 'utf8mb3_spanish_ci',
-	`horaModificacion` VARCHAR(50) NOT NULL COLLATE 'utf8mb3_spanish_ci',
-	`accionAdmin` VARCHAR(50) NOT NULL COLLATE 'utf8mb3_spanish_ci',
-	PRIMARY KEY (`id`) USING BTREE,
-	INDEX `FK_Tabla8` (`id_Administrador`) USING BTREE,
-	CONSTRAINT `FK_Tabla8` FOREIGN KEY (`id_Administrador`) REFERENCES `administrador` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
-)
-COLLATE='utf8mb3_spanish_ci'
-ENGINE=InnoDB
-AUTO_INCREMENT=5
-;
 
 CREATE TABLE `registro_estados` (
 	`id_RegEst` INT(10) NOT NULL AUTO_INCREMENT,
@@ -83,6 +44,7 @@ COLLATE='utf8mb4_spanish_ci'
 ENGINE=InnoDB
 ;
 
+
 CREATE TABLE `registro_penalizaciones` (
 	`id_RegPen` INT(10) NOT NULL AUTO_INCREMENT,
 	`n_Infracciones` INT(10) NOT NULL,
@@ -96,6 +58,7 @@ COLLATE='utf8mb4_spanish_ci'
 ENGINE=InnoDB
 ;
 
+
 CREATE TABLE `rutas` (
 	`id_Ruta` INT(10) NOT NULL AUTO_INCREMENT,
 	`nombre_Ruta` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_spanish_ci',
@@ -107,16 +70,15 @@ CREATE TABLE `rutas` (
 )
 COLLATE='utf8mb4_0900_ai_ci'
 ENGINE=InnoDB
-AUTO_INCREMENT=5
+AUTO_INCREMENT=4
 ;
+
 
 CREATE TABLE `vehiculo` (
 	`id_Vehiculo` INT(10) NOT NULL AUTO_INCREMENT,
 	`id_Placa` VARCHAR(8) NOT NULL COLLATE 'utf8mb4_spanish_ci',
 	`tipo_Vehiculo` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_spanish_ci',
 	`id_Chofer` INT(10) NOT NULL,
-	`marcaVehiculo` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
-	`modeloVehiculo` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
 	PRIMARY KEY (`id_Vehiculo`) USING BTREE,
 	UNIQUE INDEX `UNIQUE_Placa` (`id_Placa`) USING BTREE,
 	INDEX `FK_Tabla_Vehiculo` (`id_Chofer`) USING BTREE,
@@ -125,4 +87,40 @@ CREATE TABLE `vehiculo` (
 COLLATE='utf8mb4_0900_ai_ci'
 ENGINE=InnoDB
 AUTO_INCREMENT=4
+;
+
+CREATE TABLE administrador (
+	id INT(10) NOT NULL AUTO_INCREMENT,
+	usuarioAdmin VARCHAR(50) NOT NULL COLLATE 'utf8mb3_spanish_ci',
+	nombreAdmin VARCHAR(50) NOT NULL COLLATE 'utf8mb3_spanish_ci',
+	apellidoAdmin VARCHAR(50) NOT NULL COLLATE 'utf8mb3_spanish_ci',
+	correoAdmin VARCHAR(50) NOT NULL COLLATE 'utf8mb3_spanish_ci',
+	contrasenaAdmin VARCHAR(50) NOT NULL COLLATE 'utf8mb3_spanish_ci',
+	fechaIngreso DATE NOT NULL,
+	horaIngreso TIME NOT NULL,
+	estadoAdmin VARCHAR(50) NOT NULL COLLATE 'utf8mb3_spanish_ci',
+	cargoAdmin VARCHAR(50) NOT NULL COLLATE 'utf8mb3_spanish_ci',
+	PRIMARY KEY (id) USING BTREE,
+	UNIQUE INDEX UNIQUE_CORREO (correoAdmin, contrasenaAdmin, usuarioAdmin) USING BTREE
+)
+COLLATE='utf8mb3_spanish_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=3
+;
+
+
+
+CREATE TABLE modificaciones (
+	id INT(10) NOT NULL AUTO_INCREMENT,
+	id_Administrador INT(10) NOT NULL,
+	fechaModificacion VARCHAR(50) NOT NULL COLLATE 'utf8mb3_spanish_ci',
+	horaModificacion VARCHAR(50) NOT NULL COLLATE 'utf8mb3_spanish_ci',
+	accionAdmin VARCHAR(50) NOT NULL COLLATE 'utf8mb3_spanish_ci',
+	PRIMARY KEY (id) USING BTREE,
+	INDEX FK_Tabla8 (id_Administrador) USING BTREE,
+	CONSTRAINT FK_Tabla8 FOREIGN KEY (id_Administrador) REFERENCES administrador (id) ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+COLLATE='utf8mb3_spanish_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=33
 ;
