@@ -17,16 +17,18 @@ public class VehiculoDAO {
     }
 
     public void agregarVehiculo(Vehiculo vehiculo) {
-        if (existeVehiculo(vehiculo.getIdChofer())) {
-            System.out.println("Error: El vehículo con el ID del chofer " + vehiculo.getIdChofer() + " ya existe.");
-            return;
+       if (existeVehiculo(vehiculo.getIdChofer())) {
+        System.out.println("Error: El vehículo con el ID del chofer " + vehiculo.getIdChofer() + " ya existe.");
+        return;
         }
         try {
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("INSERT INTO vehiculo (id_Placa, tipo_Vehiculo, id_Chofer) VALUES (?, ?, ?)");
+                    .prepareStatement("INSERT INTO vehiculo (id_Placa, tipo_Vehiculo, id_Chofer, marcaVehiculo, modeloVehiculo) VALUES (?, ?, ?, ?, ?)"); // Modificar aquí para incluir todos los parámetros necesarios
             preparedStatement.setString(1, vehiculo.getIdPlaca());
             preparedStatement.setString(2, vehiculo.getTipoVehiculo());
             preparedStatement.setInt(3, vehiculo.getIdChofer());
+            preparedStatement.setString(4, vehiculo.getMarcaVehiculo()); 
+            preparedStatement.setString(5, vehiculo.getModeloVehiculo());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -55,11 +57,13 @@ public class VehiculoDAO {
         }
         try {
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("UPDATE vehiculo SET id_Placa=?, tipo_Vehiculo=?, id_Chofer=? WHERE id_Vehiculo=?");
+                    .prepareStatement("UPDATE vehiculo SET id_Placa=?, tipo_Vehiculo=?, id_Chofer=?, marcaVehiculo=?, modeloVehiculo=? WHERE id_Vehiculo=?");
             preparedStatement.setString(1, vehiculo.getIdPlaca());
             preparedStatement.setString(2, vehiculo.getTipoVehiculo());
             preparedStatement.setInt(3, vehiculo.getIdChofer());
-            preparedStatement.setInt(4, vehiculo.getIdVehiculo());
+            preparedStatement.setString(4, vehiculo.getMarcaVehiculo());
+            preparedStatement.setString(5, vehiculo.getModeloVehiculo());
+            preparedStatement.setInt(6, vehiculo.getIdVehiculo());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

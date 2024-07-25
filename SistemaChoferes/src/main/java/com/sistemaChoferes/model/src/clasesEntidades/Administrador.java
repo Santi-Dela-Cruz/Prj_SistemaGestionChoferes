@@ -22,6 +22,24 @@ public class Administrador {
     private String cargoAdmin;
     private Date fechaIngreso;
     private Time horaIngreso;
+    private String telfono;
+    private String direccion;
+
+    public String getTelfono() {
+        return telfono;
+    }
+
+    public void setTelfono(String telfono) {
+        this.telfono = telfono;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
 
     public String getCargoAdmin() {
         return cargoAdmin;
@@ -97,6 +115,6 @@ public class Administrador {
     }
 
     public void setRol(String administrador) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }
