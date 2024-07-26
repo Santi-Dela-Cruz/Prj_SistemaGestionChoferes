@@ -4,9 +4,9 @@
  */
 package com.sistemaChoferes.view;
 
-import com.sistemaChoferes.model.src.clasesEntidades.Administrador;
-import com.sistemaChoferes.model.src.conexionBaseDatos.Conexion;
-import com.sistemaChoferes.model.src.objetoAccesoDatos.AdministradorDAO;
+import com.sistemaChoferes.model.clasesEntidades.Administrador;
+import com.sistemaChoferes.model.conexionBaseDatos.Conexion;
+import com.sistemaChoferes.model.objetoAccesoDatos.AdministradorDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -4,16 +4,16 @@
  */
 package com.sistemaChoferes.view;
 
-import com.sistemaChoferes.model.src.clasesEntidades.Chofer;
-import com.sistemaChoferes.model.src.clasesEntidades.Huella;
-import com.sistemaChoferes.model.src.clasesEntidades.Rutas;
-import com.sistemaChoferes.model.src.clasesEntidades.Vehiculo;
-import com.sistemaChoferes.model.src.conexionBaseDatos.Conexion;
-import com.sistemaChoferes.model.src.funcionesGestiosChoferes.RegistroChofer;
-import com.sistemaChoferes.model.src.objetoAccesoDatos.ChoferDAO;
-import com.sistemaChoferes.model.src.objetoAccesoDatos.HuellaDAO;
-import com.sistemaChoferes.model.src.objetoAccesoDatos.RutasDAO;
-import com.sistemaChoferes.model.src.objetoAccesoDatos.VehiculoDAO;
+import com.sistemaChoferes.model.clasesEntidades.Chofer;
+import com.sistemaChoferes.model.clasesEntidades.Huella;
+import com.sistemaChoferes.model.clasesEntidades.Rutas;
+import com.sistemaChoferes.model.clasesEntidades.Vehiculo;
+import com.sistemaChoferes.model.conexionBaseDatos.Conexion;
+import com.sistemaChoferes.model.funcionesGestiosChoferes.RegistroChofer;
+import com.sistemaChoferes.model.objetoAccesoDatos.ChoferDAO;
+import com.sistemaChoferes.model.objetoAccesoDatos.HuellaDAO;
+import com.sistemaChoferes.model.objetoAccesoDatos.RutasDAO;
+import com.sistemaChoferes.model.objetoAccesoDatos.VehiculoDAO;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
