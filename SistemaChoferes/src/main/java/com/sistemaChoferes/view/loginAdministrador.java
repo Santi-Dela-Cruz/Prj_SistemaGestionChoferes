@@ -4,8 +4,8 @@
  */
 package com.sistemaChoferes.view;
 
-import com.sistemaChoferes.model.src.clasesEntidades.Administrador;
-import com.sistemaChoferes.model.src.objetoAccesoDatos.AdministradorDAO;
+import com.sistemaChoferes.model.clasesEntidades.Administrador;
+import com.sistemaChoferes.model.objetoAccesoDatos.AdministradorDAO;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import javax.swing.*;
@@ -186,7 +186,7 @@ public class loginAdministrador extends javax.swing.JFrame {
         lbAyuda.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         lbAyuda.setForeground(new java.awt.Color(153, 153, 153));
         lbAyuda.setText("¿Necesitas ayuda?");
-        jPanel1.add(lbAyuda, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 280, -1, -1));
+        jPanel1.add(lbAyuda, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 280, 120, -1));
 
         jSeparator1.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator1.setForeground(new java.awt.Color(255, 255, 255));

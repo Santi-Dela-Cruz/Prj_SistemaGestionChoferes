@@ -3,15 +3,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.sistemaChoferes.view;
-import com.sistemaChoferes.model.src.clasesEntidades.Chofer;
-import com.sistemaChoferes.model.src.clasesEntidades.Huella;
-import com.sistemaChoferes.model.src.clasesEntidades.Rutas;
-import com.sistemaChoferes.model.src.clasesEntidades.Vehiculo;
-import com.sistemaChoferes.model.src.funcionesGestiosChoferes.RegistroChofer;
-import com.sistemaChoferes.model.src.objetoAccesoDatos.ChoferDAO;
-import com.sistemaChoferes.model.src.objetoAccesoDatos.HuellaDAO;
-import com.sistemaChoferes.model.src.objetoAccesoDatos.RutasDAO;
-import com.sistemaChoferes.model.src.objetoAccesoDatos.VehiculoDAO;
+import com.sistemaChoferes.model.clasesEntidades.Chofer;
+import com.sistemaChoferes.model.clasesEntidades.Huella;
+import com.sistemaChoferes.model.clasesEntidades.Rutas;
+import com.sistemaChoferes.model.clasesEntidades.Vehiculo;
+import com.sistemaChoferes.model.funcionesGestiosChoferes.RegistroChofer;
+import com.sistemaChoferes.model.objetoAccesoDatos.ChoferDAO;
+import com.sistemaChoferes.model.objetoAccesoDatos.HuellaDAO;
+import com.sistemaChoferes.model.objetoAccesoDatos.RutasDAO;
+import com.sistemaChoferes.model.objetoAccesoDatos.VehiculoDAO;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
