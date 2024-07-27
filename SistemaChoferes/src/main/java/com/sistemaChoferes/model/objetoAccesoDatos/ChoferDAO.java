@@ -107,6 +107,11 @@ public class ChoferDAO {
                 chofer.setNombre(rs.getString("nombre"));
                 chofer.setApellido(rs.getString("apellido"));
                 chofer.setTelefono(rs.getString("telefono"));
+                chofer.setDirreccion(rs.getString("direccion"));
+                chofer.setCorreo(rs.getString("correo"));
+                chofer.setCategoriaLicencia(rs.getString("categoriaLicencia"));
+                chofer.setFechaVenciminetoLicencia(rs.getDate("fechaVenciminetoLicencia"));
+                
             }
         } catch (SQLException e) {
             e.printStackTrace();

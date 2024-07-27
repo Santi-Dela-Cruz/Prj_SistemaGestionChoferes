@@ -39,7 +39,7 @@ public class RegistroIngreso {
         System.out.print("Ingrese el ID de la huella: ");
         String idHuella = scanner.nextLine();
 
-        Huella huella = huellaDAO.obtenerHuellaPorCodigo(idHuella); // Cambiar a obtener por código
+        Huella huella = huellaDAO.obtenerHuellaPorCodigo(idHuella);
         if (huella == null) {
             System.out.println("Huella no encontrada. El usuario no existe.");
             return;
@@ -104,7 +104,6 @@ public class RegistroIngreso {
             boolean despedido = registroPenalizacionesDAO.actualizarPenalizaciones(idChofer);
             if (despedido) {
                 System.out.println("El chofer ha sido despedido.");
-                registroPenalizacionesDAO.eliminarPenalizacionesPorChofer(idChofer); // Limpiar el registro de penalizaciones si es despedido
             } else {
                 System.out.println("Penalización registrada.");
             }

@@ -7,6 +7,7 @@ com\sistemaChoferes\view\formularioIngreso.class
 com\sistemaChoferes\model\objetoAccesoDatos\RegistroPenalizacionesDAO.class
 com\sistemaChoferes\view\formularioIngreso$12.class
 com\sistemaChoferes\view\listadoChoferesCRUD$5.class
+com\sistemaChoferes\view\listadoChoferesCRUD$8.class
 com\sistemaChoferes\model\objetoAccesoDatos\AdministradorDAO.class
 com\sistemaChoferes\model\objetoAccesoDatos\HuellaDAO.class
 com\sistemaChoferes\view\formularioIngreso$8.class
@@ -20,6 +21,7 @@ com\sistemaChoferes\view\listadoChoferesCRUD$2.class
 com\sistemaChoferes\model\objetoAccesoDatos\RutasDAO.class
 com\sistemaChoferes\view\formularioIngreso$1.class
 com\sistemaChoferes\view\formularioIngreso$7.class
+com\sistemaChoferes\view\listadoChoferesCRUD$9.class
 com\sistemaChoferes\model\funcionesGestiosChoferes\RegistroIngreso.class
 com\sistemaChoferes\model\objetoAccesoDatos\VehiculoDAO.class
 com\sistemaChoferes\model\clasesEntidades\Huella.class
@@ -48,6 +50,7 @@ com\sistemaChoferes\view\loginAdministrador$4.class
 com\sistemaChoferes\view\viewDatosGenerales.class
 com\sistemaChoferes\view\formularioIngreso$5.class
 com\sistemaChoferes\view\formularioIngreso$3.class
+com\sistemaChoferes\view\listadoChoferesCRUD$7.class
 com\sistemaChoferes\view\loginAdministrador$6.class
 com\sistemaChoferes\view\formularioIngreso$14.class
 com\sistemaChoferes\view\viewDatosGenerales$1.class

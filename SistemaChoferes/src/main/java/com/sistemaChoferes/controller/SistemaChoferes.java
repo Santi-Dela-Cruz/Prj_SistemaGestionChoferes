@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.sistemaChoferes.controller;
-//import com.sistemaChoferes.model.src.objetoAccesoDatos.LimpiarTabla;
+//import com.sistemaChoferes.model.objetoAccesoDatos.LimpiarTabla;
 import com.sistemaChoferes.view.loginAdministrador;
 //import com.sistemaChoferes.view.listadoChoferesCRUD;
 //import com.sistemaChoferes.view.formularioIngreso;

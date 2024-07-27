@@ -436,6 +436,7 @@ public class formularioIngreso extends javax.swing.JFrame {
             registroChofer.registrarNuevoChofer(cedula, nombres, apellidos, telefono, huella, placa, vehiculo, ruta, direccion, correo, categoriaLicencia, fechaVencimientoLicencia, marcaVehiculo, modeloVehiculo);
             JOptionPane.showMessageDialog(this, "Registro guardado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             limpiarCampos();
+            listadoChoferesCRUD.datosAgregados = true;
             this.dispose();
             if (listadoChoferesCRUD.listadoChoferesInstance != null) {
                 listadoChoferesCRUD.listadoChoferesInstance.actualizarTabla();
@@ -448,29 +449,44 @@ public class formularioIngreso extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     public void mostarDatos(int idc){
-        Chofer chofer = chofeDAO.obtenerChoferPorId(idc);
-        Vehiculo vehiculo = vehiculoDAO.obtenerVehiculoPorChoferId(idc);
-        Huella huella = huellaDAO.obtenerHuellaPorChoferId(idc);
-        Rutas rutas = rutasDAO.obtenerRutaPorChoferId(idc);
+    Chofer chofer = chofeDAO.obtenerChoferPorId(idc);
+    Vehiculo vehiculo = vehiculoDAO.obtenerVehiculoPorChoferId(idc);
+    Huella huella = huellaDAO.obtenerHuellaPorChoferId(idc);
+    Rutas rutas = rutasDAO.obtenerRutaPorChoferId(idc);
 
-        if (chofer != null) {
-            txtNombres.setText(chofer.getNombre());
-            txtApellidos.setText(chofer.getApellido());
-            txtCedula.setText(chofer.getIdCedula());
-            txtTelefono.setText(chofer.getTelefono());
-            if (vehiculo != null) {
-                txtPlaca.setText(vehiculo.getIdPlaca());
-                txtVehiculo.setText(vehiculo.getTipoVehiculo());
-            }
-            if (rutas != null) {
-                txtRuta.setText(rutas.getNombreRuta());
-            }
-            if (huella != null) {
-                txtHuella.setText(huella.getIdCodigoHuella());
-            }
+    if (chofer != null) {
+        txtNombres.setText(chofer.getNombre());
+        txtApellidos.setText(chofer.getApellido());
+        txtCedula.setText(chofer.getIdCedula());
+        txtTelefono.setText(chofer.getTelefono());
+        txtCorreo.setText(chofer.getCorreo());  
+        txtDireccion.setText(chofer.getDirreccion());
+        txtCategoriaLicencia.setText(chofer.getCategoriaLicencia());
+
+        if (chofer.getFechaVenciminetoLicencia() != null) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String fechaFormateada = dateFormat.format(chofer.getFechaVenciminetoLicencia());
+            txtFechaVencimientoLicencia.setText(fechaFormateada);
+        } else {
+            txtFechaVencimientoLicencia.setText("");
+        }
+
+        if (vehiculo != null) {
+            txtPlaca.setText(vehiculo.getIdPlaca());
+            txtVehiculo.setText(vehiculo.getTipoVehiculo());
+            txtMarcaVehiculo.setText(vehiculo.getMarcaVehiculo());
+            txtModeloVehiculo.setText(vehiculo.getModeloVehiculo());
+        }
+        if (rutas != null) {
+            txtRuta.setText(rutas.getNombreRuta());
+        }
+        if (huella != null) {
+            txtHuella.setText(huella.getIdCodigoHuella());
+        }
         } else {
             JOptionPane.showMessageDialog(this, "Error al cargar los datos del chofer", "Error", JOptionPane.ERROR_MESSAGE);
         }
+
     }
 
     
@@ -530,6 +546,7 @@ public class formularioIngreso extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Registro actualizado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 limpiarCampos();
                 this.dispose();
+                listadoChoferesCRUD.datosActualizados = true;
                 if (listadoChoferesCRUD.listadoChoferesInstance != null) {
                     listadoChoferesCRUD.listadoChoferesInstance.actualizarTabla();
                 } else {
