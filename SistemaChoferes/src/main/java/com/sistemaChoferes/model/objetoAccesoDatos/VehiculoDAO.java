@@ -102,6 +102,8 @@ public class VehiculoDAO {
                 vehiculo.setIdPlaca(rs.getString("id_Placa"));
                 vehiculo.setTipoVehiculo(rs.getString("tipo_Vehiculo"));
                 vehiculo.setIdChofer(rs.getInt("id_Chofer"));
+                vehiculo.setTipoVehiculo(rs.getString("marcaVehiculo"));
+                vehiculo.setTipoVehiculo(rs.getString("modeloVehiculo"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -121,6 +123,8 @@ public class VehiculoDAO {
                 vehiculo.setIdPlaca(rs.getString("id_Placa"));
                 vehiculo.setTipoVehiculo(rs.getString("tipo_Vehiculo"));
                 vehiculo.setIdChofer(rs.getInt("id_Chofer"));
+                vehiculo.setMarcaVehiculo(rs.getString("marcaVehiculo"));
+                vehiculo.setModeloVehiculo(rs.getString("modeloVehiculo"));
             }
         } catch (SQLException e) {
             e.printStackTrace();

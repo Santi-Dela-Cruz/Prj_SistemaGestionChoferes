@@ -26,6 +26,8 @@ public class listadoChoferesCRUD extends javax.swing.JFrame {
     public static listadoChoferesCRUD listadoChoferesInstance;
     private Administrador administrador;
     private AdministradorDAO adminDAO;
+    public static boolean datosActualizados;
+    public static boolean datosAgregados;
     
     Conexion conexion;
     Connection connection;
@@ -213,31 +215,55 @@ public class listadoChoferesCRUD extends javax.swing.JFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         if (idc == 0) {
-        JOptionPane.showMessageDialog(null, "Por favor, seleccione un registro para editar");
-        return;
-        }
+                JOptionPane.showMessageDialog(null, "Por favor, seleccione un registro para editar");
+                return;
+            }
 
-        formularioIngreso formIngreso = new formularioIngreso(idc);
-        formIngreso.setVisible(true);
-        tbDatosGenerales.clearSelection();
-        try {
-            registrarModificacion("Editar");
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error al registrar la modificación: " + e.getMessage());
-        }
-        idc = 0;
+            formularioIngreso formIngreso = new formularioIngreso(idc);
+            formIngreso.setVisible(true);
+            tbDatosGenerales.clearSelection();
+
+            formIngreso.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+                    if (listadoChoferesCRUD.datosActualizados) {
+                        try {
+                            registrarModificacion("Editar");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            JOptionPane.showMessageDialog(null, "Error al registrar la modificación: " + e.getMessage());
+                        }
+                        listadoChoferesCRUD.datosActualizados = false;
+                    } else {
+                        System.out.println("No se han realizado cambios.");
+                    }
+                }
+            });
+
+            datosActualizados = false;
+            idc = 0;
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnAnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirActionPerformed
         formularioIngreso formIngreso = new formularioIngreso();
         formIngreso.setVisible(true);
-        try {
-            registrarModificacion("Agregar");
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error al registrar la modificación: " + e.getMessage());
-        }
+
+        formIngreso.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+                if (listadoChoferesCRUD.datosAgregados) {
+                    try {
+                        registrarModificacion("Agregar");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        JOptionPane.showMessageDialog(null, "Error al registrar la modificación: " + e.getMessage());
+                    }
+                    listadoChoferesCRUD.datosAgregados = false;
+                    } else {
+                        System.out.println("No se han realizado cambios.");
+                    }
+                }
+            });
     }//GEN-LAST:event_btnAnadirActionPerformed
 
     private void tbDatosGeneralesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbDatosGeneralesMouseClicked
@@ -267,7 +293,6 @@ public class listadoChoferesCRUD extends javax.swing.JFrame {
         idc = 0;
     }//GEN-LAST:event_btnVisualizarActionPerformed
 
-    
     private void tbDatosGeneralesMouseReleased(java.awt.event.MouseEvent evt) {                                              
         int row = tbDatosGenerales.getSelectedRow();
         if (row == -1) {
@@ -321,7 +346,7 @@ public class listadoChoferesCRUD extends javax.swing.JFrame {
         });
     }
     private void consultarTabla() {
-    String sql = "SELECT c.id_Chofer, c.id_Cedula, c.nombre, c.apellido, v.id_Placa FROM choferes c LEFT JOIN vehiculo v ON c.id_Chofer = v.id_Chofer";
+    String sql = "SELECT c.id_Chofer, c.id_Cedula, c.nombre, c.apellido, v.id_Placa FROM choferes c LEFT JOIN vehiculo v ON c.id_Chofer = v.id_Chofer LEFT JOIN rutas r ON c.id_Chofer = r.id_Chofer WHERE c.estado = 'A' AND v.estado = 'A' AND r.estado = 'A';";
         try {
             connection = conexion.conectar();
             st = connection.createStatement();

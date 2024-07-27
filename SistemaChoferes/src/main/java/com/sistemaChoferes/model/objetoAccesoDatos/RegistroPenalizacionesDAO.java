@@ -26,19 +26,39 @@ public class RegistroPenalizacionesDAO {
             if (rs.next()) {
                 int infracciones = rs.getInt("n_Infracciones") + 1;
                 PreparedStatement updatePenalizaciones = connection
-                        .prepareStatement("UPDATE registro_penalizaciones SET n_Infracciones=?, penalizacion_Chofer=? WHERE id_Chofer=?");
+                        .prepareStatement("UPDATE registro_penalizaciones SET n_Infracciones=?, penalizacion_Chofer=?, estado=? WHERE id_Chofer=?");
                 updatePenalizaciones.setInt(1, infracciones);
                 updatePenalizaciones.setString(2, infracciones >= 3 ? "Despedido" : "Advertencia");
-                updatePenalizaciones.setInt(3, idChofer);
+                updatePenalizaciones.setString(3, infracciones >= 3 ? "X" : "A");
+                updatePenalizaciones.setInt(4, idChofer);
                 updatePenalizaciones.executeUpdate();
+                
+                if (infracciones >= 3) {
+                PreparedStatement updateChofer = connection.prepareStatement("UPDATE chofer SET estado='X' WHERE id_Chofer=?");
+                updateChofer.setInt(1, idChofer);
+                updateChofer.executeUpdate();
+                
+                PreparedStatement updateHuella = connection.prepareStatement("UPDATE huella SET estado='X' WHERE id_Chofer=?");
+                updateHuella.setInt(1, idChofer);
+                updateHuella.executeUpdate();
+
+                PreparedStatement updateVehiculo = connection.prepareStatement("UPDATE vehiculo SET estado='X' WHERE id_Chofer=?");
+                updateVehiculo.setInt(1, idChofer);
+                updateVehiculo.executeUpdate();
+
+                PreparedStatement updateRuta = connection.prepareStatement("UPDATE rutas SET estado='X' WHERE id_Chofer=?");
+                updateRuta.setInt(1, idChofer);
+                updateRuta.executeUpdate();
+            }
                 
                 return infracciones >= 3;
             } else {
                 PreparedStatement insertPenalizacion = connection
-                        .prepareStatement("INSERT INTO registro_penalizaciones (n_Infracciones, penalizacion_Chofer, id_Chofer) VALUES (?, ?, ?)");
+                        .prepareStatement("INSERT INTO registro_penalizaciones (n_Infracciones, penalizacion_Chofer, id_Chofer, estado) VALUES (?, ?, ?)");
                 insertPenalizacion.setInt(1, 1);
                 insertPenalizacion.setString(2, "Advertencia");
                 insertPenalizacion.setInt(3, idChofer);
+                insertPenalizacion.setString(4, "A");
                 insertPenalizacion.executeUpdate();
                 return false;
             }
@@ -50,10 +70,10 @@ public class RegistroPenalizacionesDAO {
 
     public void eliminarPenalizacionesPorChofer(int idChofer) {
         try {
-            PreparedStatement preparedStatement = connection
-                    .prepareStatement("DELETE FROM registro_penalizaciones WHERE id_Chofer=?");
-            preparedStatement.setInt(1, idChofer);
-            preparedStatement.executeUpdate();
+        PreparedStatement preparedStatement = connection
+                .prepareStatement("UPDATE registro_penalizaciones SET estado='X' WHERE id_Chofer=?");
+        preparedStatement.setInt(1, idChofer);
+        preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -74,12 +94,12 @@ public class RegistroPenalizacionesDAO {
 
     public void eliminarRegistroPenalizacion(int idRegPen) {
         if (!existeRegistroPenalizacion(idRegPen)) {
-            System.out.println("Error: El registro de penalización con el ID " + idRegPen + " no existe.");
-            return;
+        System.out.println("Error: El registro de penalización con el ID " + idRegPen + " no existe.");
+        return;
         }
         try {
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("DELETE FROM registro_penalizaciones WHERE id_RegPen=?");
+                    .prepareStatement("UPDATE registro_penalizaciones SET estado='X' WHERE id_RegPen=?");
             preparedStatement.setInt(1, idRegPen);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -109,7 +129,7 @@ public class RegistroPenalizacionesDAO {
         List<RegistroPenalizaciones> registros = new ArrayList<RegistroPenalizaciones>();
         try {
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("SELECT * FROM registro_penalizaciones");
+                    .prepareStatement("SELECT * FROM registro_penalizaciones WHERE estado='A'");
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 RegistroPenalizaciones registroPenalizacion = new RegistroPenalizaciones();
@@ -129,7 +149,7 @@ public class RegistroPenalizacionesDAO {
         RegistroPenalizaciones registroPenalizacion = new RegistroPenalizaciones();
         try {
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("SELECT * FROM registro_penalizaciones WHERE id_RegPen=?");
+                    .prepareStatement("SELECT * FROM registro_penalizaciones WHERE id_RegPen=? AND estado='A'");
             preparedStatement.setInt(1, idRegPen);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
