@@ -1,0 +1,349 @@
+package com.sistemaChoferes.ui;
+
+import com.sistemaChoferes.dataacess.entity.Administrador;
+import com.sistemaChoferes.dataacess.dao.AdministradorDAO;
+import java.awt.Color;
+import javax.swing.JOptionPane;
+import javax.swing.*;
+import java.net.URL;
+
+public class loginAdministrador extends javax.swing.JFrame {
+    private Administrador administrador;
+    private AdministradorDAO administradorDAO;
+    int xMouse, yMouse;
+    
+    public loginAdministrador() {
+        initComponents();
+        setLocationRelativeTo(null);
+        administradorDAO = new AdministradorDAO();
+    }
+
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        pnlMinimizar = new javax.swing.JPanel();
+        lblExit1 = new javax.swing.JLabel();
+        pnlExit = new javax.swing.JPanel();
+        lblExit = new javax.swing.JLabel();
+        pnlBarra = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        lbTitle1 = new javax.swing.JLabel();
+        lbTitle2 = new javax.swing.JLabel();
+        lbUserCorreo = new javax.swing.JLabel();
+        txtUserCorreo = new javax.swing.JTextField();
+        lbContrasena = new javax.swing.JLabel();
+        pswContrasena = new javax.swing.JPasswordField();
+        lbOlvidaste = new javax.swing.JLabel();
+        btnIniciar = new javax.swing.JButton();
+        lbAyuda = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jSeparator2 = new javax.swing.JSeparator();
+        jLabel1 = new javax.swing.JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(0, 102, 102));
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setUndecorated(true);
+        setResizable(false);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        pnlMinimizar.setBackground(new java.awt.Color(255, 255, 255));
+        pnlMinimizar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnlMinimizarMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                pnlMinimizarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                pnlMinimizarMouseExited(evt);
+            }
+        });
+
+        lblExit1.setFont(new java.awt.Font("Roboto Light", 0, 18)); // NOI18N
+        lblExit1.setForeground(new java.awt.Color(0, 0, 0));
+        lblExit1.setText("--");
+        pnlMinimizar.add(lblExit1);
+
+        getContentPane().add(pnlMinimizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 0, 30, 30));
+
+        pnlExit.setBackground(new java.awt.Color(255, 255, 255));
+        pnlExit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnlExitMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                pnlExitMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                pnlExitMouseExited(evt);
+            }
+        });
+
+        lblExit.setFont(new java.awt.Font("Roboto Light", 0, 18)); // NOI18N
+        lblExit.setForeground(new java.awt.Color(0, 0, 0));
+        lblExit.setText("X");
+        pnlExit.add(lblExit);
+
+        getContentPane().add(pnlExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 0, 40, 30));
+
+        pnlBarra.setBackground(new java.awt.Color(255, 255, 255));
+        pnlBarra.setForeground(new java.awt.Color(255, 255, 255));
+        pnlBarra.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                pnlBarraMouseDragged(evt);
+            }
+        });
+        pnlBarra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                pnlBarraMousePressed(evt);
+            }
+        });
+        getContentPane().add(pnlBarra, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 460, 30));
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lbTitle1.setFont(new java.awt.Font("Roboto Black", 1, 14)); // NOI18N
+        lbTitle1.setText("SISTEMA DE GESTIÓN DE CHOFERES");
+        jPanel1.add(lbTitle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 14, -1, -1));
+
+        lbTitle2.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
+        lbTitle2.setForeground(new java.awt.Color(0, 0, 0));
+        lbTitle2.setText("Administración Escuela Politécnica Nacional");
+        jPanel1.add(lbTitle2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
+
+        lbUserCorreo.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
+        lbUserCorreo.setForeground(new java.awt.Color(0, 0, 0));
+        lbUserCorreo.setText("Usuario o correo electronico:");
+        jPanel1.add(lbUserCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, -1, -1));
+
+        txtUserCorreo.setBackground(new java.awt.Color(255, 255, 255));
+        txtUserCorreo.setFont(new java.awt.Font("Roboto Light", 0, 12)); // NOI18N
+        txtUserCorreo.setForeground(new java.awt.Color(102, 102, 102));
+        txtUserCorreo.setBorder(null);
+        txtUserCorreo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUserCorreoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txtUserCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 274, 25));
+
+        lbContrasena.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
+        lbContrasena.setForeground(new java.awt.Color(0, 0, 0));
+        lbContrasena.setText("Contraseña:");
+        jPanel1.add(lbContrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, -1, -1));
+
+        pswContrasena.setBackground(new java.awt.Color(255, 255, 255));
+        pswContrasena.setFont(new java.awt.Font("Roboto Light", 0, 12)); // NOI18N
+        pswContrasena.setForeground(new java.awt.Color(102, 102, 102));
+        pswContrasena.setBorder(null);
+        jPanel1.add(pswContrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 274, 25));
+
+        lbOlvidaste.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
+        lbOlvidaste.setForeground(new java.awt.Color(153, 153, 153));
+        lbOlvidaste.setText("¿Olvidaste tu contraseña?");
+        jPanel1.add(lbOlvidaste, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, -1, -1));
+
+        btnIniciar.setBackground(new java.awt.Color(51, 153, 255));
+        btnIniciar.setFont(new java.awt.Font("Roboto Black", 1, 14)); // NOI18N
+        btnIniciar.setForeground(new java.awt.Color(255, 255, 255));
+        btnIniciar.setText("Iniciar Sesión");
+        btnIniciar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        btnIniciar.setBorderPainted(false);
+        btnIniciar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnIniciarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnIniciarMouseExited(evt);
+            }
+        });
+        btnIniciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIniciarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnIniciar, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, 140, 40));
+
+        lbAyuda.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        lbAyuda.setForeground(new java.awt.Color(153, 153, 153));
+        lbAyuda.setText("¿Necesitas ayuda?");
+        jPanel1.add(lbAyuda, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 280, 120, -1));
+
+        jSeparator1.setBackground(new java.awt.Color(0, 0, 0));
+        jSeparator1.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 280, 5));
+
+        jSeparator2.setBackground(new java.awt.Color(0, 0, 0));
+        jSeparator2.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 280, 10));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 300, 430));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/epn.jpg"))); // NOI18N
+        jLabel1.setText("jLabel1");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, 230, 460));
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
+        String usuarioCorreo = txtUserCorreo.getText().trim();
+        String contrasena = new String(pswContrasena.getPassword());
+
+        if (usuarioCorreo.isEmpty() || contrasena.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor ingrese usuario y contraseña.", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        Administrador admin;
+        try {
+            admin = administradorDAO.getAdministrador(usuarioCorreo, contrasena);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al conectar con la base de datos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (admin != null) {
+            JOptionPane.showMessageDialog(this, "Bienvenido.", "Inicio de sesión", JOptionPane.INFORMATION_MESSAGE);
+            abrirListadoChoferesCRUD(admin);
+            dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Credenciales incorrectas.", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnIniciarActionPerformed
+
+    private void txtUserCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUserCorreoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUserCorreoActionPerformed
+
+    private void pnlBarraMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlBarraMousePressed
+        xMouse = evt.getX();
+        yMouse = evt.getY();
+    }//GEN-LAST:event_pnlBarraMousePressed
+
+    private void pnlBarraMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlBarraMouseDragged
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - xMouse, y - yMouse);
+    }//GEN-LAST:event_pnlBarraMouseDragged
+
+    private void pnlExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlExitMouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_pnlExitMouseClicked
+
+    private void pnlExitMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlExitMouseEntered
+       pnlExit.setBackground(Color.red);
+       lblExit.setForeground(Color.white);
+    }//GEN-LAST:event_pnlExitMouseEntered
+
+    private void pnlExitMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlExitMouseExited
+        pnlExit.setBackground(Color.white);
+        lblExit.setForeground(Color.black);
+    }//GEN-LAST:event_pnlExitMouseExited
+
+    private void btnIniciarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIniciarMouseEntered
+        btnIniciar.setBackground(new java.awt.Color(0, 154, 250));
+    }//GEN-LAST:event_btnIniciarMouseEntered
+
+    private void btnIniciarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIniciarMouseExited
+        btnIniciar.setBackground(new java.awt.Color(51, 153, 255));
+        //[51,153,255]
+    }//GEN-LAST:event_btnIniciarMouseExited
+
+    private void pnlMinimizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlMinimizarMouseClicked
+        setExtendedState(JFrame.ICONIFIED);
+    }//GEN-LAST:event_pnlMinimizarMouseClicked
+
+    private void pnlMinimizarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlMinimizarMouseEntered
+        pnlMinimizar.setBackground(new java.awt.Color(204, 204, 204));
+    }//GEN-LAST:event_pnlMinimizarMouseEntered
+
+    private void pnlMinimizarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlMinimizarMouseExited
+        pnlMinimizar.setBackground(Color.white);
+    }//GEN-LAST:event_pnlMinimizarMouseExited
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(loginAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(loginAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(loginAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(loginAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(loginAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(loginAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(loginAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(loginAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new loginAdministrador().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnIniciar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JLabel lbAyuda;
+    private javax.swing.JLabel lbContrasena;
+    private javax.swing.JLabel lbOlvidaste;
+    private javax.swing.JLabel lbTitle1;
+    private javax.swing.JLabel lbTitle2;
+    private javax.swing.JLabel lbUserCorreo;
+    private javax.swing.JLabel lblExit;
+    private javax.swing.JLabel lblExit1;
+    private javax.swing.JPanel pnlBarra;
+    private javax.swing.JPanel pnlExit;
+    private javax.swing.JPanel pnlMinimizar;
+    private javax.swing.JPasswordField pswContrasena;
+    private javax.swing.JTextField txtUserCorreo;
+    // End of variables declaration//GEN-END:variables
+
+    private void abrirListadoChoferesCRUD(Administrador admin) {
+        listadoChoferesCRUD listadoChoferes = new listadoChoferesCRUD(admin);
+        listadoChoferes.setVisible(true);
+    }
+}
