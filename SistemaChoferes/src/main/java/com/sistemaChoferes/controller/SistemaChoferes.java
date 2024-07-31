@@ -1,10 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.sistemaChoferes.controller;
 //import com.sistemaChoferes.model.objetoAccesoDatos.LimpiarTabla;
-import com.sistemaChoferes.view.loginAdministrador;
+import com.sistemaChoferes.ui.loginAdministrador;
 //import com.sistemaChoferes.view.listadoChoferesCRUD;
 //import com.sistemaChoferes.view.formularioIngreso;
 
