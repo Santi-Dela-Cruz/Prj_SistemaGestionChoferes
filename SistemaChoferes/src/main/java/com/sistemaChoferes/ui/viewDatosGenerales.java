@@ -294,16 +294,16 @@ public class viewDatosGenerales extends javax.swing.JFrame {
         String fechaIngreso = sdf.format(fecha);
         
         if (chofer != null) {
-            lbLlenoCedula.setText(chofer.getIdCedula());;
-            lbLlenoEstado.setText("Activo");;
-            lbLlenoNombres.setText(chofer.getNombre());;
-            lbLlenoApellidos.setText(chofer.getApellido());;
-            lbLlenoTelefono.setText(chofer.getTelefono());;
-            lbLlenoPlaca.setText(vehiculo.getIdPlaca());;
-            lbLlenoRuta.setText(rutas.getNombreRuta());;
+            lbLlenoCedula.setText(chofer.getIdCedula());
+            lbLlenoEstado.setText("Activo");
+            lbLlenoNombres.setText(chofer.getNombre());
+            lbLlenoApellidos.setText(chofer.getApellido());
+            lbLlenoTelefono.setText(chofer.getTelefono());
+            lbLlenoPlaca.setText(vehiculo.getIdPlaca());
+            lbLlenoRuta.setText(rutas.getNombreRuta());
             lbLlenoFechaIn.setText(fechaIngreso);
             lbLlenoFechaMod.setText(fechaIngreso);
-            lbLlenoHuella.setText(huella.getIdCodigoHuella());;
+            lbLlenoHuella.setText(huella.getIdCodigoHuella());
         } else {
             JOptionPane.showMessageDialog(this, "Error al cargar los datos del chofer", "Error", JOptionPane.ERROR_MESSAGE);
         }

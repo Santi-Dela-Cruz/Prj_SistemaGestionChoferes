@@ -70,7 +70,7 @@ public class AdministradorDAO implements IDAO<Administrador> {
 
     @Override
     public boolean update(Administrador admin) throws Exception {
-        String sql = "UPDATE administrador SET usuarioAdmin = ?, nombreAdmin = ?, apellidoAdmin = ?, correoAdmin = ?, contrasenaAdmin = ?, fechaIngreso = ?, horaIngreso = ?, estadoAdmin = ?, cargoAdmin = ?, telefono = ?, direccion = ?, estado = ? WHERE id = ?";
+        String sql = "UPDATE administrador SET usuarioAdmin = ?, nombreAdmin = ?, apellidoAdmin = ?, correoAdmin = ?, contrasenaAdmin = ?, fechaIngreso = ?, horaIngreso = ?, estadoAdmin = ?, cargoAdmin = ?, telefono = ?, direccion = ? WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, admin.getUsuario());
             preparedStatement.setString(2, admin.getNombres());
@@ -83,8 +83,7 @@ public class AdministradorDAO implements IDAO<Administrador> {
             preparedStatement.setString(9, admin.getCargoAdmin());
             preparedStatement.setString(10, admin.getTelefono());
             preparedStatement.setString(11, admin.getDireccion());
-            preparedStatement.setString(12, admin.getEstado());
-            preparedStatement.setInt(13, admin.getIdAdministrador());
+            preparedStatement.setInt(12, admin.getIdAdministrador());
 
             int result = preparedStatement.executeUpdate();
             return result > 0;
