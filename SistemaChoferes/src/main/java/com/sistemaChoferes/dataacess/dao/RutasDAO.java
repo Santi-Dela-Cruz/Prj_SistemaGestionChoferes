@@ -53,12 +53,11 @@ public class RutasDAO implements IDAO<Rutas> {
 
     @Override
     public boolean update(Rutas ruta) throws Exception {
-        String sql = "UPDATE rutas SET nombre_Ruta = ?, id_Chofer = ?, estado = ? WHERE id_Ruta = ?";
+        String sql = "UPDATE rutas SET nombre_Ruta = ?, id_Chofer = ? WHERE id_Ruta = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, ruta.getNombreRuta());
             preparedStatement.setInt(2, ruta.getIdChofer());
-            preparedStatement.setString(3, ruta.getEstado());
-            preparedStatement.setInt(4, ruta.getIdRuta());
+            preparedStatement.setInt(3, ruta.getIdRuta());
 
             int result = preparedStatement.executeUpdate();
             return result > 0;

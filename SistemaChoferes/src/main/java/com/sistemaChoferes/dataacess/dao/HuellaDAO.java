@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 public class HuellaDAO implements IDAO<Huella> {
     private Connection connection;
@@ -54,13 +55,12 @@ public class HuellaDAO implements IDAO<Huella> {
 
     @Override
     public boolean update(Huella huella) throws Exception {
-        String sql = "UPDATE huella SET id_Codigo_Huella = ?, fecha_RegHuella = ?, id_Chofer = ?, estado = ? WHERE id_Huella = ?";
+        String sql = "UPDATE huella SET id_Codigo_Huella = ?, fecha_RegHuella = ?, id_Chofer = ? WHERE id_Huella = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, huella.getIdCodigoHuella());
             preparedStatement.setDate(2, new java.sql.Date(huella.getFechaRegHuella().getTime()));
             preparedStatement.setInt(3, huella.getIdChofer());
-            preparedStatement.setString(4, huella.getEstado());
-            preparedStatement.setInt(5, huella.getIdHuella());
+            preparedStatement.setInt(4, huella.getIdHuella());
 
             int result = preparedStatement.executeUpdate();
             return result > 0;
@@ -120,6 +120,24 @@ public class HuellaDAO implements IDAO<Huella> {
             }
         } catch (SQLException e) {
             throw new Exception("Error al obtener huella por chofer ID", e);
+        }
+        return null;
+    }
+    
+    public Integer getHuellaIdByCode(String codigoHuella) throws Exception {
+        String sql = "SELECT id_Huella FROM huella WHERE id_Codigo_Huella = ? AND estado='A'";
+        try (Connection connection = DataHelper.conectar();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, codigoHuella);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("id_Huella");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new Exception("Error al verificar la huella: " + e.getMessage());
         }
         return null;
     }

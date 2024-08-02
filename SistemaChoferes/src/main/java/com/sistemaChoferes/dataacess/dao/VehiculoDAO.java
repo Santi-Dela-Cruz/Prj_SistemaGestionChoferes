@@ -59,15 +59,15 @@ public class VehiculoDAO implements IDAO<Vehiculo> {
 
     @Override
     public boolean update(Vehiculo vehiculo) throws Exception {
-        String sql = "UPDATE vehiculo SET id_Placa = ?, tipo_Vehiculo = ?, id_Chofer = ?, marcaVehiculo = ?, modeloVehiculo = ?, estado = ? WHERE id_Vehiculo = ?";
+        String sql = "UPDATE vehiculo SET id_Placa = ?, tipo_Vehiculo = ?, id_Chofer = ?, marcaVehiculo = ?, modeloVehiculo = ? WHERE id_Vehiculo = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, vehiculo.getIdPlaca());
             preparedStatement.setString(2, vehiculo.getTipoVehiculo());
             preparedStatement.setInt(3, vehiculo.getIdChofer());
             preparedStatement.setString(4, vehiculo.getMarcaVehiculo());
             preparedStatement.setString(5, vehiculo.getModeloVehiculo());
-            preparedStatement.setString(6, vehiculo.getEstado());
-            preparedStatement.setInt(7, vehiculo.getIdVehiculo());
+            
+            preparedStatement.setInt(6, vehiculo.getIdVehiculo());
 
             int result = preparedStatement.executeUpdate();
             return result > 0;

@@ -213,7 +213,6 @@ public class listadoChoferesCRUD extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Por favor, seleccione un registro para editar");
                 return;
             }
-
             formularioIngreso formIngreso = null;
         try {
             formIngreso = new formularioIngreso(idc);
@@ -222,13 +221,12 @@ public class listadoChoferesCRUD extends javax.swing.JFrame {
         }
             formIngreso.setVisible(true);
             tbDatosGenerales.clearSelection();
-
             formIngreso.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
                 public void windowClosed(java.awt.event.WindowEvent windowEvent) {
                     if (listadoChoferesCRUD.datosActualizados) {
                         try {
-                            registrarModificacion("Editar");
+                            registrarModificacion("Editar", idc);
                         } catch (Exception e) {
                             e.printStackTrace();
                             JOptionPane.showMessageDialog(null, "Error al registrar la modificación: " + e.getMessage());
@@ -237,11 +235,9 @@ public class listadoChoferesCRUD extends javax.swing.JFrame {
                     } else {
                         System.out.println("No se han realizado cambios.");
                     }
+                    idc = 0;
                 }
             });
-
-            datosActualizados = false;
-            idc = 0;
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnAnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirActionPerformed
@@ -253,7 +249,8 @@ public class listadoChoferesCRUD extends javax.swing.JFrame {
             public void windowClosed(java.awt.event.WindowEvent windowEvent) {
                 if (listadoChoferesCRUD.datosAgregados) {
                     try {
-                        registrarModificacion("Agregar");
+                        int idChofer = formIngreso.getIdChofer();
+                        registrarModificacion("Agregar", idChofer);
                     } catch (Exception e) {
                         e.printStackTrace();
                         JOptionPane.showMessageDialog(null, "Error al registrar la modificación: " + e.getMessage());
@@ -290,7 +287,7 @@ public class listadoChoferesCRUD extends javax.swing.JFrame {
         viewEstados.setVisible(true);
         tbDatosGenerales.clearSelection();
         try {
-            registrarModificacion("Visualizar");
+            registrarModificacion("Visualizar", idc);
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error al registrar la modificación: " + e.getMessage());
@@ -309,30 +306,6 @@ public class listadoChoferesCRUD extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(listadoChoferesCRUD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(listadoChoferesCRUD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(listadoChoferesCRUD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(listadoChoferesCRUD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -351,7 +324,7 @@ public class listadoChoferesCRUD extends javax.swing.JFrame {
         });
     }
     private void consultarTabla() {
-    String sql = "SELECT c.id_Chofer, c.id_Cedula, c.nombre, c.apellido, v.id_Placa FROM choferes c LEFT JOIN vehiculo v ON c.id_Chofer = v.id_Chofer LEFT JOIN rutas r ON c.id_Chofer = r.id_Chofer WHERE c.estado = 'A' AND v.estado = 'A' AND r.estado = 'A';";
+        String sql = "SELECT c.id_Chofer, c.id_Cedula, c.nombre, c.apellido, v.id_Placa FROM choferes c LEFT JOIN vehiculo v ON c.id_Chofer = v.id_Chofer AND v.estado = 'A' LEFT JOIN rutas r ON c.id_Chofer = r.id_Chofer AND r.estado = 'A' WHERE c.estado = 'A';";
         try {
             connection = conexion.conectar();
             st = connection.createStatement();
@@ -419,7 +392,7 @@ public class listadoChoferesCRUD extends javax.swing.JFrame {
         }
     }
     
-    private void registrarModificacion(String accion) {
+    private void registrarModificacion(String accion, int idChofer) {
     if (administrador == null) {
         throw new IllegalStateException("Administrador no inicializado.");
     }
@@ -435,13 +408,14 @@ public class listadoChoferesCRUD extends javax.swing.JFrame {
         String fechaActual = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         String horaActual = new SimpleDateFormat("HH:mm:ss").format(new Date());
 
-        String sql = "INSERT INTO modificaciones (id_Administrador, fechaModificacion, horaModificacion, accionAdmin) "
-                + "VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO modificaciones (id_Administrador, fechaModificacion, horaModificacion, accionAdmin, id_UserMod) "
+                + "VALUES (?, ?, ?, ?, ?)";
         statement = connection.prepareStatement(sql);
         statement.setInt(1, administrador.getIdAdministrador());
         statement.setString(2, fechaActual);
         statement.setString(3, horaActual);
         statement.setString(4, accion);
+        statement.setInt(5, idChofer);
 
         statement.executeUpdate();
         } catch (SQLException e) {
@@ -459,5 +433,9 @@ public class listadoChoferesCRUD extends javax.swing.JFrame {
                 e.printStackTrace();
             }
         }
+    }
+    
+    public void registrarModificacionChofer(String accion, int idChofer) {
+        registrarModificacion(accion, idChofer);
     }
 }

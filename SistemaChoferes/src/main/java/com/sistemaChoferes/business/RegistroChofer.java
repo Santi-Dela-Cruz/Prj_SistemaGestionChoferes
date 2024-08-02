@@ -10,6 +10,7 @@ import com.sistemaChoferes.dataacess.dao.ChoferDAO;
 import com.sistemaChoferes.dataacess.dao.HuellaDAO;
 import com.sistemaChoferes.dataacess.dao.RutasDAO;
 import com.sistemaChoferes.dataacess.dao.VehiculoDAO;
+import com.sistemaChoferes.ui.listadoChoferesCRUD;
 
 public class RegistroChofer {
 
@@ -18,7 +19,7 @@ public class RegistroChofer {
     private VehiculoDAO vehiculoDAO = new VehiculoDAO();
     private RutasDAO rutasDAO = new RutasDAO();
 
-    public void registrarNuevoChofer(String idCedula, String nombre, String apellido, String telefono, 
+    public int registrarNuevoChofer(String idCedula, String nombre, String apellido, String telefono, 
                                  String idCodigoHuella, String idPlaca, String tipoVehiculo, 
                                  String nombreRuta, String direccion, String correo, 
                                  String categoriaLicencia, java.sql.Date fechaVencimientoLicencia, 
@@ -74,15 +75,17 @@ public class RegistroChofer {
             ruta.setNombreRuta(nombreRuta);
             ruta.setIdChofer(idChofer);
             rutasDAO.create(ruta);
-
+            
             System.out.println("Registro completado con éxito.");
+            System.out.println("ID del chofer registrado: " + idChofer);
+            return idChofer;
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Error al registrar el chofer: " + e.getMessage());
         }
     }
 
-    public void actualizarChofer(int idChofer, String idCedula, String nombre, String apellido, String telefono, 
+    public boolean actualizarChofer(int idChofer, String idCedula, String nombre, String apellido, String telefono, 
                              String idCodigoHuella, String idPlaca, String tipoVehiculo, String nombreRuta, 
                              String direccion, String correo, String categoriaLicencia, 
                              java.sql.Date fechaVencimientoLicencia, String marcaVehiculo, String modeloVehiculo) {
@@ -146,6 +149,7 @@ public class RegistroChofer {
             }
 
             System.out.println("Actualización completada con éxito.");
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Error al actualizar el chofer: " + e.getMessage());

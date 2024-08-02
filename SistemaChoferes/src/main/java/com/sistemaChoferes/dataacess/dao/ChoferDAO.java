@@ -65,7 +65,7 @@ public class ChoferDAO implements IDAO<Chofer> {
 
     @Override
     public boolean update(Chofer chofer) throws Exception {
-        String sql = "UPDATE choferes SET id_Cedula = ?, nombre = ?, apellido = ?, telefono = ?, direccion = ?, correo = ?, categoriaLicencia = ?, fechaVenciminetoLicencia = ?, estado = ? WHERE id_Chofer = ?";
+        String sql = "UPDATE choferes SET id_Cedula = ?, nombre = ?, apellido = ?, telefono = ?, direccion = ?, correo = ?, categoriaLicencia = ?, fechaVenciminetoLicencia = ? WHERE id_Chofer = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, chofer.getIdCedula());
             preparedStatement.setString(2, chofer.getNombre());
@@ -75,8 +75,7 @@ public class ChoferDAO implements IDAO<Chofer> {
             preparedStatement.setString(6, chofer.getCorreo());
             preparedStatement.setString(7, chofer.getCategoriaLicencia());
             preparedStatement.setDate(8, new java.sql.Date(chofer.getFechaVencimientoLicencia().getTime()));
-            preparedStatement.setString(9, chofer.getEstado());
-            preparedStatement.setInt(10, chofer.getIdChofer());
+            preparedStatement.setInt(9, chofer.getIdChofer());
 
             int result = preparedStatement.executeUpdate();
             return result > 0;

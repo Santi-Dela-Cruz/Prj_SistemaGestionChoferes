@@ -59,15 +59,15 @@ public class RegistroEstadosDAO implements IDAO<RegistroEstados> {
 
     @Override
     public boolean update(RegistroEstados registroEstado) throws Exception {
-        String sql = "UPDATE registro_estados SET fecha_Ingreso = ?, hora_Ingreso = ?, estado_Chofer = ?, autorizacion_Chofer = ?, id_Chofer = ?, estado = ? WHERE id_RegEst = ?";
+        String sql = "UPDATE registro_estados SET fecha_Ingreso = ?, hora_Ingreso = ?, estado_Chofer = ?, autorizacion_Chofer = ?, id_Chofer = ? WHERE id_RegEst = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setDate(1, new java.sql.Date(registroEstado.getFechaIngreso().getTime()));
             preparedStatement.setTime(2, registroEstado.getHoraIngreso());
             preparedStatement.setString(3, registroEstado.getEstadoChofer());
             preparedStatement.setBoolean(4, registroEstado.isAutorizacionChofer());
             preparedStatement.setInt(5, registroEstado.getIdChofer());
-            preparedStatement.setString(6, registroEstado.getEstado());
-            preparedStatement.setInt(7, registroEstado.getIdRegEst());
+            
+            preparedStatement.setInt(6, registroEstado.getIdRegEst());
 
             int result = preparedStatement.executeUpdate();
             return result > 0;
