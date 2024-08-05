@@ -1,16 +1,15 @@
 package ui.gui;
+
 import ui.customerControl.ComponentFactory;
 import ui.resources.InterfaceStyle;
 
 import javax.swing.*;
-
 import dataAccesComponent.dao.HuellaDAO;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class TestHuella extends JFrame {
+public class TestHuella extends JPanel {
 
     private JTextField txtIDHuella;
     private JLabel jLabel1, jLabel2, jLIngresarHuella;
@@ -22,25 +21,33 @@ public class TestHuella extends JFrame {
     }
 
     private void initComponents() {
-        setTitle("Test de Huella");
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
-        setSize(500, 500);
 
-        // Crear un panel con bordes redondeados usando ComponentFactory
+        // Panel superior: Crear un panel con bordes redondeados usando ComponentFactory
         jPanel1 = ComponentFactory.createRoundedPanel(new Color(102, 153, 255), 20, 20, true);
-        jPanel1.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 20));
+        jPanel1.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        jPanel1.setPreferredSize(new Dimension(300, 60)); // Cambiar el ancho del panel
 
         jLabel2 = ComponentFactory.createLabel("Esperando escaneo");
         jLabel2.setForeground(Color.WHITE);
         jPanel1.add(jLabel2);
 
-        add(jPanel1, BorderLayout.NORTH);
+        // Contenedor para centrar el panel en la parte superior
+        JPanel topPanelContainer = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        topPanelContainer.add(jPanel1);
+        topPanelContainer.setOpaque(false); // Fondo transparente
+        add(topPanelContainer, BorderLayout.NORTH);
 
+        // Imagen central: Crear un panel central con la imagen de la huella
         jLabel1 = new JLabel(new ImageIcon(InterfaceStyle.URL_ICON_SAVE));
         jLabel1.setHorizontalAlignment(JLabel.CENTER);
-        add(jLabel1, BorderLayout.CENTER);
+        jLabel1.setPreferredSize(new Dimension(100, 100)); // Cambiar tamaño de la imagen
+        JPanel centerPanel = new JPanel(new GridBagLayout());
+        centerPanel.add(jLabel1);
+        centerPanel.setOpaque(false); // Fondo transparente
+        add(centerPanel, BorderLayout.CENTER);
 
+        // Panel inferior: Campo de texto y botón
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
         bottomPanel.setOpaque(false);
 
@@ -48,9 +55,11 @@ public class TestHuella extends JFrame {
         bottomPanel.add(jLIngresarHuella);
 
         txtIDHuella = ComponentFactory.createTextField();
+        txtIDHuella.setPreferredSize(new Dimension(200, 30)); // Cambiar tamaño del campo de texto
         bottomPanel.add(txtIDHuella);
 
         btnIngresar = ComponentFactory.createButton("INGRESAR", InterfaceStyle.COLOR_FONT_LIGHT);
+        btnIngresar.setPreferredSize(new Dimension(120, 30)); // Cambiar tamaño del botón
         btnIngresar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 btnIngresarActionPerformed(evt);
@@ -81,25 +90,14 @@ public class TestHuella extends JFrame {
 
         if (idHuella != null) {
             InterfaceStyle.showMsg("Huella encontrada en la base de datos.");
-            this.dispose();
 
-            try {
-                InterfaceStyle.showMsgError("Abriendo Datos");
-            } catch (Exception e) {
-                InterfaceStyle.showMsgError("Error al abrir la ventana de datos del chofer: " + e.getMessage());
+            // Acceder al frame principal para cambiar el panel
+            JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+            if (frame instanceof MainPanelController) {
+                ((MainPanelController) frame).mostrarDatosChoferPanel(idHuella);
             }
-
         } else {
             InterfaceStyle.showMsgError("Huella no encontrada. Verifique el código e intente nuevamente.");
         }
     }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                new TestHuella().setVisible(true);
-            }
-        });
-    }
 }
-
