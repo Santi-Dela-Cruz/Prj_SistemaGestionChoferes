@@ -1,16 +1,7 @@
 package ui.forms;
 
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import ui.customerControl.ComponentFactory;
-import ui.resources.InterfaceStyle;
-import java.awt.Color;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import businessLogical.GestorChofer;
+import businessLogical.GestorModificaciones;
 import dataAccesComponent.dao.ChoferDAO;
 import dataAccesComponent.dao.HuellaDAO;
 import dataAccesComponent.dao.RutaDAO;
@@ -18,10 +9,19 @@ import dataAccesComponent.dao.VehiculoDAO;
 import dataAccesComponent.dataHelper.DataHelper;
 import dataAccesComponent.entity.Chofer;
 import dataAccesComponent.entity.Huella;
+import dataAccesComponent.entity.Modificaciones;
 import dataAccesComponent.entity.Ruta;
 import dataAccesComponent.entity.Vehiculo;
-import businessLogical.GestorModificaciones;
-import dataAccesComponent.entity.Modificaciones;
+import java.awt.Color;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import ui.customerControl.ComponentFactory;
+import ui.resources.InterfaceStyle;
 
 public class VisualizarDatos extends JPanel {
 
@@ -53,8 +53,6 @@ public class VisualizarDatos extends JPanel {
         gestorModificaciones = new GestorModificaciones();
         mostrarDatos(idChofer);
         consultarTabla(idChofer);
-
-        registrarModificacion("Visualización de chofer", idChofer);
     }
 
     private void setupPanel() {

@@ -1,11 +1,5 @@
 package ui.forms;
 
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
 import businessLogical.GestorChofer;
 import dataAccesComponent.dao.ChoferDAO;
 import dataAccesComponent.dao.HuellaDAO;
@@ -15,10 +9,15 @@ import dataAccesComponent.entity.Chofer;
 import dataAccesComponent.entity.Huella;
 import dataAccesComponent.entity.Ruta;
 import dataAccesComponent.entity.Vehiculo;
-import ui.customerControl.ComponentFactory;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import ui.customerControl.ComponentFactory;
 
 public class RegistroDatosForm extends JPanel {
 
@@ -199,7 +198,7 @@ public class RegistroDatosForm extends JPanel {
         }
     }
 
-    public void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {
+    public boolean btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {
         int result = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que quieres actualizar los datos?",
                 "Confirmación", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
         if (result == JOptionPane.OK_OPTION) {
@@ -217,16 +216,16 @@ public class RegistroDatosForm extends JPanel {
             String marcaVehiculo = txtMarcaVehiculo.getText();
             String categoriaLicencia = txtCategoriaLicencia.getText();
             String fechaVencimientoLicenciaStr = txtFechaVencimientoLicencia.getText();
-
+    
             if (cedula.isEmpty() || nombres.isEmpty() || apellidos.isEmpty() || telefono.isEmpty() ||
                     placa.isEmpty() || vehiculo.isEmpty() || ruta.isEmpty() || huella.isEmpty() || correo.isEmpty() ||
                     direccion.isEmpty() || modeloVehiculo.isEmpty() || marcaVehiculo.isEmpty()
                     || categoriaLicencia.isEmpty() || fechaVencimientoLicenciaStr.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Todos los campos deben ser llenados.", "Error",
                         JOptionPane.ERROR_MESSAGE);
-                return;
+                return false;
             }
-
+    
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             java.sql.Date fechaVencimientoLicencia;
             try {
@@ -235,26 +234,37 @@ public class RegistroDatosForm extends JPanel {
             } catch (ParseException e) {
                 JOptionPane.showMessageDialog(this, "Formato de fecha no válido. Use el formato 'yyyy-MM-dd'.", "Error",
                         JOptionPane.ERROR_MESSAGE);
-                return;
+                return false;
             }
-
+    
             try {
-                gestorChofer.actualizarChofer(idChofer, cedula, nombres, apellidos, telefono, huella, placa, vehiculo,
+                boolean actualizado = gestorChofer.actualizarChofer(idChofer, cedula, nombres, apellidos, telefono, huella, placa, vehiculo,
                         ruta, direccion, correo, categoriaLicencia, fechaVencimientoLicencia, marcaVehiculo,
                         modeloVehiculo);
-                JOptionPane.showMessageDialog(this, "Registro actualizado exitosamente.", "Éxito",
-                        JOptionPane.INFORMATION_MESSAGE);
-
-                // Notificar a PanelControl para mostrar la tabla nuevamente
-                PanelControl panelControl = (PanelControl) SwingUtilities.getWindowAncestor(this);
-                panelControl.mostrarTabla();
-
+                        
+                if (actualizado) {
+                    JOptionPane.showMessageDialog(this, "Registro actualizado exitosamente.", "Éxito",
+                            JOptionPane.INFORMATION_MESSAGE);
+        
+                    // Notificar a PanelControl para mostrar la tabla nuevamente
+                    PanelControl panelControl = (PanelControl) SwingUtilities.getWindowAncestor(this);
+                    panelControl.mostrarTabla();
+        
+                    return true; // Solo retornar true si la actualización fue exitosa
+                } else {
+                    return false; // Si la actualización falló, retornar false
+                }
+    
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Error al actualizar el registro: " + e.getMessage(), "Error",
                         JOptionPane.ERROR_MESSAGE);
+                return false;  // Indica que la actualización falló
             }
         }
+        
+        return false;  // En caso de que se cancele la actualización
     }
+    
 
     public void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {
         int result = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que quieres cancelar el ingreso?",
