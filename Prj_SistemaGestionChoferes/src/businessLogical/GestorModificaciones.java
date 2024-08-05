@@ -1,13 +1,11 @@
 package businessLogical;
 
+import dataAccesComponent.dataHelper.DataHelper;
+import dataAccesComponent.entity.Modificaciones;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-
-import dataAccesComponent.dataHelper.DataHelper;
-import dataAccesComponent.entity.Modificaciones;
 
 public class GestorModificaciones {
 
@@ -20,7 +18,7 @@ public class GestorModificaciones {
                 throw new SQLException("No se pudo establecer una conexión con la base de datos.");
             }
 
-            String sql = "INSERT INTO modificaciones (id_Administrador, fechaModificacion, horaModificacion, accionAdmin, id_UserMod) "
+            String sql = "INSERT INTO modificaciones (id_Administrador, fechaModificacion, horaModificacion, accionAdmin, id_ChoferModificacion) "
                     + "VALUES (?, ?, ?, ?, ?)";
             statement = connection.prepareStatement(sql);
             statement.setInt(1, modificacion.getIdAdministrador());

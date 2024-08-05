@@ -1,14 +1,13 @@
 package ui.forms;
 
-import javax.swing.*;
-import ui.customerControl.ComponentFactory;
-import ui.resources.InterfaceStyle;
+import businessLogical.GestorModificaciones;
+import dataAccesComponent.entity.Modificaciones;
 import java.awt.Color;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import businessLogical.GestorModificaciones;
-import dataAccesComponent.entity.Modificaciones;
+import javax.swing.*;
+import ui.customerControl.ComponentFactory;
+import ui.resources.InterfaceStyle;
 
 public class PanelControl extends JFrame {
 
@@ -237,10 +236,10 @@ public class PanelControl extends JFrame {
                 panelCambiable.add(visualizarDatos);
                 panelCambiable.revalidate();
                 panelCambiable.repaint();
-
+    
                 toggleButtons(false);
                 btnRegresar.setVisible(true); // Usar el botón de regresar en lugar de eliminar
-
+    
                 // Registrar la visualización en el log
                 registrarModificacion("Chofer visualizado", Integer.parseInt(id));
             } catch (Exception e) {
@@ -252,32 +251,59 @@ public class PanelControl extends JFrame {
                     JOptionPane.ERROR_MESSAGE);
         }
     }
+    
 
     private void handleGuardarAction() {
         JPanel currentPanel = (JPanel) panelCambiable.getComponent(0);
         if (currentPanel instanceof RegistroDatosForm) {
-            ((RegistroDatosForm) currentPanel).btnGuardarActionPerformed(null);
-
-            // Obtener el ID del chofer que se acaba de guardar
-            int idChoferModificado = ((RegistroDatosForm) currentPanel).getIdChofer();
-
-            // Registrar la modificación en el log
-            registrarModificacion("Chofer agregado", idChoferModificado);
+            try {
+                ((RegistroDatosForm) currentPanel).btnGuardarActionPerformed(null);
+    
+                // Obtener el ID del chofer que se acaba de guardar
+                int idChoferModificado = ((RegistroDatosForm) currentPanel).getIdChofer();
+    
+                // Solo registrar la modificación si el idChofer es válido (mayor a 0)
+                if (idChoferModificado > 0) {
+                    registrarModificacion("Chofer agregado", idChoferModificado);
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al guardar el chofer: " + e.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
+    
 
     private void handleActualizarAction() {
         JPanel currentPanel = (JPanel) panelCambiable.getComponent(0);
         if (currentPanel instanceof RegistroDatosForm) {
-            ((RegistroDatosForm) currentPanel).btnActualizarActionPerformed(null);
-
-            // Obtener el ID del chofer que se acaba de actualizar
-            int idChoferModificado = ((RegistroDatosForm) currentPanel).getIdChofer();
-
-            // Registrar la modificación en el log
-            registrarModificacion("Chofer actualizado", idChoferModificado);
+            try {
+                System.out.println("Iniciando la actualización del chofer...");
+    
+                boolean actualizado = ((RegistroDatosForm) currentPanel).btnActualizarActionPerformed(null);
+    
+                if (actualizado) {
+                    int idChoferModificado = ((RegistroDatosForm) currentPanel).getIdChofer();
+                    if (idChoferModificado > 0) {
+                        System.out.println("Actualización exitosa, registrando la modificación...");
+                        registrarModificacion("Chofer actualizado", idChoferModificado);
+                    }
+                } else {
+                    System.out.println("Actualización fallida, no se registrará la modificación.");
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al actualizar el chofer: " + e.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+                System.out.println("Error durante la actualización: " + e.getMessage());
+            }
         }
     }
+    
+    
+    
+    
+    
+    
 
     private void handleRegresarAction() {
         int result = JOptionPane.showConfirmDialog(this, "¿Desea regresar al panel anterior?", "Confirmar regreso",

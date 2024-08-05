@@ -1,0 +1,151 @@
+CREATE TABLE `administrador` (
+	`id` INT(10) NOT NULL AUTO_INCREMENT,
+	`usuarioAdmin` VARCHAR(50) NOT NULL COLLATE 'utf8mb3_spanish_ci',
+	`nombreAdmin` VARCHAR(50) NOT NULL COLLATE 'utf8mb3_spanish_ci',
+	`apellidoAdmin` VARCHAR(50) NOT NULL COLLATE 'utf8mb3_spanish_ci',
+	`correoAdmin` VARCHAR(50) NOT NULL COLLATE 'utf8mb3_spanish_ci',
+	`contrasenaAdmin` VARCHAR(50) NOT NULL COLLATE 'utf8mb3_spanish_ci',
+	`fechaIngreso` DATE NOT NULL,
+	`horaIngreso` TIME NOT NULL,
+	`estadoAdmin` VARCHAR(50) NOT NULL COLLATE 'utf8mb3_spanish_ci',
+	`cargoAdmin` VARCHAR(50) NOT NULL COLLATE 'utf8mb3_spanish_ci',
+	`telefono` VARCHAR(50) NOT NULL COLLATE 'utf8mb3_spanish_ci',
+	`direccion` VARCHAR(50) NOT NULL COLLATE 'utf8mb3_spanish_ci',
+	`estado` CHAR(1) NOT NULL DEFAULT 'A' COLLATE 'utf8mb3_spanish_ci',
+	PRIMARY KEY (`id`) USING BTREE,
+	UNIQUE INDEX `UNIQUE_CORREO` (`correoAdmin`, `contrasenaAdmin`, `usuarioAdmin`, `telefono`) USING BTREE,
+	CONSTRAINT `administrador_chk_1` CHECK ((`estado` in (_utf8mb4\'A\',_utf8mb4\'X\')))
+)
+COLLATE='utf8mb3_spanish_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=3
+;
+
+
+CREATE TABLE `choferes` (
+	`id_Chofer` INT(10) NOT NULL AUTO_INCREMENT,
+	`id_Cedula` VARCHAR(10) NOT NULL COLLATE 'utf8mb4_spanish_ci',
+	`nombre` VARCHAR(100) NOT NULL COLLATE 'utf8mb4_unicode_ci',
+	`apellido` VARCHAR(100) NOT NULL COLLATE 'utf8mb4_unicode_ci',
+	`telefono` VARCHAR(10) NOT NULL COLLATE 'utf8mb4_spanish_ci',
+	`direccion` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`correo` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`categoriaLicencia` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`fechaVenciminetoLicencia` DATE NOT NULL,
+	`estado` CHAR(1) NOT NULL DEFAULT 'A' COLLATE 'utf8mb4_0900_ai_ci',
+	PRIMARY KEY (`id_Chofer`) USING BTREE,
+	UNIQUE INDEX `UNIQUE KEY` (`id_Cedula`, `telefono`, `correo`) USING BTREE,
+	CONSTRAINT `choferes_chk_1` CHECK ((`estado` in (_utf8mb4\'A\',_utf8mb4\'X\')))
+)
+COLLATE='utf8mb4_0900_ai_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=4
+;
+
+
+CREATE TABLE `huella` (
+	`id_Huella` INT(10) NOT NULL AUTO_INCREMENT,
+	`id_Codigo_Huella` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_spanish_ci',
+	`fecha_RegHuella` DATE NOT NULL,
+	`id_Chofer` INT(10) NOT NULL,
+	`estado` CHAR(1) NOT NULL DEFAULT 'A' COLLATE 'utf8mb4_0900_ai_ci',
+	PRIMARY KEY (`id_Huella`) USING BTREE,
+	UNIQUE INDEX `UK_CodigoHuella` (`id_Codigo_Huella`) USING BTREE,
+	INDEX `FK_huella_choferes` (`id_Chofer`) USING BTREE,
+	CONSTRAINT `FK_huella_choferes` FOREIGN KEY (`id_Chofer`) REFERENCES `choferes` (`id_Chofer`) ON UPDATE NO ACTION ON DELETE NO ACTION,
+	CONSTRAINT `huella_chk_1` CHECK ((`estado` in (_utf8mb4\'A\',_utf8mb4\'X\')))
+)
+COLLATE='utf8mb4_0900_ai_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=4
+;
+
+
+CREATE TABLE `modificaciones` (
+	`id` INT(10) NOT NULL AUTO_INCREMENT,
+	`id_Administrador` INT(10) NOT NULL,
+	`id_ChoferModificacion` INT(10) NOT NULL,
+	`fechaModificacion` VARCHAR(50) NOT NULL COLLATE 'utf8mb3_spanish_ci',
+	`horaModificacion` VARCHAR(50) NOT NULL COLLATE 'utf8mb3_spanish_ci',
+	`accionAdmin` VARCHAR(50) NOT NULL COLLATE 'utf8mb3_spanish_ci',
+	`estado` CHAR(1) NOT NULL DEFAULT 'A' COLLATE 'utf8mb3_spanish_ci',
+	PRIMARY KEY (`id`) USING BTREE,
+	INDEX `FK_Tabla8` (`id_Administrador`) USING BTREE,
+	CONSTRAINT `FK_Tabla8` FOREIGN KEY (`id_Administrador`) REFERENCES `administrador` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION,
+	CONSTRAINT `modificaciones_chk_1` CHECK ((`estado` in (_utf8mb3\'A\',_utf8mb3\'X\')))
+)
+COLLATE='utf8mb3_spanish_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=35
+;
+
+
+CREATE TABLE `registro_estados` (
+	`id_RegEst` INT(10) NOT NULL AUTO_INCREMENT,
+	`fecha_Ingreso` DATE NOT NULL,
+	`hora_Ingreso` TIME NOT NULL,
+	`estado_Chofer` VARCHAR(20) NOT NULL COLLATE 'utf8mb4_spanish_ci',
+	`autorizacion_Chofer` TINYINT(1) NOT NULL,
+	`id_Chofer` INT(10) NOT NULL,
+	`estado` CHAR(1) NOT NULL DEFAULT 'A' COLLATE 'utf8mb4_spanish_ci',
+	PRIMARY KEY (`id_RegEst`) USING BTREE,
+	INDEX `FK_Tabla_RegEst` (`id_Chofer`) USING BTREE,
+	CONSTRAINT `FK_Tabla_RegEst` FOREIGN KEY (`id_Chofer`) REFERENCES `choferes` (`id_Chofer`) ON UPDATE NO ACTION ON DELETE NO ACTION,
+	CONSTRAINT `registro_estados_chk_1` CHECK ((`estado` in (_utf8mb4\'A\',_utf8mb4\'X\')))
+)
+COLLATE='utf8mb4_spanish_ci'
+ENGINE=InnoDB
+;
+
+
+CREATE TABLE `registro_penalizaciones` (
+	`id_RegPen` INT(10) NOT NULL AUTO_INCREMENT,
+	`n_Infracciones` INT(10) NOT NULL,
+	`penalizacion_Chofer` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_spanish_ci',
+	`id_Chofer` INT(10) NOT NULL,
+	`estado` CHAR(1) NOT NULL DEFAULT 'A' COLLATE 'utf8mb4_spanish_ci',
+	PRIMARY KEY (`id_RegPen`) USING BTREE,
+	INDEX `FK_Tabla_RegPen` (`id_Chofer`) USING BTREE,
+	CONSTRAINT `FK_Tabla_RegPen` FOREIGN KEY (`id_Chofer`) REFERENCES `choferes` (`id_Chofer`) ON UPDATE NO ACTION ON DELETE NO ACTION,
+	CONSTRAINT `registro_penalizaciones_chk_1` CHECK ((`estado` in (_utf8mb4\'A\',_utf8mb4\'X\')))
+)
+COLLATE='utf8mb4_spanish_ci'
+ENGINE=InnoDB
+;
+
+
+CREATE TABLE `rutas` (
+	`id_Ruta` INT(10) NOT NULL AUTO_INCREMENT,
+	`nombre_Ruta` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_spanish_ci',
+	`id_Chofer` INT(10) NOT NULL,
+	`estado` CHAR(1) NOT NULL DEFAULT 'A' COLLATE 'utf8mb4_0900_ai_ci',
+	PRIMARY KEY (`id_Ruta`) USING BTREE,
+	UNIQUE INDEX `UNIQUE_Ruta` (`nombre_Ruta`) USING BTREE,
+	INDEX `FK_Tabla_Rutas` (`id_Chofer`) USING BTREE,
+	CONSTRAINT `FK_Tabla_Rutas` FOREIGN KEY (`id_Chofer`) REFERENCES `choferes` (`id_Chofer`) ON UPDATE NO ACTION ON DELETE NO ACTION,
+	CONSTRAINT `rutas_chk_1` CHECK ((`estado` in (_utf8mb4\'A\',_utf8mb4\'X\')))
+)
+COLLATE='utf8mb4_0900_ai_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=4
+;
+
+
+CREATE TABLE `vehiculo` (
+	`id_Vehiculo` INT(10) NOT NULL AUTO_INCREMENT,
+	`id_Placa` VARCHAR(8) NOT NULL COLLATE 'utf8mb4_spanish_ci',
+	`tipo_Vehiculo` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_spanish_ci',
+	`id_Chofer` INT(10) NOT NULL,
+	`marcaVehiculo` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`modeloVehiculo` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`estado` CHAR(1) NOT NULL DEFAULT 'A' COLLATE 'utf8mb4_0900_ai_ci',
+	PRIMARY KEY (`id_Vehiculo`) USING BTREE,
+	UNIQUE INDEX `UNIQUE_Placa` (`id_Placa`) USING BTREE,
+	INDEX `FK_Tabla_Vehiculo` (`id_Chofer`) USING BTREE,
+	CONSTRAINT `FK_Tabla_Vehiculo` FOREIGN KEY (`id_Chofer`) REFERENCES `choferes` (`id_Chofer`) ON UPDATE NO ACTION ON DELETE NO ACTION,
+	CONSTRAINT `vehiculo_chk_1` CHECK ((`estado` in (_utf8mb4\'A\',_utf8mb4\'X\')))
+)
+COLLATE='utf8mb4_0900_ai_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=4
+;

@@ -83,73 +83,75 @@ public class GestorChofer {
     }
 
     public boolean actualizarChofer(int idChofer, String idCedula, String nombre, String apellido, String telefono,
-            String idCodigoHuella, String idPlaca, String tipoVehiculo, String nombreRuta,
-            String direccion, String correo, String categoriaLicencia,
-            java.sql.Date fechaVencimientoLicencia, String marcaVehiculo, String modeloVehiculo) {
-        try {
-            Chofer chofer = choferDAO.readBy(idChofer);
-            if (chofer == null) {
-                throw new RuntimeException("Error: El chofer no existe.");
-            }
-
-            if (!chofer.getIdCedula().equals(idCedula) && choferDAO.existeChoferPorCedula(idCedula)) {
-                throw new RuntimeException("Error: La cédula ya existe en el sistema.");
-            }
-
-            chofer.setIdCedula(idCedula);
-            chofer.setNombre(nombre);
-            chofer.setApellido(apellido);
-            chofer.setTelefono(telefono);
-            chofer.setCorreo(correo);
-            chofer.setDireccion(direccion);
-            chofer.setCategoriaLicencia(categoriaLicencia);
-            chofer.setFechaVencimientoLicencia(fechaVencimientoLicencia);
-            choferDAO.update(chofer);
-
-            Huella huellaExistente = huellaDAO.readBy(idChofer);
-            if (huellaExistente != null) {
-                huellaExistente.setIdCodigoHuella(idCodigoHuella);
-                huellaDAO.update(huellaExistente);
-            } else {
-                Huella huella = new Huella();
-                huella.setIdCodigoHuella(idCodigoHuella);
-                huella.setIdChofer(idChofer);
-                huellaDAO.create(huella);
-            }
-
-            Vehiculo vehiculo = vehiculoDAO.obtenerVehiculoPorChoferId(idChofer);
-            if (vehiculo == null) {
-                vehiculo = new Vehiculo();
-                vehiculo.setIdPlaca(idPlaca);
-                vehiculo.setTipoVehiculo(tipoVehiculo);
-                vehiculo.setIdChofer(idChofer);
-                vehiculo.setMarcaVehiculo(marcaVehiculo);
-                vehiculo.setModeloVehiculo(modeloVehiculo);
-                vehiculoDAO.create(vehiculo);
-            } else {
-                vehiculo.setIdPlaca(idPlaca);
-                vehiculo.setTipoVehiculo(tipoVehiculo);
-                vehiculo.setMarcaVehiculo(marcaVehiculo);
-                vehiculo.setModeloVehiculo(modeloVehiculo);
-                vehiculoDAO.update(vehiculo);
-            }
-
-            Ruta ruta = rutasDAO.readBy(idChofer);
-            if (ruta == null) {
-                ruta = new Ruta();
-                ruta.setNombreRuta(nombreRuta);
-                ruta.setIdChofer(idChofer);
-                rutasDAO.create(ruta);
-            } else {
-                ruta.setNombreRuta(nombreRuta);
-                rutasDAO.update(ruta);
-            }
-
-            System.out.println("Actualización completada con éxito.");
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("Error al actualizar el chofer: " + e.getMessage());
+        String idCodigoHuella, String idPlaca, String tipoVehiculo, String nombreRuta,
+        String direccion, String correo, String categoriaLicencia,
+        java.sql.Date fechaVencimientoLicencia, String marcaVehiculo, String modeloVehiculo) {
+    try {
+        Chofer chofer = choferDAO.readBy(idChofer);
+        if (chofer == null) {
+            throw new RuntimeException("Error: El chofer no existe.");
         }
+
+        if (!chofer.getIdCedula().equals(idCedula) && choferDAO.existeChoferPorCedula(idCedula)) {
+            throw new RuntimeException("Error: La cédula ya existe en el sistema.");
+        }
+
+        chofer.setIdCedula(idCedula);
+        chofer.setNombre(nombre);
+        chofer.setApellido(apellido);
+        chofer.setTelefono(telefono);
+        chofer.setCorreo(correo);
+        chofer.setDireccion(direccion);
+        chofer.setCategoriaLicencia(categoriaLicencia);
+        chofer.setFechaVencimientoLicencia(fechaVencimientoLicencia);
+        choferDAO.update(chofer);
+
+        Huella huellaExistente = huellaDAO.readBy(idChofer);
+        if (huellaExistente != null) {
+            huellaExistente.setIdCodigoHuella(idCodigoHuella);
+            huellaDAO.update(huellaExistente);
+        } else {
+            Huella huella = new Huella();
+            huella.setIdCodigoHuella(idCodigoHuella);
+            huella.setIdChofer(idChofer);
+            huellaDAO.create(huella);
+        }
+
+        Vehiculo vehiculo = vehiculoDAO.obtenerVehiculoPorChoferId(idChofer);
+        if (vehiculo == null) {
+            vehiculo = new Vehiculo();
+            vehiculo.setIdPlaca(idPlaca);
+            vehiculo.setTipoVehiculo(tipoVehiculo);
+            vehiculo.setIdChofer(idChofer);
+            vehiculo.setMarcaVehiculo(marcaVehiculo);
+            vehiculo.setModeloVehiculo(modeloVehiculo);
+            vehiculoDAO.create(vehiculo);
+        } else {
+            vehiculo.setIdPlaca(idPlaca);
+            vehiculo.setTipoVehiculo(tipoVehiculo);
+            vehiculo.setMarcaVehiculo(marcaVehiculo);
+            vehiculo.setModeloVehiculo(modeloVehiculo);
+            vehiculoDAO.update(vehiculo);
+        }
+
+        Ruta ruta = rutasDAO.readBy(idChofer);
+        if (ruta == null) {
+            ruta = new Ruta();
+            ruta.setNombreRuta(nombreRuta);
+            ruta.setIdChofer(idChofer);
+            rutasDAO.create(ruta);
+        } else {
+            ruta.setNombreRuta(nombreRuta);
+            rutasDAO.update(ruta);
+        }
+
+        System.out.println("Actualización completada con éxito.");
+        return true; // Indica que la actualización fue exitosa
+    } catch (Exception e) {
+        e.printStackTrace();
+        return false; // Indica que la actualización falló
     }
+}
+
+
 }

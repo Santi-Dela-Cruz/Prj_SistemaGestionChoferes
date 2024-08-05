@@ -1,15 +1,14 @@
 package dataAccesComponent.dao;
 
+import dataAccesComponent.IDAO;
+import dataAccesComponent.dataHelper.DataHelper;
+import dataAccesComponent.entity.Modificaciones;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import dataAccesComponent.IDAO;
-import dataAccesComponent.dataHelper.DataHelper;
-import dataAccesComponent.entity.Modificaciones;
 
 public class ModificacionesDAO implements IDAO<Modificaciones> {
     private Connection connection;
@@ -64,7 +63,7 @@ public class ModificacionesDAO implements IDAO<Modificaciones> {
 
     @Override
     public boolean update(Modificaciones modificaciones) throws Exception {
-        String sql = "UPDATE modificaciones SET id_Administrador = ?,  id_UserMod = ?, fechaModificacion = ?, horaModificacion = ?, accionAdmin = ? WHERE id = ?";
+        String sql = "UPDATE modificaciones SET id_Administrador = ?,  id_ChoferModificacion = ?, fechaModificacion = ?, horaModificacion = ?, accionAdmin = ? WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, modificaciones.getIdAdministrador());
             preparedStatement.setInt(2, modificaciones.getIdChoferModificacion());
@@ -103,7 +102,7 @@ public class ModificacionesDAO implements IDAO<Modificaciones> {
                     modificaciones = new Modificaciones();
                     modificaciones.setId(rs.getInt("id"));
                     modificaciones.setIdAdministrador(rs.getInt("id_Administrador"));
-                    modificaciones.setIdChoferModificacion(rs.getInt(" id_UserMod"));
+                    modificaciones.setIdChoferModificacion(rs.getInt(" id_ChoferModificacion"));
                     modificaciones.setFechaModificacion(rs.getDate("fechaModificacion"));
                     modificaciones.setHoraModificacion(rs.getString("horaModificacion"));
                     modificaciones.setAccionAdmin(rs.getString("accionAdmin"));
