@@ -18,7 +18,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import ui.customerControl.ComponentFactory;
@@ -88,6 +87,7 @@ public class VisualizarDatos extends JPanel {
         Ruta rutas = rutasDAO.obtenerRutaPorChoferId(idc);
         ModificacionesDAO modificacionesDAO = new ModificacionesDAO();
         Modificaciones primeraModificacion = modificacionesDAO.obtenerPrimeraModificacionPorChoferId(idc);
+        Modificaciones ultimaModificacion = modificacionesDAO.obtenerUltimaModificacionPorChoferId(idc); // Nuevo código
 
         if (chofer != null) {
             String cedula = chofer.getIdCedula();
@@ -98,9 +98,11 @@ public class VisualizarDatos extends JPanel {
             String placa = vehiculo != null ? vehiculo.getIdPlaca() : "N/A";
             String ruta = rutas != null ? rutas.getNombreRuta() : "N/A";
             String fechaIngreso = primeraModificacion != null
-                    ? new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(primeraModificacion.getFechaModificacion())
+                    ? new SimpleDateFormat("dd/MM/yyyy").format(primeraModificacion.getFechaModificacion())
                     : "N/A";
-            String fechaModificacion = fechaIngreso;
+            String fechaModificacion = ultimaModificacion != null
+                    ? new SimpleDateFormat("dd/MM/yyyy").format(ultimaModificacion.getFechaModificacion())
+                    : "N/A"; // Nuevo código
 
             panelControl.setChoferData(cedula, nombres, apellidos, telefono, huellaId, placa, ruta, fechaIngreso,
                     fechaModificacion);
@@ -150,20 +152,5 @@ public class VisualizarDatos extends JPanel {
 
     private void regresar() {
         panelControl.mostrarTabla();
-    }
-
-    private void registrarModificacion(String accion, int idChofer) {
-        try {
-            Modificaciones modificacion = new Modificaciones();
-            modificacion.setIdAdministrador(panelControl.obtenerIdAdministrador());
-            Date now = new Date();
-            modificacion.setFechaModificacion(new java.sql.Date(now.getTime()));
-            modificacion.setHoraModificacion(new SimpleDateFormat("HH:mm:ss").format(now));
-            modificacion.setAccionAdmin(accion + " - Chofer ID: " + idChofer);
-            gestorModificaciones.registrarModificacion(modificacion);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al registrar la modificación: " + e.getMessage(),
-                    "Error", JOptionPane.ERROR_MESSAGE);
-        }
     }
 }

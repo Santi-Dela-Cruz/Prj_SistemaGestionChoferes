@@ -132,4 +132,27 @@ public class ModificacionesDAO implements IDAO<Modificaciones> {
         return modificaciones;
     }
 
+    public Modificaciones obtenerUltimaModificacionPorChoferId(int idChofer) throws Exception {
+        Modificaciones modificaciones = null;
+        String sql = "SELECT * FROM modificacion WHERE chofer_id_modificado = ? AND modificacion_accion = 'Chofer actualizado' ORDER BY modificacion_fecha DESC, modificacion_hora DESC LIMIT 1";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, idChofer);
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                if (rs.next()) {
+                    modificaciones = new Modificaciones();
+                    modificaciones.setId(rs.getInt("modificacion_id"));
+                    modificaciones.setIdAdministrador(rs.getInt("admin_id"));
+                    modificaciones.setIdChoferModificacion(rs.getInt("chofer_id_modificado"));
+                    modificaciones.setFechaModificacion(rs.getDate("modificacion_fecha"));
+                    modificaciones.setHoraModificacion(rs.getString("modificacion_hora"));
+                    modificaciones.setAccionAdmin(rs.getString("modificacion_accion"));
+                }
+            }
+        } catch (SQLException e) {
+            throw new Exception("Error al obtener la última modificación por chofer ID y acción 'Chofer actualizado'",
+                    e);
+        }
+        return modificaciones;
+    }
+
 }
