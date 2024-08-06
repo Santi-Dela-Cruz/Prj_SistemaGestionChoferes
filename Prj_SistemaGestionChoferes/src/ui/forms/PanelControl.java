@@ -17,7 +17,7 @@ public class PanelControl extends JFrame {
     private JLabel lblNombre, lblCargo, lblEstado;
     private JLabel lbLlenoCedula, lbLlenoEstado, lbLlenoNombres, lbLlenoApellidos, lbLlenoTelefono, lbLlenoHuella,
             lbLlenoPlaca, lbLlenoRuta, lbLlenoFechaIn, lbLlenoFechaMod;
-    private JButton btnAdd, btnEdit, btnView, btnDelete, btnGuardar, btnActualizar, btnCancelar, btnRegresar;
+    private JButton btnAdd, btnEdit, btnView, btnExit, btnGuardar, btnActualizar, btnCancelar, btnRegresar;
 
     private GestorModificaciones gestorModificaciones;
     private int idAdministrador;
@@ -129,11 +129,12 @@ public class PanelControl extends JFrame {
         btnView.addActionListener(e -> handleViewAction());
         add(btnView);
 
-        btnDelete = ComponentFactory.createCircularButton(new ImageIcon(InterfaceStyle.URL_ICON_DELETE),
+        btnExit = ComponentFactory.createCircularButton(new ImageIcon(InterfaceStyle.URL_ICON_EXIT),
                 new Color(100, 100, 255),
                 new Color(120, 120, 255), new Color(80, 80, 255));
-        btnDelete.setBounds(baseX + 3 * spacing, 10, 50, 50);
-        add(btnDelete);
+        btnExit.setBounds(baseX + 3 * spacing, 10, 50, 50);
+        btnExit.addActionListener(e -> handleExitAction());
+        add(btnExit);
 
         btnGuardar = ComponentFactory.createCircularButton(new ImageIcon(InterfaceStyle.URL_ICON_SAVE),
                 new Color(100, 255, 100),
@@ -185,7 +186,7 @@ public class PanelControl extends JFrame {
         btnGuardar.setBounds(btnActualizar.getBounds());
         btnGuardar.setVisible(true);
         btnActualizar.setVisible(false);
-        btnCancelar.setBounds(btnDelete.getBounds());
+        btnCancelar.setBounds(btnExit.getBounds());
         btnCancelar.setVisible(true);
 
         panelCambiable.removeAll();
@@ -204,7 +205,7 @@ public class PanelControl extends JFrame {
             btnActualizar.setBounds(btnActualizar.getBounds());
             btnActualizar.setVisible(true);
             btnGuardar.setVisible(false);
-            btnCancelar.setBounds(btnDelete.getBounds());
+            btnCancelar.setBounds(btnExit.getBounds());
             btnCancelar.setVisible(true);
 
             String id = listadoChoferesForm.getTable().getValueAt(selectedRow, 0).toString();
@@ -225,6 +226,18 @@ public class PanelControl extends JFrame {
         }
     }
 
+    private void handleExitAction() {
+        int result = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas salir?", "Confirmar salida",
+                JOptionPane.YES_NO_OPTION);
+
+        if (result == JOptionPane.YES_OPTION) {
+            // Cerrar el PanelControl y mostrar la ventana de login
+            this.dispose();
+            LoginAdministradorForm loginForm = new LoginAdministradorForm();
+            loginForm.setVisible(true);
+        }
+    }
+
     private void handleViewAction() {
         int selectedRow = listadoChoferesForm.getTable().getSelectedRow();
         if (selectedRow >= 0) {
@@ -236,10 +249,10 @@ public class PanelControl extends JFrame {
                 panelCambiable.add(visualizarDatos);
                 panelCambiable.revalidate();
                 panelCambiable.repaint();
-    
+
                 toggleButtons(false);
                 btnRegresar.setVisible(true); // Usar el botón de regresar en lugar de eliminar
-    
+
                 // Registrar la visualización en el log
                 registrarModificacion("Chofer visualizado", Integer.parseInt(id));
             } catch (Exception e) {
@@ -251,37 +264,35 @@ public class PanelControl extends JFrame {
                     JOptionPane.ERROR_MESSAGE);
         }
     }
-    
 
     private void handleGuardarAction() {
         JPanel currentPanel = (JPanel) panelCambiable.getComponent(0);
         if (currentPanel instanceof RegistroDatosForm) {
             try {
                 ((RegistroDatosForm) currentPanel).btnGuardarActionPerformed(null);
-    
+
                 // Obtener el ID del chofer que se acaba de guardar
                 int idChoferModificado = ((RegistroDatosForm) currentPanel).getIdChofer();
-    
+
                 // Solo registrar la modificación si el idChofer es válido (mayor a 0)
                 if (idChoferModificado > 0) {
                     registrarModificacion("Chofer agregado", idChoferModificado);
                 }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Error al guardar el chofer: " + e.getMessage(),
-                    "Error", JOptionPane.ERROR_MESSAGE);
+                        "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
-    
 
     private void handleActualizarAction() {
         JPanel currentPanel = (JPanel) panelCambiable.getComponent(0);
         if (currentPanel instanceof RegistroDatosForm) {
             try {
                 System.out.println("Iniciando la actualización del chofer...");
-    
+
                 boolean actualizado = ((RegistroDatosForm) currentPanel).btnActualizarActionPerformed(null);
-    
+
                 if (actualizado) {
                     int idChoferModificado = ((RegistroDatosForm) currentPanel).getIdChofer();
                     if (idChoferModificado > 0) {
@@ -293,17 +304,11 @@ public class PanelControl extends JFrame {
                 }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Error al actualizar el chofer: " + e.getMessage(),
-                    "Error", JOptionPane.ERROR_MESSAGE);
+                        "Error", JOptionPane.ERROR_MESSAGE);
                 System.out.println("Error durante la actualización: " + e.getMessage());
             }
         }
     }
-    
-    
-    
-    
-    
-    
 
     private void handleRegresarAction() {
         int result = JOptionPane.showConfirmDialog(this, "¿Desea regresar al panel anterior?", "Confirmar regreso",
@@ -338,7 +343,7 @@ public class PanelControl extends JFrame {
         btnAdd.setVisible(showControlButtons);
         btnEdit.setVisible(showControlButtons);
         btnView.setVisible(showControlButtons);
-        btnDelete.setVisible(showControlButtons);
+        btnExit.setVisible(showControlButtons);
         btnGuardar.setVisible(!showControlButtons && btnGuardar.isVisible());
         btnActualizar.setVisible(!showControlButtons && btnActualizar.isVisible());
         btnCancelar.setVisible(!showControlButtons);
