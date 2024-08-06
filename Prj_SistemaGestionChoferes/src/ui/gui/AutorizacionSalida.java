@@ -1,10 +1,7 @@
 package ui.gui;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.*;
+import java.awt.*;
 import ui.customerControl.ComponentFactory;
 
 public class AutorizacionSalida extends JPanel {
@@ -14,27 +11,6 @@ public class AutorizacionSalida extends JPanel {
     public AutorizacionSalida(boolean estaBorracho) {
         initComponents();
         mostrarResultado(estaBorracho);
-
-        // Crear un Timer que cambie de panel después de 10 segundos
-        Timer timer = new Timer(10000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(AutorizacionSalida.this);
-                if (frame instanceof MainPanelController) {
-                    // Cambiar al panel TestHuella
-                    ((MainPanelController) frame).reiniciarCiclo();
-
-                    // Asegurarse de que el panel de AutorizacionSalida ya no esté en el mainPanel
-                    Container parent = AutorizacionSalida.this.getParent();
-                    if (parent != null) {
-                        parent.remove(AutorizacionSalida.this);
-                    }
-                }
-            }
-        });
-
-        timer.setRepeats(false); // El temporizador solo debe ejecutarse una vez
-        timer.start(); // Iniciar el temporizador
     }
 
     private void initComponents() {

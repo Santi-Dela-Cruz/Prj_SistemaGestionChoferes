@@ -5,7 +5,6 @@ import java.awt.Cursor;
 import java.awt.Font;
 import java.net.URL;
 import javax.swing.BorderFactory;
-import javax.swing.Icon;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.CompoundBorder;

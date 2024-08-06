@@ -10,6 +10,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 import javax.swing.*;
 import ui.customerControl.ComponentFactory;
 
@@ -60,9 +62,17 @@ public class DatosChofer extends JPanel {
         jLFechaIngreso = addLabelAndField("Hora de salida", 370, 200, 200, 30, 370, 230, 200, 30);
 
         // Botón "Test Alcohol"
-        JButton jButton1 = ComponentFactory.createChamferedButton("TEST ALCOHOLEMIA", new Color(70, 130, 180),
-                new Color(30, 40, 40), new Color(20, 23, 30), 20);
-        jButton1.setBounds(420, 300, 200, 50);
+        JButton jButton1 = ComponentFactory.createChamferedButton(
+                "TEST ALCOHOLEMIA",
+                new Color(70, 130, 180), // Color normal
+                new Color(100, 149, 237), // Color al hacer hover
+                new Color(0, 105, 180), // Color al presionar
+                40 // Radio de las esquinas
+        );
+        jButton1.setBounds(420, 300, 150, 40);
+        jButton1.setContentAreaFilled(false); // Desactiva el área de contenido para evitar problemas con el fondo
+        jButton1.setOpaque(false); // Desactiva la opacidad para que el fondo no se superponga
+        jButton1.setHorizontalAlignment(SwingConstants.CENTER); // Asegura que el texto esté centrado
         jButton1.addActionListener(evt -> jButton1ActionPerformed(evt));
         add(jButton1);
     }
@@ -107,8 +117,12 @@ public class DatosChofer extends JPanel {
             LocalDate fechaIngreso = LocalDate.now();
             LocalTime horaIngreso = LocalTime.now();
 
+            // Formatear la hora para que se muestre como "HH:mm:ss"
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+            String horaFormateada = horaIngreso.format(formatter);
+
             jLFechaIngreso.setText(fechaIngreso.toString());
-            jLHoraIngreso.setText(horaIngreso.toString());
+            jLHoraIngreso.setText(horaFormateada);
 
         } else {
             JOptionPane.showMessageDialog(this, "Error al cargar los datos del chofer, vehículo o ruta", "Error",
