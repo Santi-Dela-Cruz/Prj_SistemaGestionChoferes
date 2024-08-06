@@ -5,8 +5,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.JButton;
@@ -48,8 +46,8 @@ public class ComponentFactory {
 
     // Método para crear un modelo de tabla con nombres de columnas personalizados
     public static DefaultTableModel createTableModel(String[] columnNames) {
-        return new DefaultTableModel(new Object[][]{}, columnNames) {
-            boolean[] canEdit = new boolean[]{
+        return new DefaultTableModel(new Object[][] {}, columnNames) {
+            boolean[] canEdit = new boolean[] {
                     false, false, false, false, false
             };
 
@@ -101,29 +99,6 @@ public class ComponentFactory {
         button.setFocusPainted(false);
         button.setOpaque(false);
 
-        // Cambiar color al interactuar con el botón
-        button.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                button.setBackground(hoverColor);
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                button.setBackground(normalColor);
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                button.setBackground(pressedColor);
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                button.setBackground(hoverColor);
-            }
-        });
-
         return button;
     }
 
@@ -132,13 +107,52 @@ public class ComponentFactory {
         return new RoundedPanel(bgColor, arcWidth, arcHeight);
     }
 
-    // Método para crear un panel con bordes redondeados y cambiar color/transparencia
+    // Método para crear un panel con bordes redondeados y cambiar
+    // color/transparencia
     public static JPanel createRoundedPanel(Color bgColor, int arcWidth, int arcHeight, boolean isTransparent) {
         RoundedPanel panel = new RoundedPanel(bgColor, arcWidth, arcHeight);
         if (isTransparent) {
             panel.setBackground(new Color(bgColor.getRed(), bgColor.getGreen(), bgColor.getBlue(), 150));
         }
         return panel;
+    }
+
+    // Método para crear un botón con esquinas achaflanadas (bordes redondeados)
+    public static JButton createChamferedButton(String text, Color normalColor, Color hoverColor, Color pressedColor,
+            int cornerRadius) {
+        return new JButton(text) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+                if (getModel().isPressed()) {
+                    g2.setColor(pressedColor);
+                } else if (getModel().isRollover()) {
+                    g2.setColor(hoverColor);
+                } else {
+                    g2.setColor(normalColor);
+                }
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), cornerRadius, cornerRadius);
+
+                super.paintComponent(g2);
+                g2.dispose();
+            }
+
+            @Override
+            protected void paintBorder(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(getBackground().darker());
+                g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, cornerRadius, cornerRadius);
+                g2.dispose();
+            }
+
+            @Override
+            public Dimension getPreferredSize() {
+                return new Dimension(100, 40); // Tamaño preferido del botón
+            }
+        };
     }
 
     // Clase interna para definir el panel redondeado

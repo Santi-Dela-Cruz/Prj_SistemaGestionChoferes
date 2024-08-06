@@ -60,13 +60,15 @@ public class DatosChofer extends JPanel {
         jLFechaIngreso = addLabelAndField("Hora de salida", 370, 200, 200, 30, 370, 230, 200, 30);
 
         // Botón "Test Alcohol"
-        JButton jButton1 = ComponentFactory.createButton("TEST ALCOHOLEMIA", new Color(70, 130, 180));
+        JButton jButton1 = ComponentFactory.createChamferedButton("TEST ALCOHOLEMIA", new Color(70, 130, 180),
+                new Color(30, 40, 40), new Color(20, 23, 30), 20);
         jButton1.setBounds(420, 300, 200, 50);
         jButton1.addActionListener(evt -> jButton1ActionPerformed(evt));
         add(jButton1);
     }
 
-    private JLabel addLabelAndField(String labelText, int labelX, int labelY, int labelW, int labelH, int fieldX, int fieldY, int fieldW, int fieldH) {
+    private JLabel addLabelAndField(String labelText, int labelX, int labelY, int labelW, int labelH, int fieldX,
+            int fieldY, int fieldW, int fieldH) {
         JLabel label = new JLabel(labelText);
         label.setFont(new Font("Arial", Font.PLAIN, 14));
         label.setBounds(labelX, labelY, labelW, labelH);
@@ -109,7 +111,8 @@ public class DatosChofer extends JPanel {
             jLHoraIngreso.setText(horaIngreso.toString());
 
         } else {
-            JOptionPane.showMessageDialog(this, "Error al cargar los datos del chofer, vehículo o ruta", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error al cargar los datos del chofer, vehículo o ruta", "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 }

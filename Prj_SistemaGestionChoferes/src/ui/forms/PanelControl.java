@@ -73,35 +73,35 @@ public class PanelControl extends JFrame {
         datosChoferPanel.add(lbLlenoCedula);
 
         lbLlenoNombres = ComponentFactory.createLabel("Nombres: ");
-        lbLlenoNombres.setBounds(10, 50, 180, 30);
+        lbLlenoNombres.setBounds(10, 40, 180, 30);
         datosChoferPanel.add(lbLlenoNombres);
 
         lbLlenoApellidos = ComponentFactory.createLabel("Apellidos: ");
-        lbLlenoApellidos.setBounds(10, 90, 180, 30);
+        lbLlenoApellidos.setBounds(10, 70, 180, 30);
         datosChoferPanel.add(lbLlenoApellidos);
 
         lbLlenoTelefono = ComponentFactory.createLabel("Teléfono: ");
-        lbLlenoTelefono.setBounds(10, 130, 180, 30);
+        lbLlenoTelefono.setBounds(10, 100, 180, 30);
         datosChoferPanel.add(lbLlenoTelefono);
 
         lbLlenoHuella = ComponentFactory.createLabel("ID Huella: ");
-        lbLlenoHuella.setBounds(10, 170, 180, 30);
+        lbLlenoHuella.setBounds(10, 130, 180, 30);
         datosChoferPanel.add(lbLlenoHuella);
 
         lbLlenoPlaca = ComponentFactory.createLabel("Placa: ");
-        lbLlenoPlaca.setBounds(10, 210, 180, 30);
+        lbLlenoPlaca.setBounds(10, 160, 180, 30);
         datosChoferPanel.add(lbLlenoPlaca);
 
         lbLlenoRuta = ComponentFactory.createLabel("Ruta: ");
-        lbLlenoRuta.setBounds(10, 250, 180, 30);
+        lbLlenoRuta.setBounds(10, 190, 180, 30);
         datosChoferPanel.add(lbLlenoRuta);
 
-        lbLlenoFechaIn = ComponentFactory.createLabel("Fecha de ingreso: ");
-        lbLlenoFechaIn.setBounds(10, 290, 180, 30);
+        lbLlenoFechaIn = ComponentFactory.createLabel("Fecha ingreso: ");
+        lbLlenoFechaIn.setBounds(10, 220, 180, 30);
         datosChoferPanel.add(lbLlenoFechaIn);
 
-        lbLlenoFechaMod = ComponentFactory.createLabel("Fecha última modificación: ");
-        lbLlenoFechaMod.setBounds(10, 330, 180, 30);
+        lbLlenoFechaMod = ComponentFactory.createLabel("Fecha ult_mod: ");
+        lbLlenoFechaMod.setBounds(10, 250, 180, 30);
         datosChoferPanel.add(lbLlenoFechaMod);
 
         // Posiciones de los botones
@@ -396,8 +396,8 @@ public class PanelControl extends JFrame {
         lbLlenoHuella.setText("ID Huella: " + huella);
         lbLlenoPlaca.setText("Placa: " + placa);
         lbLlenoRuta.setText("Ruta: " + ruta);
-        lbLlenoFechaIn.setText("Fecha de ingreso: " + fechaIngreso);
-        lbLlenoFechaMod.setText("Fecha última modificación: " + fechaModificacion);
+        lbLlenoFechaIn.setText("Fecha ingreso: " + fechaIngreso);
+        lbLlenoFechaMod.setText("Fecha ult_mod: " + fechaModificacion);
         datosChoferPanel.setVisible(true);
     }
 }

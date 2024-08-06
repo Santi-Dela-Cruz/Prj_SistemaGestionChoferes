@@ -5,6 +5,7 @@ import java.awt.Cursor;
 import java.awt.Font;
 import java.net.URL;
 import javax.swing.BorderFactory;
+import javax.swing.Icon;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.CompoundBorder;
@@ -45,16 +46,29 @@ public abstract class InterfaceStyle {
                 new EmptyBorder(5, 5, 5, 5));
     }
 
-    public static final void showMsg(String msg) {
-        JOptionPane.showMessageDialog(null, msg, "🤖 IABot", JOptionPane.INFORMATION_MESSAGE);
+    public static void showMsg(String msg) {
+        JOptionPane.showMessageDialog(null, msg, "🚗 Registro de Choferes", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public static final void showMsgError(String msg) {
-        JOptionPane.showMessageDialog(null, msg, "💀 IABot", JOptionPane.OK_OPTION);
+    // Mensaje de error
+    public static void showMsgError(String msg) {
+        JOptionPane.showMessageDialog(null, msg, "💀 Error: Por eso el shampoo tiene instrucciones🤨🤨",
+                JOptionPane.ERROR_MESSAGE);
     }
 
-    public static final boolean showConfirmYesNo(String msg) {
-        return (JOptionPane.showConfirmDialog(null, msg, "😠 IABot",
+    // Confirmación Sí/No
+    public static boolean showConfirmYesNo(String msg) {
+        return (JOptionPane.showConfirmDialog(null, msg, "⚠️ Confirmación",
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION);
+    }
+
+    // Mensaje de advertencia
+    public static void showWarningMsg(String msg) {
+        JOptionPane.showMessageDialog(null, msg, "🤡 Advertencia", JOptionPane.WARNING_MESSAGE);
+    }
+
+    // Confirmación con más opciones (Sí, No, Cancelar)
+    public static int showConfirmYesNoCancel(String msg) {
+        return JOptionPane.showConfirmDialog(null, msg, "❓ ¿Qué deseas hacer?", JOptionPane.YES_NO_CANCEL_OPTION);
     }
 }
