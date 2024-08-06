@@ -30,13 +30,14 @@ public abstract class InterfaceStyle {
     public static final Cursor CURSOR_DEFAULT = new Cursor(Cursor.DEFAULT_CURSOR);
 
     public static final URL URL_EPN_CAMPUS = InterfaceStyle.class.getResource("/ui/resources/Images/epn.jpg");
-    public static final URL URL_ICON_CANCEL = InterfaceStyle.class.getResource("/ui/resources/Images/cancelIcon.png");
-    public static final URL URL_ICON_SAVE = InterfaceStyle.class.getResource("/ui/resources/Images/saveIcon.png");
-    public static final URL URL_ICON_UPDATE = InterfaceStyle.class.getResource("/ui/resources/Images/updateIcon.png");
-    public static final URL URL_ICON_ADD = InterfaceStyle.class.getResource("/ui/resources/Images/addIcon.png");
-    public static final URL URL_ICON_EDIT = InterfaceStyle.class.getResource("/ui/resources/Images/editIcon.png");
-    public static final URL URL_ICON_VIEW = InterfaceStyle.class.getResource("/ui/resources/Images/viewIcon.png");
-    public static final URL URL_ICON_DELETE = InterfaceStyle.class.getResource("/ui/resources/Images/deleteIcon.png");
+    public static final URL URL_ICON_CANCEL = InterfaceStyle.class.getResource("/ui/resources/Icons/cancelIcon.png");
+    public static final URL URL_ICON_SAVE = InterfaceStyle.class.getResource("/ui/resources/Icons/saveIcon.png");
+    public static final URL URL_ICON_UPDATE = InterfaceStyle.class.getResource("/ui/resources/Icons/updateIcon.png");
+    public static final URL URL_ICON_ADD = InterfaceStyle.class.getResource("/ui/resources/Icons/addIcon.png");
+    public static final URL URL_ICON_EDIT = InterfaceStyle.class.getResource("/ui/resources/Icons/editIcon.png");
+    public static final URL URL_ICON_VIEW = InterfaceStyle.class.getResource("/ui/resources/Icons/viewIcon.png");
+    public static final URL URL_ICON_DELETE = InterfaceStyle.class.getResource("/ui/resources/Icons/deleteIcon.png");
+    public static final URL URL_ICON_EXIT = InterfaceStyle.class.getResource("/ui/resources/Icons/exitIcon.png");
 
     public static final CompoundBorder createBorderRect() {
         return BorderFactory.createCompoundBorder(
