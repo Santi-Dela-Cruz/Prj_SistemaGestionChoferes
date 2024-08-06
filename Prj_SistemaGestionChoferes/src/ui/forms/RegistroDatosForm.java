@@ -183,105 +183,125 @@ public class RegistroDatosForm extends JPanel {
         boolean banderaMarca = false;
         boolean banderaModelo = false;
 
-        while (banderaID == false){
-            if (cedula.length()==10){
+        while (banderaID == false) {
+            if (cedula.length() == 10) {
                 banderaID = true;
             } else {
-                JOptionPane.showMessageDialog(this, "El ID que ha ingresado no contiene exactamente 10 numeros, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this,
+                        "El ID que ha ingresado no contiene exactamente 10 numeros, vuelvalo a ingresar", "Error",
+                        JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            if (validaciones.validarBanderas(cedula.length(), cedula) == false){
-                JOptionPane.showMessageDialog(this, "El ID ingresado contiene un espacio, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            } else {
-                banderaID = true;
-            }
-            if (validaciones.validarNumeros(cedula.length(), cedula) == false){
-                JOptionPane.showMessageDialog(this, "El ID ingresado solo debe contener números, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+            if (validaciones.validarBanderas(cedula.length(), cedula) == false) {
+                JOptionPane.showMessageDialog(this, "El ID ingresado contiene un espacio, vuelvalo a ingresar", "Error",
+                        JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 banderaID = true;
             }
-            
+            if (validaciones.validarNumeros(cedula.length(), cedula) == false) {
+                JOptionPane.showMessageDialog(this, "El ID ingresado solo debe contener números, vuelvalo a ingresar",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            } else {
+                banderaID = true;
+            }
+
         }
-        
-        while (banderaNombre == false){
-            if (validaciones.validarBanderas(nombres.length(), nombres) == false){
-                JOptionPane.showMessageDialog(this, "El nombre ingresado contiene un espacio, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+
+        while (banderaNombre == false) {
+            if (validaciones.validarBanderas(nombres.length(), nombres) == false) {
+                JOptionPane.showMessageDialog(this, "El nombre ingresado contiene un espacio, vuelvalo a ingresar",
+                        "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 banderaNombre = true;
             }
         }
-        
-        while (banderaApellido == false){
-            if (validaciones.validarBanderas(apellidos.length(), apellidos) == false){
-                JOptionPane.showMessageDialog(this, "El apellido ingresado contiene un espacio, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+
+        while (banderaApellido == false) {
+            if (validaciones.validarBanderas(apellidos.length(), apellidos) == false) {
+                JOptionPane.showMessageDialog(this, "El apellido ingresado contiene un espacio, vuelvalo a ingresar",
+                        "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 banderaApellido = true;
             }
         }
 
-        while (banderaTelefono == false){
-            if (telefono.length()==10){
+        while (banderaTelefono == false) {
+            if (telefono.length() == 10) {
                 banderaTelefono = true;
             } else {
-                JOptionPane.showMessageDialog(this, "El numero de telefono que ha ingresado no contiene exactamente 10 numeros, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this,
+                        "El numero de telefono que ha ingresado no contiene exactamente 10 numeros, vuelvalo a ingresar",
+                        "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            if (validaciones.validarBanderas(telefono.length(), telefono) == false){
-                JOptionPane.showMessageDialog(this, "El telefono ingresado contiene un espacio, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+            if (validaciones.validarBanderas(telefono.length(), telefono) == false) {
+                JOptionPane.showMessageDialog(this, "El telefono ingresado contiene un espacio, vuelvalo a ingresar",
+                        "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 banderaTelefono = true;
             }
-            if (validaciones.validarNumeros(telefono.length(), telefono) == false){
-                JOptionPane.showMessageDialog(this, "El telefono ingresado solo debe contener números, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+            if (validaciones.validarNumeros(telefono.length(), telefono) == false) {
+                JOptionPane.showMessageDialog(this,
+                        "El telefono ingresado solo debe contener números, vuelvalo a ingresar", "Error",
+                        JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 banderaTelefono = true;
             }
         }
-        
-        while (banderaIDHuella == false){ 
-            if (validaciones.validarBanderas(huella.length(), huella) == false){
-                JOptionPane.showMessageDialog(this, "La ID de la huella ingresada contiene un espacio, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+
+        while (banderaIDHuella == false) {
+            if (validaciones.validarBanderas(huella.length(), huella) == false) {
+                JOptionPane.showMessageDialog(this,
+                        "La ID de la huella ingresada contiene un espacio, vuelvalo a ingresar", "Error",
+                        JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 banderaIDHuella = true;
             }
         }
-        
-        while (banderaPlaca == false){
-            if (placa.length()==7){
+
+        while (banderaPlaca == false) {
+            if ((placa.length() == 8) && (placa.charAt(3) == '-')) {
                 banderaPlaca = true;
             } else {
-                JOptionPane.showMessageDialog(this, "La placa que ha ingresado no contiene exactamente 7 caracteres, vuelvala a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this,
+                        "La placa que ha ingresado no contiene el formato correcto 000-XXXX, vuelvala a ingresar",
+                        "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            if (validaciones.validarBanderas(placa.length(), placa) == false){
-                JOptionPane.showMessageDialog(this, "La placa ingresada contiene un espacio, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+            if (validaciones.validarBanderas(placa.length(), placa) == false) {
+                JOptionPane.showMessageDialog(this, "La placa ingresada contiene un espacio, vuelvalo a ingresar",
+                        "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 banderaPlaca = true;
             }
         }
 
-        while (banderaModelo == false){ 
-            
-            if (validaciones.validarBanderas(modeloVehiculo.length(), modeloVehiculo) == false){
-                JOptionPane.showMessageDialog(this, "El modelo de vehiculo ingresado contiene un espacio, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+        while (banderaModelo == false) {
+
+            if (validaciones.validarBanderas(modeloVehiculo.length(), modeloVehiculo) == false) {
+                JOptionPane.showMessageDialog(this,
+                        "El modelo de vehiculo ingresado contiene un espacio, vuelvalo a ingresar", "Error",
+                        JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 banderaModelo = true;
             }
         }
 
-        while (banderaMarca == false){ 
-            
-            if (validaciones.validarBanderas(marcaVehiculo.length(), marcaVehiculo) == false){
-                JOptionPane.showMessageDialog(this, "La marca del vehiculo ingresado contiene un espacio, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+        while (banderaMarca == false) {
+
+            if (validaciones.validarBanderas(marcaVehiculo.length(), marcaVehiculo) == false) {
+                JOptionPane.showMessageDialog(this,
+                        "La marca del vehiculo ingresado contiene un espacio, vuelvalo a ingresar", "Error",
+                        JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 banderaMarca = true;
@@ -336,7 +356,7 @@ public class RegistroDatosForm extends JPanel {
             String marcaVehiculo = txtMarcaVehiculo.getText();
             String categoriaLicencia = txtCategoriaLicencia.getText();
             String fechaVencimientoLicenciaStr = txtFechaVencimientoLicencia.getText();
-    
+
             if (cedula.isEmpty() || nombres.isEmpty() || apellidos.isEmpty() || telefono.isEmpty() ||
                     placa.isEmpty() || vehiculo.isEmpty() || ruta.isEmpty() || huella.isEmpty() || correo.isEmpty() ||
                     direccion.isEmpty() || modeloVehiculo.isEmpty() || marcaVehiculo.isEmpty()
@@ -345,8 +365,8 @@ public class RegistroDatosForm extends JPanel {
                         JOptionPane.ERROR_MESSAGE);
                 return false;
             }
-            
-            //Cambios edición 
+
+            // Cambios edición
             Validaciones validaciones = new Validaciones();
             boolean banderaID = false;
             boolean banderaNombre = false;
@@ -357,112 +377,135 @@ public class RegistroDatosForm extends JPanel {
             boolean banderaMarca = false;
             boolean banderaModelo = false;
 
-            while (banderaID == false){
-                if (cedula.length()==10){
+            while (banderaID == false) {
+                if (cedula.length() == 10) {
                     banderaID = true;
                 } else {
-                    JOptionPane.showMessageDialog(this, "El ID que ha ingresado no contiene exactamente 10 numeros, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this,
+                            "El ID que ha ingresado no contiene exactamente 10 numeros, vuelvalo a ingresar", "Error",
+                            JOptionPane.ERROR_MESSAGE);
                     return false;
                 }
-                if (validaciones.validarBanderas(cedula.length(), cedula) == false){
-                    JOptionPane.showMessageDialog(this, "El ID ingresado contiene un espacio, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+                if (validaciones.validarBanderas(cedula.length(), cedula) == false) {
+                    JOptionPane.showMessageDialog(this, "El ID ingresado contiene un espacio, vuelvalo a ingresar",
+                            "Error", JOptionPane.ERROR_MESSAGE);
                     return false;
                 } else {
                     banderaID = true;
                 }
-                if (validaciones.validarNumeros(cedula.length(), cedula) == false){
-                    JOptionPane.showMessageDialog(this, "El ID ingresado solo debe contener números, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+                if (validaciones.validarNumeros(cedula.length(), cedula) == false) {
+                    JOptionPane.showMessageDialog(this,
+                            "El ID ingresado solo debe contener números, vuelvalo a ingresar", "Error",
+                            JOptionPane.ERROR_MESSAGE);
                     return false;
                 } else {
                     banderaTelefono = true;
                 }
-                
+
             }
-            
-            while (banderaNombre == false){
-                if (validaciones.validarBanderas(nombres.length(), nombres) == false){
-                    JOptionPane.showMessageDialog(this, "El nombre ingresado contiene un espacio, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+
+            while (banderaNombre == false) {
+                if (validaciones.validarBanderas(nombres.length(), nombres) == false) {
+                    JOptionPane.showMessageDialog(this, "El nombre ingresado contiene un espacio, vuelvalo a ingresar",
+                            "Error", JOptionPane.ERROR_MESSAGE);
                     return false;
                 } else {
                     banderaNombre = true;
                 }
             }
-            
-            while (banderaApellido == false){
-                if (validaciones.validarBanderas(apellidos.length(), apellidos) == false){
-                    JOptionPane.showMessageDialog(this, "El apellido ingresado contiene un espacio, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+
+            while (banderaApellido == false) {
+                if (validaciones.validarBanderas(apellidos.length(), apellidos) == false) {
+                    JOptionPane.showMessageDialog(this,
+                            "El apellido ingresado contiene un espacio, vuelvalo a ingresar", "Error",
+                            JOptionPane.ERROR_MESSAGE);
                     return false;
                 } else {
                     banderaApellido = true;
                 }
             }
-    
-            while (banderaTelefono == false){
-                if (telefono.length()==10){
+
+            while (banderaTelefono == false) {
+                if (telefono.length() == 10) {
                     banderaTelefono = true;
                 } else {
-                    JOptionPane.showMessageDialog(this, "El numero de telefono que ha ingresado no contiene exactamente 10 numeros, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this,
+                            "El numero de telefono que ha ingresado no contiene exactamente 10 numeros, vuelvalo a ingresar",
+                            "Error", JOptionPane.ERROR_MESSAGE);
                     return false;
                 }
-                if (validaciones.validarBanderas(telefono.length(), telefono) == false){
-                    JOptionPane.showMessageDialog(this, "El telefono ingresado contiene un espacio, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+                if (validaciones.validarBanderas(telefono.length(), telefono) == false) {
+                    JOptionPane.showMessageDialog(this,
+                            "El telefono ingresado contiene un espacio, vuelvalo a ingresar", "Error",
+                            JOptionPane.ERROR_MESSAGE);
                     return false;
                 } else {
                     banderaTelefono = true;
                 }
-                if (validaciones.validarNumeros(telefono.length(), telefono) == false){
-                    JOptionPane.showMessageDialog(this, "El telefono ingresado solo debe contener números, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+                if (validaciones.validarNumeros(telefono.length(), telefono) == false) {
+                    JOptionPane.showMessageDialog(this,
+                            "El telefono ingresado solo debe contener números, vuelvalo a ingresar", "Error",
+                            JOptionPane.ERROR_MESSAGE);
                     return false;
                 } else {
                     banderaTelefono = true;
                 }
             }
-            
-            while (banderaIDHuella == false){ 
-                if (validaciones.validarBanderas(huella.length(), huella) == false){
-                    JOptionPane.showMessageDialog(this, "La ID de la huella ingresada contiene un espacio, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+
+            while (banderaIDHuella == false) {
+                if (validaciones.validarBanderas(huella.length(), huella) == false) {
+                    JOptionPane.showMessageDialog(this,
+                            "La ID de la huella ingresada contiene un espacio, vuelvalo a ingresar", "Error",
+                            JOptionPane.ERROR_MESSAGE);
                     return false;
                 } else {
                     banderaIDHuella = true;
                 }
             }
-            
-            while (banderaPlaca == false){
-                if (placa.length()==7){
+
+            while (banderaPlaca == false) {
+                if ((placa.length() == 8) && (placa.charAt(3) == '-')) {
                     banderaPlaca = true;
                 } else {
-                    JOptionPane.showMessageDialog(this, "La placa que ha ingresado no contiene exactamente 7 caracteres, vuelvala a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this,
+                            "La placa que ha ingresado no contiene el formato correcto 000-XXXX, vuelvala a ingresar",
+                            "Error", JOptionPane.ERROR_MESSAGE);
                     return false;
                 }
-                if (validaciones.validarBanderas(placa.length(), placa) == false){
-                    JOptionPane.showMessageDialog(this, "La placa ingresada contiene un espacio, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+                if (validaciones.validarBanderas(placa.length(), placa) == false) {
+                    JOptionPane.showMessageDialog(this, "La placa ingresada contiene un espacio, vuelvalo a ingresar",
+                            "Error", JOptionPane.ERROR_MESSAGE);
                     return false;
                 } else {
                     banderaPlaca = true;
                 }
             }
-    
-            while (banderaModelo == false){ 
-                
-                if (validaciones.validarBanderas(modeloVehiculo.length(), modeloVehiculo) == false){
-                    JOptionPane.showMessageDialog(this, "El modelo de vehiculo ingresado contiene un espacio, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+
+            while (banderaModelo == false) {
+
+                if (validaciones.validarBanderas(modeloVehiculo.length(), modeloVehiculo) == false) {
+                    JOptionPane.showMessageDialog(this,
+                            "El modelo de vehiculo ingresado contiene un espacio, vuelvalo a ingresar", "Error",
+                            JOptionPane.ERROR_MESSAGE);
                     return false;
                 } else {
                     banderaModelo = true;
                 }
             }
-    
-            while (banderaMarca == false){ 
-                
-                if (validaciones.validarBanderas(marcaVehiculo.length(), marcaVehiculo) == false){
-                    JOptionPane.showMessageDialog(this, "La marca del vehiculo ingresado contiene un espacio, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+
+            while (banderaMarca == false) {
+
+                if (validaciones.validarBanderas(marcaVehiculo.length(), marcaVehiculo) == false) {
+                    JOptionPane.showMessageDialog(this,
+                            "La marca del vehiculo ingresado contiene un espacio, vuelvalo a ingresar", "Error",
+                            JOptionPane.ERROR_MESSAGE);
                     return false;
                 } else {
                     banderaMarca = true;
                 }
             }
 
-            //Fin cambios edicion
+            // Fin cambios edicion
 
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             java.sql.Date fechaVencimientoLicencia;
@@ -474,35 +517,35 @@ public class RegistroDatosForm extends JPanel {
                         JOptionPane.ERROR_MESSAGE);
                 return false;
             }
-    
+
             try {
-                boolean actualizado = gestorChofer.actualizarChofer(idChofer, cedula, nombres, apellidos, telefono, huella, placa, vehiculo,
+                boolean actualizado = gestorChofer.actualizarChofer(idChofer, cedula, nombres, apellidos, telefono,
+                        huella, placa, vehiculo,
                         ruta, direccion, correo, categoriaLicencia, fechaVencimientoLicencia, marcaVehiculo,
                         modeloVehiculo);
-                        
+
                 if (actualizado) {
                     JOptionPane.showMessageDialog(this, "Registro actualizado exitosamente.", "Éxito",
                             JOptionPane.INFORMATION_MESSAGE);
-        
+
                     // Notificar a PanelControl para mostrar la tabla nuevamente
                     PanelControl panelControl = (PanelControl) SwingUtilities.getWindowAncestor(this);
                     panelControl.mostrarTabla();
-        
+
                     return true; // Solo retornar true si la actualización fue exitosa
                 } else {
                     return false; // Si la actualización falló, retornar false
                 }
-    
+
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Error al actualizar el registro: " + e.getMessage(), "Error",
                         JOptionPane.ERROR_MESSAGE);
-                return false;  // Indica que la actualización falló
+                return false; // Indica que la actualización falló
             }
         }
-        
-        return false;  // En caso de que se cancele la actualización
+
+        return false; // En caso de que se cancele la actualización
     }
-    
 
     public void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {
         int result = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que quieres cancelar el ingreso?",
