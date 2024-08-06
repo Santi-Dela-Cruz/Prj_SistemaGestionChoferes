@@ -7,14 +7,12 @@ import javax.swing.*;
 import dataAccesComponent.dao.HuellaDAO;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class TestHuella extends JPanel {
 
     private JTextField txtIDHuella;
     private JLabel jLabel1, jLabel2, jLIngresarHuella;
     private JPanel jPanel1;
-    private JButton btnIngresar;
 
     public TestHuella() {
         initComponents();
@@ -47,7 +45,7 @@ public class TestHuella extends JPanel {
         centerPanel.setOpaque(false); // Fondo transparente
         add(centerPanel, BorderLayout.CENTER);
 
-        // Panel inferior: Campo de texto y botón
+        // Panel inferior: Campo de texto
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
         bottomPanel.setOpaque(false);
 
@@ -56,16 +54,8 @@ public class TestHuella extends JPanel {
 
         txtIDHuella = ComponentFactory.createTextField();
         txtIDHuella.setPreferredSize(new Dimension(200, 30)); // Cambiar tamaño del campo de texto
+        txtIDHuella.addActionListener(evt -> btnIngresarActionPerformed(evt)); // Asignar la acción al presionar Enter
         bottomPanel.add(txtIDHuella);
-
-        btnIngresar = ComponentFactory.createButton("INGRESAR", InterfaceStyle.COLOR_FONT_LIGHT);
-        btnIngresar.setPreferredSize(new Dimension(120, 30)); // Cambiar tamaño del botón
-        btnIngresar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                btnIngresarActionPerformed(evt);
-            }
-        });
-        bottomPanel.add(btnIngresar);
 
         add(bottomPanel, BorderLayout.SOUTH);
     }

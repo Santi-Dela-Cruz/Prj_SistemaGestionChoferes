@@ -117,7 +117,6 @@ public class ComponentFactory {
         return panel;
     }
 
-    // Método para crear un botón con esquinas achaflanadas (bordes redondeados)
     public static JButton createChamferedButton(String text, Color normalColor, Color hoverColor, Color pressedColor,
             int cornerRadius) {
         return new JButton(text) {
@@ -133,8 +132,8 @@ public class ComponentFactory {
                 } else {
                     g2.setColor(normalColor);
                 }
-                g2.fillRoundRect(0, 0, getWidth(), getHeight(), cornerRadius, cornerRadius);
 
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), cornerRadius, cornerRadius);
                 super.paintComponent(g2);
                 g2.dispose();
             }
@@ -143,14 +142,14 @@ public class ComponentFactory {
             protected void paintBorder(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(getBackground().darker());
+                g2.setColor(normalColor.darker());
                 g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, cornerRadius, cornerRadius);
                 g2.dispose();
             }
 
             @Override
             public Dimension getPreferredSize() {
-                return new Dimension(100, 40); // Tamaño preferido del botón
+                return new Dimension(150, 40); // Tamaño preferido del botón, ajustado a tu ejemplo
             }
         };
     }
