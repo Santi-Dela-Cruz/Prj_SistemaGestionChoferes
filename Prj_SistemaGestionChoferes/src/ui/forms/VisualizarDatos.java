@@ -4,6 +4,7 @@ import businessLogical.GestorChofer;
 import businessLogical.GestorModificaciones;
 import dataAccesComponent.dao.ChoferDAO;
 import dataAccesComponent.dao.HuellaDAO;
+import dataAccesComponent.dao.ModificacionesDAO;
 import dataAccesComponent.dao.RutaDAO;
 import dataAccesComponent.dao.VehiculoDAO;
 import dataAccesComponent.dataHelper.DataHelper;
@@ -85,6 +86,8 @@ public class VisualizarDatos extends JPanel {
         Vehiculo vehiculo = vehiculoDAO.obtenerVehiculoPorChoferId(idc);
         Huella huella = huellaDAO.obtenerHuellaPorChoferId(idc);
         Ruta rutas = rutasDAO.obtenerRutaPorChoferId(idc);
+        ModificacionesDAO modificacionesDAO = new ModificacionesDAO();
+        Modificaciones primeraModificacion = modificacionesDAO.obtenerPrimeraModificacionPorChoferId(idc);
 
         if (chofer != null) {
             String cedula = chofer.getIdCedula();
@@ -94,8 +97,8 @@ public class VisualizarDatos extends JPanel {
             String huellaId = huella != null ? huella.getIdCodigoHuella() : "N/A";
             String placa = vehiculo != null ? vehiculo.getIdPlaca() : "N/A";
             String ruta = rutas != null ? rutas.getNombreRuta() : "N/A";
-            String fechaIngreso = huella != null
-                    ? new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(huella.getFechaRegHuella())
+            String fechaIngreso = primeraModificacion != null
+                    ? new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(primeraModificacion.getFechaModificacion())
                     : "N/A";
             String fechaModificacion = fechaIngreso;
 
@@ -108,7 +111,7 @@ public class VisualizarDatos extends JPanel {
     }
 
     private void consultarTabla(int idc) {
-        String sql = "SELECT * FROM registro_Estados WHERE id_Chofer = " + idc;
+        String sql = "SELECT * FROM registro_estado WHERE chofer_id = " + idc;
 
         try {
             connection = DataHelper.conectar();
@@ -120,10 +123,10 @@ public class VisualizarDatos extends JPanel {
             defTableMod.setRowCount(0);
 
             while (rs.next()) {
-                datosChoferes[0] = rs.getString("fecha_Ingreso");
-                datosChoferes[1] = rs.getString("hora_Ingreso");
-                datosChoferes[2] = rs.getString("estado_Chofer");
-                datosChoferes[3] = rs.getString("autorizacion_Chofer");
+                datosChoferes[0] = rs.getString("registro_fecha");
+                datosChoferes[1] = rs.getString("registro_hora");
+                datosChoferes[2] = rs.getString("estado_chofer");
+                datosChoferes[3] = rs.getString("autorizacion");
 
                 defTableMod.addRow(datosChoferes);
             }
@@ -163,5 +166,4 @@ public class VisualizarDatos extends JPanel {
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
 }

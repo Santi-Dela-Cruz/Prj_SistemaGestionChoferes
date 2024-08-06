@@ -1,6 +1,9 @@
 package ui.gui;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.*;
 import ui.customerControl.ComponentFactory;
 
@@ -12,32 +15,26 @@ public class AutorizacionSalida extends JPanel {
         initComponents();
         mostrarResultado(estaBorracho);
 
-        // Ejecutar el cambio de panel en un hilo separado
-        new Thread(() -> {
-            try {
-                for (int i = 10; i > 0; i--) {
-                    System.out.println("Cambio de panel en: " + i + " segundos");
-                    Thread.sleep(1000); // Espera 1 segundo
-                }
-        
-                // Cambiar de panel después de 10 segundos
-                SwingUtilities.invokeLater(() -> {
-                    JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(AutorizacionSalida.this);
-                    if (frame instanceof MainPanelController) {
-                        // Llamar a reiniciarCiclo para cambiar al panel TestHuella
-                        ((MainPanelController) frame).reiniciarCiclo();
-        
-                        // Asegurarse de que el panel de AutorizacionSalida ya no esté en el mainPanel
-                        Container parent = AutorizacionSalida.this.getParent();
-                        if (parent != null) {
-                            parent.remove(AutorizacionSalida.this);
-                        }
+        // Crear un Timer que cambie de panel después de 10 segundos
+        Timer timer = new Timer(10000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(AutorizacionSalida.this);
+                if (frame instanceof MainPanelController) {
+                    // Cambiar al panel TestHuella
+                    ((MainPanelController) frame).reiniciarCiclo();
+
+                    // Asegurarse de que el panel de AutorizacionSalida ya no esté en el mainPanel
+                    Container parent = AutorizacionSalida.this.getParent();
+                    if (parent != null) {
+                        parent.remove(AutorizacionSalida.this);
                     }
-                });
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                }
             }
-        }).start();
+        });
+
+        timer.setRepeats(false); // El temporizador solo debe ejecutarse una vez
+        timer.start(); // Iniciar el temporizador
     }
 
     private void initComponents() {
@@ -85,6 +82,7 @@ public class AutorizacionSalida extends JPanel {
     private void mostrarResultado(boolean estaBorracho) {
         jLResEst.setText(estaBorracho ? "Borracho" : "Sobrio");
         jLResApr.setText(estaBorracho ? "Salida Denegada" : "Salida Autorizada");
-        jLResApr.setForeground(estaBorracho ? new Color(139, 0, 0) : new Color(0, 128, 0)); // Rojo si está borracho, verde si no
+        jLResApr.setForeground(estaBorracho ? new Color(139, 0, 0) : new Color(0, 128, 0)); // Rojo si está borracho,
+                                                                                            // verde si no
     }
 }

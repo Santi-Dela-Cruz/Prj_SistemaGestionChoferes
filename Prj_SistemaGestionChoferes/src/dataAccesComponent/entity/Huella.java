@@ -1,11 +1,8 @@
 package dataAccesComponent.entity;
 
-import java.util.Date;
-
 public class Huella {
     private int idHuella;
     private String idCodigoHuella;
-    private Date fechaRegHuella;
     private int idChofer;
     private String estado;
 
@@ -23,14 +20,6 @@ public class Huella {
 
     public void setIdCodigoHuella(String idCodigoHuella) {
         this.idCodigoHuella = idCodigoHuella;
-    }
-
-    public Date getFechaRegHuella() {
-        return fechaRegHuella;
-    }
-
-    public void setFechaRegHuella(Date fechaRegHuella) {
-        this.fechaRegHuella = fechaRegHuella;
     }
 
     public int getIdChofer() {

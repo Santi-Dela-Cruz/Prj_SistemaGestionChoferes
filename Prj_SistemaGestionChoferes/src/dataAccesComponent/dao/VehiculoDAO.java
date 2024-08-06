@@ -20,7 +20,7 @@ public class VehiculoDAO implements IDAO<Vehiculo> {
 
     @Override
     public boolean create(Vehiculo vehiculo) throws Exception {
-        String sql = "INSERT INTO vehiculo (id_Placa, tipo_Vehiculo, id_Chofer, marcaVehiculo, modeloVehiculo, estado) VALUES (?, ?, ?, ?, ?, 'A')";
+        String sql = "INSERT INTO vehiculo (vehiculo_placa, vehiculo_tipo, chofer_id, vehiculo_marca, vehiculo_modelo, estado) VALUES (?, ?, ?, ?, ?, 'A')";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, vehiculo.getIdPlaca());
             preparedStatement.setString(2, vehiculo.getTipoVehiculo());
@@ -44,12 +44,12 @@ public class VehiculoDAO implements IDAO<Vehiculo> {
 
             while (rs.next()) {
                 Vehiculo vehiculo = new Vehiculo();
-                vehiculo.setIdVehiculo(rs.getInt("id_Vehiculo"));
-                vehiculo.setIdPlaca(rs.getString("id_Placa"));
-                vehiculo.setTipoVehiculo(rs.getString("tipo_Vehiculo"));
-                vehiculo.setIdChofer(rs.getInt("id_Chofer"));
-                vehiculo.setMarcaVehiculo(rs.getString("marcaVehiculo"));
-                vehiculo.setModeloVehiculo(rs.getString("modeloVehiculo"));
+                vehiculo.setIdVehiculo(rs.getInt("vehiculo_id"));
+                vehiculo.setIdPlaca(rs.getString("vehiculo_placa"));
+                vehiculo.setTipoVehiculo(rs.getString("vehiculo_tipo"));
+                vehiculo.setIdChofer(rs.getInt("chofer_id"));
+                vehiculo.setMarcaVehiculo(rs.getString("vehiculo_marca"));
+                vehiculo.setModeloVehiculo(rs.getString("vehiculo_modelo"));
                 vehiculo.setEstado(rs.getString("estado"));
                 vehiculos.add(vehiculo);
             }
@@ -61,7 +61,7 @@ public class VehiculoDAO implements IDAO<Vehiculo> {
 
     @Override
     public boolean update(Vehiculo vehiculo) throws Exception {
-        String sql = "UPDATE vehiculo SET id_Placa = ?, tipo_Vehiculo = ?, id_Chofer = ?, marcaVehiculo = ?, modeloVehiculo = ? WHERE id_Vehiculo = ?";
+        String sql = "UPDATE vehiculo SET vehiculo_placa = ?, vehiculo_tipo = ?, chofer_id = ?, vehiculo_marca = ?, vehiculo_modelo = ? WHERE vehiculo_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, vehiculo.getIdPlaca());
             preparedStatement.setString(2, vehiculo.getTipoVehiculo());
@@ -80,7 +80,7 @@ public class VehiculoDAO implements IDAO<Vehiculo> {
 
     @Override
     public boolean delete(Integer id) throws Exception {
-        String sql = "UPDATE vehiculo SET estado = 'X' WHERE id_Vehiculo = ?";
+        String sql = "UPDATE vehiculo SET estado = 'X' WHERE vehiculo_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
             int result = preparedStatement.executeUpdate();
@@ -93,18 +93,18 @@ public class VehiculoDAO implements IDAO<Vehiculo> {
     @Override
     public Vehiculo readBy(Integer id) throws Exception {
         Vehiculo vehiculo = null;
-        String sql = "SELECT * FROM vehiculo WHERE id_Vehiculo = ? AND estado = 'A'";
+        String sql = "SELECT * FROM vehiculo WHERE vehiculo_id = ? AND estado = 'A'";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
             try (ResultSet rs = preparedStatement.executeQuery()) {
                 if (rs.next()) {
                     vehiculo = new Vehiculo();
-                    vehiculo.setIdVehiculo(rs.getInt("id_Vehiculo"));
-                    vehiculo.setIdPlaca(rs.getString("id_Placa"));
-                    vehiculo.setTipoVehiculo(rs.getString("tipo_Vehiculo"));
-                    vehiculo.setIdChofer(rs.getInt("id_Chofer"));
-                    vehiculo.setMarcaVehiculo(rs.getString("marcaVehiculo"));
-                    vehiculo.setModeloVehiculo(rs.getString("modeloVehiculo"));
+                    vehiculo.setIdVehiculo(rs.getInt("vehiculo_id"));
+                    vehiculo.setIdPlaca(rs.getString("vehiculo_placa"));
+                    vehiculo.setTipoVehiculo(rs.getString("vehiculo_tipo"));
+                    vehiculo.setIdChofer(rs.getInt("chofer_id"));
+                    vehiculo.setMarcaVehiculo(rs.getString("vehiculo_marca"));
+                    vehiculo.setModeloVehiculo(rs.getString("vehiculo_modelo"));
                     vehiculo.setEstado(rs.getString("estado"));
                 }
             }
@@ -118,16 +118,16 @@ public class VehiculoDAO implements IDAO<Vehiculo> {
         Vehiculo vehiculo = new Vehiculo();
         try {
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("SELECT * FROM vehiculo WHERE id_Chofer=? AND estado='A'");
+                    .prepareStatement("SELECT * FROM vehiculo WHERE chofer_id=? AND estado='A'");
             preparedStatement.setInt(1, idChofer);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
-                vehiculo.setIdVehiculo(rs.getInt("id_Vehiculo"));
-                vehiculo.setIdPlaca(rs.getString("id_Placa"));
-                vehiculo.setTipoVehiculo(rs.getString("tipo_Vehiculo"));
-                vehiculo.setIdChofer(rs.getInt("id_Chofer"));
-                vehiculo.setMarcaVehiculo(rs.getString("marcaVehiculo"));
-                vehiculo.setModeloVehiculo(rs.getString("modeloVehiculo"));
+                vehiculo.setIdVehiculo(rs.getInt("vehiculo_id"));
+                vehiculo.setIdPlaca(rs.getString("vehiculo_placa"));
+                vehiculo.setTipoVehiculo(rs.getString("vehiculo_tipo"));
+                vehiculo.setIdChofer(rs.getInt("chofer_id"));
+                vehiculo.setMarcaVehiculo(rs.getString("vehiculo_marca"));
+                vehiculo.setModeloVehiculo(rs.getString("vehiculo_modelo"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -138,7 +138,7 @@ public class VehiculoDAO implements IDAO<Vehiculo> {
     public boolean existeVehiculo(int idChofer) {
         try {
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("SELECT * FROM vehiculo WHERE id_Chofer=? AND estado='A'");
+                    .prepareStatement("SELECT * FROM vehiculo WHERE chofer_id=? AND estado='A'");
             preparedStatement.setInt(1, idChofer);
             ResultSet rs = preparedStatement.executeQuery();
             return rs.next();
@@ -149,7 +149,7 @@ public class VehiculoDAO implements IDAO<Vehiculo> {
     }
 
     public boolean existeVehiculoPorPlaca(String id_Placa) throws Exception {
-        String sql = "SELECT COUNT(*) FROM vehiculo WHERE id_Placa = ? AND estado='A'";
+        String sql = "SELECT COUNT(*) FROM vehiculo WHERE vehiculo_placa = ? AND estado='A'";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, id_Placa);

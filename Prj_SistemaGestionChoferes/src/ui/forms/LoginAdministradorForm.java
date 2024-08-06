@@ -229,6 +229,7 @@ public class LoginAdministradorForm extends JFrame {
 
     private void abrirListadoChoferesCRUD(Administrador admin) {
         PanelControl pControl = new PanelControl(admin.getIdAdministrador());
+        System.out.println("El estado del admin es: " + admin.getEstado());
         pControl.setAdministradorData(admin.getNombres() + " " + admin.getApellidos(), admin.getCargoAdmin(),
                 admin.getEstado());
         pControl.setVisible(true);
