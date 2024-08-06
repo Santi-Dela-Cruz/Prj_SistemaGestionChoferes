@@ -127,6 +127,7 @@ public class AdministradorDAO implements IDAO<Administrador> {
                     admin.setCargoAdmin(rs.getString("cargoAdmin"));
                     admin.setTelefono(rs.getString("telefono"));
                     admin.setDireccion(rs.getString("direccion"));
+                    admin.setEstado(rs.getString("estado"));
                 }
             }
         } catch (SQLException e) {
@@ -155,6 +156,7 @@ public class AdministradorDAO implements IDAO<Administrador> {
                     admin.setCargoAdmin(rs.getString("cargoAdmin"));
                     admin.setNombres(rs.getString("nombreAdmin"));
                     admin.setApellidos(rs.getString("apellidoAdmin"));
+                    admin.setEstado(rs.getString("estado"));
                 }
             }
         } catch (SQLException e) {
