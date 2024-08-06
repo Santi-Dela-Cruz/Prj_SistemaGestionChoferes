@@ -20,7 +20,7 @@ public class RutaDAO implements IDAO<Ruta> {
 
     @Override
     public boolean create(Ruta ruta) throws Exception {
-        String sql = "INSERT INTO rutas (nombre_Ruta, id_Chofer, estado) VALUES (?, ?, 'A')";
+        String sql = "INSERT INTO ruta (ruta_nombre, chofer_id, estado) VALUES (?, ?, 'A')";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, ruta.getNombreRuta());
             preparedStatement.setInt(2, ruta.getIdChofer());
@@ -35,15 +35,15 @@ public class RutaDAO implements IDAO<Ruta> {
     @Override
     public List<Ruta> readAll() throws Exception {
         List<Ruta> rutas = new ArrayList<>();
-        String sql = "SELECT * FROM rutas WHERE estado = 'A'";
+        String sql = "SELECT * FROM ruta WHERE estado = 'A'";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql);
                 ResultSet rs = preparedStatement.executeQuery()) {
 
             while (rs.next()) {
                 Ruta ruta = new Ruta();
-                ruta.setIdRuta(rs.getInt("id_Ruta"));
-                ruta.setNombreRuta(rs.getString("nombre_Ruta"));
-                ruta.setIdChofer(rs.getInt("id_Chofer"));
+                ruta.setIdRuta(rs.getInt("ruta_id"));
+                ruta.setNombreRuta(rs.getString("ruta_nombre"));
+                ruta.setIdChofer(rs.getInt("chofer_id"));
                 ruta.setEstado(rs.getString("estado"));
                 rutas.add(ruta);
             }
@@ -55,7 +55,7 @@ public class RutaDAO implements IDAO<Ruta> {
 
     @Override
     public boolean update(Ruta ruta) throws Exception {
-        String sql = "UPDATE rutas SET nombre_Ruta = ?, id_Chofer = ? WHERE id_Ruta = ?";
+        String sql = "UPDATE ruta SET ruta_nombre = ?, chofer_id = ? WHERE ruta_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, ruta.getNombreRuta());
             preparedStatement.setInt(2, ruta.getIdChofer());
@@ -70,7 +70,7 @@ public class RutaDAO implements IDAO<Ruta> {
 
     @Override
     public boolean delete(Integer id) throws Exception {
-        String sql = "UPDATE rutas SET estado = 'X' WHERE id_Ruta = ?";
+        String sql = "UPDATE ruta SET estado = 'X' WHERE ruta_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
             int result = preparedStatement.executeUpdate();
@@ -83,15 +83,15 @@ public class RutaDAO implements IDAO<Ruta> {
     @Override
     public Ruta readBy(Integer id) throws Exception {
         Ruta ruta = null;
-        String sql = "SELECT * FROM rutas WHERE id_Ruta = ? AND estado = 'A'";
+        String sql = "SELECT * FROM ruta WHERE ruta_id = ? AND estado = 'A'";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
             try (ResultSet rs = preparedStatement.executeQuery()) {
                 if (rs.next()) {
                     ruta = new Ruta();
-                    ruta.setIdRuta(rs.getInt("id_Ruta"));
-                    ruta.setNombreRuta(rs.getString("nombre_Ruta"));
-                    ruta.setIdChofer(rs.getInt("id_Chofer"));
+                    ruta.setIdRuta(rs.getInt("ruta_id"));
+                    ruta.setNombreRuta(rs.getString("ruta_nombre"));
+                    ruta.setIdChofer(rs.getInt("chofer_id"));
                     ruta.setEstado(rs.getString("estado"));
                 }
             }
@@ -104,7 +104,7 @@ public class RutaDAO implements IDAO<Ruta> {
     public boolean existeRuta(int idChofer) {
         try {
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("SELECT * FROM rutas WHERE id_Chofer=? AND estado='A'");
+                    .prepareStatement("SELECT * FROM ruta WHERE chofer_id=? AND estado='A'");
             preparedStatement.setInt(1, idChofer);
             ResultSet rs = preparedStatement.executeQuery();
             return rs.next();
@@ -115,15 +115,15 @@ public class RutaDAO implements IDAO<Ruta> {
     }
 
     public Ruta obtenerRutaPorChoferId(int idChofer) throws Exception {
-        String sql = "SELECT * FROM rutas WHERE id_Chofer = ? AND estado = 'A'";
+        String sql = "SELECT * FROM ruta WHERE chofer_id = ? AND estado = 'A'";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, idChofer);
             try (ResultSet rs = preparedStatement.executeQuery()) {
                 if (rs.next()) {
                     Ruta ruta = new Ruta();
-                    ruta.setIdRuta(rs.getInt("id_Ruta"));
-                    ruta.setNombreRuta(rs.getString("nombre_Ruta"));
-                    ruta.setIdChofer(rs.getInt("id_Chofer"));
+                    ruta.setIdRuta(rs.getInt("ruta_id"));
+                    ruta.setNombreRuta(rs.getString("ruta_nombre"));
+                    ruta.setIdChofer(rs.getInt("chofer_id"));
                     ruta.setEstado(rs.getString("estado"));
                     return ruta;
                 }

@@ -22,13 +22,13 @@ public class LimpiaTablas {
     }
 
     public void limpiarTodasTablas() {
-        truncarTabla("registro_penalizaciones");
-        truncarTabla("registro_estados");
-        truncarTabla("rutas");
-        truncarTabla("vehiculo");
-        truncarTabla("huella");
-        truncarTabla("choferes");
         truncarTabla("administrador");
-        truncarTabla("modificaciones");
+        truncarTabla("chofer");
+        truncarTabla("huella_digital");
+        truncarTabla("modificacion");
+        truncarTabla("penalizacion");
+        truncarTabla("registro_estado");
+        truncarTabla("ruta");
+        truncarTabla("vehiculo");
     }
 }

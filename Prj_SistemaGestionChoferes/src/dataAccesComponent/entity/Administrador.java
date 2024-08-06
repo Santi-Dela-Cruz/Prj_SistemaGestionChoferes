@@ -11,7 +11,6 @@ public class Administrador {
     private String apellidos;
     private String correoAdmin;
     private String contrasenaAdmin;
-    private String estadoAdmin;
     private String cargoAdmin;
     private Date fechaIngreso;
     private Time horaIngreso;
@@ -65,14 +64,6 @@ public class Administrador {
 
     public void setContrasenaAdmin(String contrasenaAdmin) {
         this.contrasenaAdmin = contrasenaAdmin;
-    }
-
-    public String getEstadoAdmin() {
-        return estadoAdmin;
-    }
-
-    public void setEstadoAdmin(String estadoAdmin) {
-        this.estadoAdmin = estadoAdmin;
     }
 
     public String getCargoAdmin() {

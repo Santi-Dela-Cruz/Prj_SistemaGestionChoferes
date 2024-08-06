@@ -18,7 +18,7 @@ public class GestorModificaciones {
                 throw new SQLException("No se pudo establecer una conexión con la base de datos.");
             }
 
-            String sql = "INSERT INTO modificaciones (id_Administrador, fechaModificacion, horaModificacion, accionAdmin, id_ChoferModificacion) "
+            String sql = "INSERT INTO modificacion (admin_id, modificacion_fecha, modificacion_hora, modificacion_accion, chofer_id_modificado) "
                     + "VALUES (?, ?, ?, ?, ?)";
             statement = connection.prepareStatement(sql);
             statement.setInt(1, modificacion.getIdAdministrador());

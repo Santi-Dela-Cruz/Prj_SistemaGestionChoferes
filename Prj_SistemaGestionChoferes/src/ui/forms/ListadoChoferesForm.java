@@ -35,7 +35,7 @@ public class ListadoChoferesForm extends JPanel {
     }
 
     private void consultarTabla() {
-        String sql = "SELECT c.id_Chofer, c.id_Cedula, c.nombre, c.apellido, v.id_Placa FROM choferes c LEFT JOIN vehiculo v ON c.id_Chofer = v.id_Chofer AND v.estado = 'A' LEFT JOIN rutas r ON c.id_Chofer = r.id_Chofer AND r.estado = 'A' WHERE c.estado = 'A';";
+        String sql = "SELECT c.chofer_id, c.chofer_cedula, c.chofer_nombre, c.chofer_apellido, v.vehiculo_placa FROM chofer c LEFT JOIN vehiculo v ON c.chofer_id = v.chofer_id AND v.estado = 'A' LEFT JOIN ruta r ON c.chofer_id = r.chofer_id AND r.estado = 'A' WHERE c.estado = 'A';";
         Connection connection = null;
         Statement st = null;
         ResultSet rs = null;
@@ -45,11 +45,11 @@ public class ListadoChoferesForm extends JPanel {
             rs = st.executeQuery(sql);
             while (rs.next()) {
                 defTableMod.addRow(new Object[] {
-                        rs.getInt("id_Chofer"),
-                        rs.getString("id_Cedula"),
-                        rs.getString("nombre"),
-                        rs.getString("apellido"),
-                        rs.getString("id_Placa")
+                        rs.getInt("chofer_id"),
+                        rs.getString("chofer_cedula"),
+                        rs.getString("chofer_nombre"),
+                        rs.getString("chofer_apellido"),
+                        rs.getString("vehiculo_placa")
                 });
             }
         } catch (SQLException e) {

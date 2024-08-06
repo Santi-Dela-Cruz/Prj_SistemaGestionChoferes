@@ -19,17 +19,13 @@ public class ModificacionesDAO implements IDAO<Modificaciones> {
 
     @Override
     public boolean create(Modificaciones modificaciones) throws Exception {
-        String sql = "INSERT INTO modificaciones (id_Administrador, id_ChoferModificacion, fechaModificacion, horaModificacion, accionAdmin) "
+        String sql = "INSERT INTO modificacion (admin_id, chofer_id_modificado, modificacion_fecha, modificacion_hora, modificacion_accion) "
                 +
                 "VALUES (?, ?, CURRENT_DATE(), CURRENT_TIME(), ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, modificaciones.getIdAdministrador());
             preparedStatement.setInt(2, modificaciones.getIdChoferModificacion());
             preparedStatement.setString(3, modificaciones.getAccionAdmin());
-
-            System.out.println("ID Administrador: " + modificaciones.getIdAdministrador());
-            System.out.println("ID Chofer Modificacion: " + modificaciones.getIdChoferModificacion());
-            System.out.println("Acción Admin: " + modificaciones.getAccionAdmin());
 
             int result = preparedStatement.executeUpdate();
             return result > 0;
@@ -41,18 +37,18 @@ public class ModificacionesDAO implements IDAO<Modificaciones> {
     @Override
     public List<Modificaciones> readAll() throws Exception {
         List<Modificaciones> modificacionesList = new ArrayList<>();
-        String sql = "SELECT * FROM modificaciones";
+        String sql = "SELECT * FROM modificacion";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql);
                 ResultSet rs = preparedStatement.executeQuery()) {
 
             while (rs.next()) {
                 Modificaciones modificaciones = new Modificaciones();
-                modificaciones.setId(rs.getInt("id"));
-                modificaciones.setIdAdministrador(rs.getInt("id_Administrador"));
-                modificaciones.setIdChoferModificacion(rs.getInt("id_ChoferModificacion"));
-                modificaciones.setFechaModificacion(rs.getDate("fechaModificacion"));
-                modificaciones.setHoraModificacion(rs.getString("horaModificacion"));
-                modificaciones.setAccionAdmin(rs.getString("accionAdmin"));
+                modificaciones.setId(rs.getInt("modificacion_id"));
+                modificaciones.setIdAdministrador(rs.getInt("admin_id"));
+                modificaciones.setIdChoferModificacion(rs.getInt("chofer_id_modificado"));
+                modificaciones.setFechaModificacion(rs.getDate("modificacion_fecha"));
+                modificaciones.setHoraModificacion(rs.getString("modificacion_hora"));
+                modificaciones.setAccionAdmin(rs.getString("modificacion_accion"));
                 modificacionesList.add(modificaciones);
             }
         } catch (SQLException e) {
@@ -63,7 +59,7 @@ public class ModificacionesDAO implements IDAO<Modificaciones> {
 
     @Override
     public boolean update(Modificaciones modificaciones) throws Exception {
-        String sql = "UPDATE modificaciones SET id_Administrador = ?,  id_ChoferModificacion = ?, fechaModificacion = ?, horaModificacion = ?, accionAdmin = ? WHERE id = ?";
+        String sql = "UPDATE modificacion SET admin_id = ?, chofer_id_modificado = ?, modificacion_fecha = ?, modificacion_hora = ?, modificacion_accion = ? WHERE modificacion_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, modificaciones.getIdAdministrador());
             preparedStatement.setInt(2, modificaciones.getIdChoferModificacion());
@@ -81,7 +77,7 @@ public class ModificacionesDAO implements IDAO<Modificaciones> {
 
     @Override
     public boolean delete(Integer id) throws Exception {
-        String sql = "DELETE FROM modificaciones WHERE id = ?";
+        String sql = "DELETE FROM modificacion WHERE modificacion_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
             int result = preparedStatement.executeUpdate();
@@ -94,18 +90,18 @@ public class ModificacionesDAO implements IDAO<Modificaciones> {
     @Override
     public Modificaciones readBy(Integer id) throws Exception {
         Modificaciones modificaciones = null;
-        String sql = "SELECT * FROM modificaciones WHERE id = ?";
+        String sql = "SELECT * FROM modificacion WHERE modificacion_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
             try (ResultSet rs = preparedStatement.executeQuery()) {
                 if (rs.next()) {
                     modificaciones = new Modificaciones();
-                    modificaciones.setId(rs.getInt("id"));
-                    modificaciones.setIdAdministrador(rs.getInt("id_Administrador"));
-                    modificaciones.setIdChoferModificacion(rs.getInt(" id_ChoferModificacion"));
-                    modificaciones.setFechaModificacion(rs.getDate("fechaModificacion"));
-                    modificaciones.setHoraModificacion(rs.getString("horaModificacion"));
-                    modificaciones.setAccionAdmin(rs.getString("accionAdmin"));
+                    modificaciones.setId(rs.getInt("modificacion_id"));
+                    modificaciones.setIdAdministrador(rs.getInt("admin_id"));
+                    modificaciones.setIdChoferModificacion(rs.getInt("chofer_id_modificado"));
+                    modificaciones.setFechaModificacion(rs.getDate("modificacion_fecha"));
+                    modificaciones.setHoraModificacion(rs.getString("modificacion_hora"));
+                    modificaciones.setAccionAdmin(rs.getString("modificacion_accion"));
                 }
             }
         } catch (SQLException e) {
@@ -113,4 +109,27 @@ public class ModificacionesDAO implements IDAO<Modificaciones> {
         }
         return modificaciones;
     }
+
+    public Modificaciones obtenerPrimeraModificacionPorChoferId(int idChofer) throws Exception {
+        Modificaciones modificaciones = null;
+        String sql = "SELECT * FROM modificacion WHERE chofer_id_modificado = ? ORDER BY modificacion_fecha ASC, modificacion_hora ASC LIMIT 1";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, idChofer);
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                if (rs.next()) {
+                    modificaciones = new Modificaciones();
+                    modificaciones.setId(rs.getInt("modificacion_id"));
+                    modificaciones.setIdAdministrador(rs.getInt("admin_id"));
+                    modificaciones.setIdChoferModificacion(rs.getInt("chofer_id_modificado"));
+                    modificaciones.setFechaModificacion(rs.getDate("modificacion_fecha"));
+                    modificaciones.setHoraModificacion(rs.getString("modificacion_hora"));
+                    modificaciones.setAccionAdmin(rs.getString("modificacion_accion"));
+                }
+            }
+        } catch (SQLException e) {
+            throw new Exception("Error al obtener la primera modificación por chofer ID", e);
+        }
+        return modificaciones;
+    }
+
 }

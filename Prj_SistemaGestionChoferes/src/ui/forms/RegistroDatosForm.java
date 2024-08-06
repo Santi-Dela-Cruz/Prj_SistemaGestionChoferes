@@ -9,6 +9,8 @@ import dataAccesComponent.entity.Chofer;
 import dataAccesComponent.entity.Huella;
 import dataAccesComponent.entity.Ruta;
 import dataAccesComponent.entity.Vehiculo;
+import framework.Validaciones;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -169,6 +171,124 @@ public class RegistroDatosForm extends JPanel {
             return;
         }
 
+        // Cambios Ruben Inicio
+        Validaciones validaciones = new Validaciones();
+
+        boolean banderaID = false;
+        boolean banderaNombre = false;
+        boolean banderaApellido = false;
+        boolean banderaTelefono = false;
+        boolean banderaPlaca = false;
+        boolean banderaIDHuella = false;
+        boolean banderaMarca = false;
+        boolean banderaModelo = false;
+
+        while (banderaID == false){
+            if (cedula.length()==10){
+                banderaID = true;
+            } else {
+                JOptionPane.showMessageDialog(this, "El ID que ha ingresado no contiene exactamente 10 numeros, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (validaciones.validarBanderas(cedula.length(), cedula) == false){
+                JOptionPane.showMessageDialog(this, "El ID ingresado contiene un espacio, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            } else {
+                banderaID = true;
+            }
+            if (validaciones.validarNumeros(cedula.length(), cedula) == false){
+                JOptionPane.showMessageDialog(this, "El ID ingresado solo debe contener números, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            } else {
+                banderaID = true;
+            }
+            
+        }
+        
+        while (banderaNombre == false){
+            if (validaciones.validarBanderas(nombres.length(), nombres) == false){
+                JOptionPane.showMessageDialog(this, "El nombre ingresado contiene un espacio, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            } else {
+                banderaNombre = true;
+            }
+        }
+        
+        while (banderaApellido == false){
+            if (validaciones.validarBanderas(apellidos.length(), apellidos) == false){
+                JOptionPane.showMessageDialog(this, "El apellido ingresado contiene un espacio, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            } else {
+                banderaApellido = true;
+            }
+        }
+
+        while (banderaTelefono == false){
+            if (telefono.length()==10){
+                banderaTelefono = true;
+            } else {
+                JOptionPane.showMessageDialog(this, "El numero de telefono que ha ingresado no contiene exactamente 10 numeros, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (validaciones.validarBanderas(telefono.length(), telefono) == false){
+                JOptionPane.showMessageDialog(this, "El telefono ingresado contiene un espacio, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            } else {
+                banderaTelefono = true;
+            }
+            if (validaciones.validarNumeros(telefono.length(), telefono) == false){
+                JOptionPane.showMessageDialog(this, "El telefono ingresado solo debe contener números, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            } else {
+                banderaTelefono = true;
+            }
+        }
+        
+        while (banderaIDHuella == false){ 
+            if (validaciones.validarBanderas(huella.length(), huella) == false){
+                JOptionPane.showMessageDialog(this, "La ID de la huella ingresada contiene un espacio, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            } else {
+                banderaIDHuella = true;
+            }
+        }
+        
+        while (banderaPlaca == false){
+            if (placa.length()==7){
+                banderaPlaca = true;
+            } else {
+                JOptionPane.showMessageDialog(this, "La placa que ha ingresado no contiene exactamente 7 caracteres, vuelvala a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (validaciones.validarBanderas(placa.length(), placa) == false){
+                JOptionPane.showMessageDialog(this, "La placa ingresada contiene un espacio, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            } else {
+                banderaPlaca = true;
+            }
+        }
+
+        while (banderaModelo == false){ 
+            
+            if (validaciones.validarBanderas(modeloVehiculo.length(), modeloVehiculo) == false){
+                JOptionPane.showMessageDialog(this, "El modelo de vehiculo ingresado contiene un espacio, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            } else {
+                banderaModelo = true;
+            }
+        }
+
+        while (banderaMarca == false){ 
+            
+            if (validaciones.validarBanderas(marcaVehiculo.length(), marcaVehiculo) == false){
+                JOptionPane.showMessageDialog(this, "La marca del vehiculo ingresado contiene un espacio, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            } else {
+                banderaMarca = true;
+            }
+        }
+        // Cambios Ruben Final
+
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         java.sql.Date fechaVencimientoLicencia;
         try {
@@ -225,7 +345,125 @@ public class RegistroDatosForm extends JPanel {
                         JOptionPane.ERROR_MESSAGE);
                 return false;
             }
+            
+            //Cambios edición 
+            Validaciones validaciones = new Validaciones();
+            boolean banderaID = false;
+            boolean banderaNombre = false;
+            boolean banderaApellido = false;
+            boolean banderaTelefono = false;
+            boolean banderaPlaca = false;
+            boolean banderaIDHuella = false;
+            boolean banderaMarca = false;
+            boolean banderaModelo = false;
+
+            while (banderaID == false){
+                if (cedula.length()==10){
+                    banderaID = true;
+                } else {
+                    JOptionPane.showMessageDialog(this, "El ID que ha ingresado no contiene exactamente 10 numeros, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+                    return false;
+                }
+                if (validaciones.validarBanderas(cedula.length(), cedula) == false){
+                    JOptionPane.showMessageDialog(this, "El ID ingresado contiene un espacio, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+                    return false;
+                } else {
+                    banderaID = true;
+                }
+                if (validaciones.validarNumeros(cedula.length(), cedula) == false){
+                    JOptionPane.showMessageDialog(this, "El ID ingresado solo debe contener números, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+                    return false;
+                } else {
+                    banderaTelefono = true;
+                }
+                
+            }
+            
+            while (banderaNombre == false){
+                if (validaciones.validarBanderas(nombres.length(), nombres) == false){
+                    JOptionPane.showMessageDialog(this, "El nombre ingresado contiene un espacio, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+                    return false;
+                } else {
+                    banderaNombre = true;
+                }
+            }
+            
+            while (banderaApellido == false){
+                if (validaciones.validarBanderas(apellidos.length(), apellidos) == false){
+                    JOptionPane.showMessageDialog(this, "El apellido ingresado contiene un espacio, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+                    return false;
+                } else {
+                    banderaApellido = true;
+                }
+            }
     
+            while (banderaTelefono == false){
+                if (telefono.length()==10){
+                    banderaTelefono = true;
+                } else {
+                    JOptionPane.showMessageDialog(this, "El numero de telefono que ha ingresado no contiene exactamente 10 numeros, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+                    return false;
+                }
+                if (validaciones.validarBanderas(telefono.length(), telefono) == false){
+                    JOptionPane.showMessageDialog(this, "El telefono ingresado contiene un espacio, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+                    return false;
+                } else {
+                    banderaTelefono = true;
+                }
+                if (validaciones.validarNumeros(telefono.length(), telefono) == false){
+                    JOptionPane.showMessageDialog(this, "El telefono ingresado solo debe contener números, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+                    return false;
+                } else {
+                    banderaTelefono = true;
+                }
+            }
+            
+            while (banderaIDHuella == false){ 
+                if (validaciones.validarBanderas(huella.length(), huella) == false){
+                    JOptionPane.showMessageDialog(this, "La ID de la huella ingresada contiene un espacio, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+                    return false;
+                } else {
+                    banderaIDHuella = true;
+                }
+            }
+            
+            while (banderaPlaca == false){
+                if (placa.length()==7){
+                    banderaPlaca = true;
+                } else {
+                    JOptionPane.showMessageDialog(this, "La placa que ha ingresado no contiene exactamente 7 caracteres, vuelvala a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+                    return false;
+                }
+                if (validaciones.validarBanderas(placa.length(), placa) == false){
+                    JOptionPane.showMessageDialog(this, "La placa ingresada contiene un espacio, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+                    return false;
+                } else {
+                    banderaPlaca = true;
+                }
+            }
+    
+            while (banderaModelo == false){ 
+                
+                if (validaciones.validarBanderas(modeloVehiculo.length(), modeloVehiculo) == false){
+                    JOptionPane.showMessageDialog(this, "El modelo de vehiculo ingresado contiene un espacio, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+                    return false;
+                } else {
+                    banderaModelo = true;
+                }
+            }
+    
+            while (banderaMarca == false){ 
+                
+                if (validaciones.validarBanderas(marcaVehiculo.length(), marcaVehiculo) == false){
+                    JOptionPane.showMessageDialog(this, "La marca del vehiculo ingresado contiene un espacio, vuelvalo a ingresar", "Error", JOptionPane.ERROR_MESSAGE);
+                    return false;
+                } else {
+                    banderaMarca = true;
+                }
+            }
+
+            //Fin cambios edicion
+
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             java.sql.Date fechaVencimientoLicencia;
             try {

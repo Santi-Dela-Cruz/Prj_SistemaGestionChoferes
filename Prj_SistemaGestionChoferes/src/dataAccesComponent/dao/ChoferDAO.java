@@ -20,7 +20,7 @@ public class ChoferDAO implements IDAO<Chofer> {
 
     @Override
     public boolean create(Chofer chofer) throws Exception {
-        String sql = "INSERT INTO choferes (id_Cedula, nombre, apellido, telefono, direccion, correo, categoriaLicencia, fechaVenciminetoLicencia, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'A')";
+        String sql = "INSERT INTO chofer (chofer_cedula, chofer_nombre, chofer_apellido, chofer_telefono, chofer_direccion, chofer_correo, chofer_categoria_licencia, chofer_fecha_vencimiento_licencia, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'A')";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, chofer.getIdCedula());
             preparedStatement.setString(2, chofer.getNombre());
@@ -41,21 +41,21 @@ public class ChoferDAO implements IDAO<Chofer> {
     @Override
     public List<Chofer> readAll() throws Exception {
         List<Chofer> choferes = new ArrayList<>();
-        String sql = "SELECT * FROM choferes WHERE estado = 'A'";
+        String sql = "SELECT * FROM chofer WHERE estado = 'A'";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql);
                 ResultSet rs = preparedStatement.executeQuery()) {
 
             while (rs.next()) {
                 Chofer chofer = new Chofer();
-                chofer.setIdChofer(rs.getInt("id_Chofer"));
-                chofer.setIdCedula(rs.getString("id_Cedula"));
-                chofer.setNombre(rs.getString("nombre"));
-                chofer.setApellido(rs.getString("apellido"));
-                chofer.setTelefono(rs.getString("telefono"));
-                chofer.setDireccion(rs.getString("direccion"));
-                chofer.setCorreo(rs.getString("correo"));
-                chofer.setCategoriaLicencia(rs.getString("categoriaLicencia"));
-                chofer.setFechaVencimientoLicencia(rs.getDate("fechaVenciminetoLicencia"));
+                chofer.setIdChofer(rs.getInt("chofer_id"));
+                chofer.setIdCedula(rs.getString("chofer_cedula"));
+                chofer.setNombre(rs.getString("chofer_nombre"));
+                chofer.setApellido(rs.getString("chofer_apellido"));
+                chofer.setTelefono(rs.getString("chofer_telefono"));
+                chofer.setDireccion(rs.getString("chofer_direccion"));
+                chofer.setCorreo(rs.getString("chofer_correo"));
+                chofer.setCategoriaLicencia(rs.getString("chofer_categoria_licencia"));
+                chofer.setFechaVencimientoLicencia(rs.getDate("chofer_fecha_vencimiento_licencia"));
                 chofer.setEstado(rs.getString("estado"));
                 choferes.add(chofer);
             }
@@ -67,7 +67,7 @@ public class ChoferDAO implements IDAO<Chofer> {
 
     @Override
     public boolean update(Chofer chofer) throws Exception {
-        String sql = "UPDATE choferes SET id_Cedula = ?, nombre = ?, apellido = ?, telefono = ?, direccion = ?, correo = ?, categoriaLicencia = ?, fechaVenciminetoLicencia = ? WHERE id_Chofer = ?";
+        String sql = "UPDATE chofer SET chofer_cedula = ?, chofer_nombre = ?, chofer_apellido = ?, chofer_telefono = ?, chofer_direccion = ?, chofer_correo = ?, chofer_categoria_licencia = ?, chofer_fecha_vencimiento_licencia = ? WHERE chofer_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, chofer.getIdCedula());
             preparedStatement.setString(2, chofer.getNombre());
@@ -88,7 +88,7 @@ public class ChoferDAO implements IDAO<Chofer> {
 
     @Override
     public boolean delete(Integer id) throws Exception {
-        String sql = "UPDATE choferes SET estado = 'X' WHERE id_Chofer = ?";
+        String sql = "UPDATE chofer SET estado = 'X' WHERE chofer_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
             int result = preparedStatement.executeUpdate();
@@ -101,21 +101,21 @@ public class ChoferDAO implements IDAO<Chofer> {
     @Override
     public Chofer readBy(Integer id) throws Exception {
         Chofer chofer = null;
-        String sql = "SELECT * FROM choferes WHERE id_Chofer = ? AND estado = 'A'";
+        String sql = "SELECT * FROM chofer WHERE chofer_id = ? AND estado = 'A'";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
             try (ResultSet rs = preparedStatement.executeQuery()) {
                 if (rs.next()) {
                     chofer = new Chofer();
-                    chofer.setIdChofer(rs.getInt("id_Chofer"));
-                    chofer.setIdCedula(rs.getString("id_Cedula"));
-                    chofer.setNombre(rs.getString("nombre"));
-                    chofer.setApellido(rs.getString("apellido"));
-                    chofer.setTelefono(rs.getString("telefono"));
-                    chofer.setDireccion(rs.getString("direccion"));
-                    chofer.setCorreo(rs.getString("correo"));
-                    chofer.setCategoriaLicencia(rs.getString("categoriaLicencia"));
-                    chofer.setFechaVencimientoLicencia(rs.getDate("fechaVenciminetoLicencia"));
+                    chofer.setIdChofer(rs.getInt("chofer_id"));
+                    chofer.setIdCedula(rs.getString("chofer_cedula"));
+                    chofer.setNombre(rs.getString("chofer_nombre"));
+                    chofer.setApellido(rs.getString("chofer_apellido"));
+                    chofer.setTelefono(rs.getString("chofer_telefono"));
+                    chofer.setDireccion(rs.getString("chofer_direccion"));
+                    chofer.setCorreo(rs.getString("chofer_correo"));
+                    chofer.setCategoriaLicencia(rs.getString("chofer_categoria_licencia"));
+                    chofer.setFechaVencimientoLicencia(rs.getDate("chofer_fecha_vencimiento_licencia"));
                     chofer.setEstado(rs.getString("estado"));
                 }
             }
@@ -126,7 +126,7 @@ public class ChoferDAO implements IDAO<Chofer> {
     }
 
     public boolean existeChoferPorCedula(String idCedula) throws Exception {
-        String sql = "SELECT COUNT(*) FROM choferes WHERE id_Cedula = ? AND estado = 'A'";
+        String sql = "SELECT COUNT(*) FROM chofer WHERE chofer_cedula = ? AND estado = 'A'";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, idCedula);
             try (ResultSet rs = preparedStatement.executeQuery()) {
@@ -141,7 +141,7 @@ public class ChoferDAO implements IDAO<Chofer> {
     }
 
     public boolean existeChoferPorTelefono(String telefono) throws Exception {
-        String sql = "SELECT COUNT(*) FROM choferes WHERE telefono = ? AND estado = 'A'";
+        String sql = "SELECT COUNT(*) FROM chofer WHERE chofer_telefono = ? AND estado = 'A'";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, telefono);
             try (ResultSet rs = preparedStatement.executeQuery()) {
@@ -156,7 +156,7 @@ public class ChoferDAO implements IDAO<Chofer> {
     }
 
     public boolean existeChoferPorCorreo(String correo) throws Exception {
-        String sql = "SELECT COUNT(*) FROM choferes WHERE correo = ? AND estado = 'A'";
+        String sql = "SELECT COUNT(*) FROM chofer WHERE chofer_correo = ? AND estado = 'A'";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, correo);
             try (ResultSet rs = preparedStatement.executeQuery()) {
@@ -171,7 +171,7 @@ public class ChoferDAO implements IDAO<Chofer> {
     }
 
     public Chofer obtenerChoferPorCedula(String idCedula) throws Exception {
-        String sql = "SELECT * FROM choferes WHERE id_Cedula = ? AND estado = 'A'";
+        String sql = "SELECT * FROM chofer WHERE chofer_cedula = ? AND estado = 'A'";
         Chofer chofer = null;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -179,15 +179,15 @@ public class ChoferDAO implements IDAO<Chofer> {
             try (ResultSet rs = preparedStatement.executeQuery()) {
                 if (rs.next()) {
                     chofer = new Chofer();
-                    chofer.setIdChofer(rs.getInt("id_Chofer"));
-                    chofer.setIdCedula(rs.getString("id_Cedula"));
-                    chofer.setNombre(rs.getString("nombre"));
-                    chofer.setApellido(rs.getString("apellido"));
-                    chofer.setTelefono(rs.getString("telefono"));
-                    chofer.setDireccion(rs.getString("direccion"));
-                    chofer.setCorreo(rs.getString("correo"));
-                    chofer.setCategoriaLicencia(rs.getString("categoriaLicencia"));
-                    chofer.setFechaVencimientoLicencia(rs.getDate("fechaVenciminetoLicencia"));
+                    chofer.setIdChofer(rs.getInt("chofer_id"));
+                    chofer.setIdCedula(rs.getString("chofer_cedula"));
+                    chofer.setNombre(rs.getString("chofer_nombre"));
+                    chofer.setApellido(rs.getString("chofer_apellido"));
+                    chofer.setTelefono(rs.getString("chofer_telefono"));
+                    chofer.setDireccion(rs.getString("chofer_direccion"));
+                    chofer.setCorreo(rs.getString("chofer_correo"));
+                    chofer.setCategoriaLicencia(rs.getString("chofer_categoria_licencia"));
+                    chofer.setFechaVencimientoLicencia(rs.getDate("chofer_fecha_vencimiento_licencia"));
                     chofer.setEstado(rs.getString("estado"));
                 }
             }
