@@ -22,24 +22,24 @@ public class TestHuella extends JPanel {
         setLayout(new BorderLayout());
 
         // Panel superior: Crear un panel con bordes redondeados usando ComponentFactory
-        jPanel1 = ComponentFactory.createRoundedPanel(new Color(102, 153, 255), 20, 20, true);
+        jPanel1 = ComponentFactory.createRoundedPanel(new Color(17, 76, 95), 20, 20, true);
         jPanel1.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        jPanel1.setPreferredSize(new Dimension(300, 60)); // Cambiar el ancho del panel
+        jPanel1.setPreferredSize(new Dimension(180, 40)); // Cambiar el ancho del panel
 
-        jLabel2 = ComponentFactory.createLabel("Esperando escaneo");
+        jLabel2 = ComponentFactory.createLabel("Huella Digital");
         jLabel2.setForeground(Color.WHITE);
         jPanel1.add(jLabel2);
 
         // Contenedor para centrar el panel en la parte superior
-        JPanel topPanelContainer = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        JPanel topPanelContainer = new JPanel(new FlowLayout(FlowLayout.CENTER, 40, 40));
         topPanelContainer.add(jPanel1);
         topPanelContainer.setOpaque(false); // Fondo transparente
         add(topPanelContainer, BorderLayout.NORTH);
 
         // Imagen central: Crear un panel central con la imagen de la huella
-        jLabel1 = new JLabel(new ImageIcon(InterfaceStyle.URL_ICON_SAVE));
+        jLabel1 = new JLabel(new ImageIcon(InterfaceStyle.URL_HUELLA));
         jLabel1.setHorizontalAlignment(JLabel.CENTER);
-        jLabel1.setPreferredSize(new Dimension(100, 100)); // Cambiar tamaño de la imagen
+        jLabel1.setPreferredSize(new Dimension(400, 400)); // Cambiar tamaño de la imagen
         JPanel centerPanel = new JPanel(new GridBagLayout());
         centerPanel.add(jLabel1);
         centerPanel.setOpaque(false); // Fondo transparente
