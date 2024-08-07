@@ -39,6 +39,7 @@ public abstract class InterfaceStyle {
     public static final URL URL_ICON_DELETE = InterfaceStyle.class.getResource("/ui/resources/Icons/deleteIcon.png");
     public static final URL URL_ICON_EXIT = InterfaceStyle.class.getResource("/ui/resources/Icons/exitIcon.png");
     public static final URL URL_HUELLA = InterfaceStyle.class.getResource("/ui/resources/Images/Huella2.png");
+    public static final URL URL_TEST_ALCOHOL = InterfaceStyle.class.getResource("/ui/resources/Images/Testalcoholimetro.png");
 
     public static final CompoundBorder createBorderRect() {
         return BorderFactory.createCompoundBorder(

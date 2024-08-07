@@ -36,30 +36,25 @@ public class DatosChofer extends JPanel {
     private void initComponents() {
         setLayout(null); // Usar Layout nulo para control absoluto sobre los componentes
 
-        // Título principal
-        JLabel jLabel1 = new JLabel("DATOS GENERALES DEL TRANSPORTISTA");
-        jLabel1.setFont(new Font("Arial", Font.BOLD, 18));
-        jLabel1.setBounds(180, 20, 400, 30);
-        add(jLabel1);
-
         // Panel para "Datos"
-        JPanel panelDatos = ComponentFactory.createRoundedPanel(new Color(255, 182, 193), 20, 20, true);
-        panelDatos.setBounds(260, 60, 180, 50);
-        JLabel jLabel2 = new JLabel("Datos");
-        jLabel2.setFont(new Font("Arial", Font.BOLD, 16));
+        JPanel panelDatos = ComponentFactory.createRoundedPanel(new Color(17, 76, 95), 20, 20, true);
+        panelDatos.setBounds(200, 40, 400, 40);
+        JLabel jLabel2 = new JLabel("DATOS GENERALES DEL TRANSPORTISTA");
+        jLabel2.setForeground(Color.WHITE);
+        jLabel2.setFont(new Font("Arial", Font.BOLD, 18));
         jLabel2.setHorizontalAlignment(SwingConstants.CENTER);
         panelDatos.add(jLabel2);
         add(panelDatos);
 
         // Etiquetas y campos de texto
         jLNombreCompleto = addLabelAndField("Nombre transportista", 50, 140, 250, 30, 50, 170, 300, 30);
-        jLCedula = addLabelAndField("CD transportista", 50, 200, 250, 30, 50, 230, 300, 30);
-        jLRuta = addLabelAndField("Ruta", 50, 260, 250, 30, 50, 290, 300, 30);
-        jLPlaca = addLabelAndField("Placa del transporte", 50, 320, 250, 30, 50, 350, 300, 30);
+        jLCedula = addLabelAndField("CD transportista", 50, 220, 250, 30, 50, 250, 300, 30);
+        jLRuta = addLabelAndField("Ruta", 50, 300, 250, 30, 50, 330, 300, 30);
+        jLPlaca = addLabelAndField("Placa del transporte", 50, 380, 250, 30, 50, 410, 300, 30);
 
         // Hora de llegada y salida
-        jLHoraIngreso = addLabelAndField("Hora de llegada", 370, 140, 200, 30, 370, 170, 200, 30);
-        jLFechaIngreso = addLabelAndField("Hora de salida", 370, 200, 200, 30, 370, 230, 200, 30);
+        jLHoraIngreso = addLabelAndField("Hora de llegada", 450, 140, 250, 30, 450, 170, 300, 30);
+        jLFechaIngreso = addLabelAndField("Fecha de llegada", 450, 220, 250, 30, 450, 250, 300, 30);
 
         // Botón "Test Alcohol"
         JButton jButton1 = ComponentFactory.createChamferedButton(
@@ -69,7 +64,7 @@ public class DatosChofer extends JPanel {
                 new Color(0, 105, 180), // Color al presionar
                 40 // Radio de las esquinas
         );
-        jButton1.setBounds(420, 300, 150, 40);
+        jButton1.setBounds(520, 405, 150, 40);
         jButton1.setContentAreaFilled(false); // Desactiva el área de contenido para evitar problemas con el fondo
         jButton1.setOpaque(false); // Desactiva la opacidad para que el fondo no se superponga
         jButton1.setHorizontalAlignment(SwingConstants.CENTER); // Asegura que el texto esté centrado
