@@ -40,7 +40,7 @@ public class PanelControl extends JFrame {
         JPanel adminPanel = new JPanel();
         adminPanel.setLayout(null);
         adminPanel.setBounds(10, 10, 200, 200);
-        adminPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        adminPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
         JLabel lblAdmin = ComponentFactory.createLabel("ADMINISTRADOR");
         lblAdmin.setBounds(10, 10, 180, 30);
@@ -64,7 +64,7 @@ public class PanelControl extends JFrame {
         datosChoferPanel = new JPanel();
         datosChoferPanel.setLayout(null);
         datosChoferPanel.setBounds(10, 220, 200, 300);
-        datosChoferPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        datosChoferPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         datosChoferPanel.setVisible(false);
         add(datosChoferPanel);
 
@@ -109,35 +109,35 @@ public class PanelControl extends JFrame {
         int spacing = 60;
 
         btnAdd = ComponentFactory.createCircularButton(new ImageIcon(InterfaceStyle.URL_ICON_ADD),
-                new Color(100, 100, 255),
-                new Color(120, 120, 255), new Color(80, 80, 255));
+                new Color(242, 230, 207),
+                new Color(218, 197, 155), new Color(218,197, 155));
         btnAdd.setBounds(baseX, 10, 50, 50);
         btnAdd.addActionListener(e -> handleAddAction());
         add(btnAdd);
 
         btnEdit = ComponentFactory.createCircularButton(new ImageIcon(InterfaceStyle.URL_ICON_EDIT),
-                new Color(100, 100, 255),
-                new Color(120, 120, 255), new Color(80, 80, 255));
+                new Color(242, 230, 207),
+                new Color(218, 197, 155), new Color(218, 197, 155));
         btnEdit.setBounds(baseX + spacing, 10, 50, 50);
         btnEdit.addActionListener(e -> handleEditAction());
         add(btnEdit);
 
         btnView = ComponentFactory.createCircularButton(new ImageIcon(InterfaceStyle.URL_ICON_VIEW),
-                new Color(100, 100, 255),
-                new Color(120, 120, 255), new Color(80, 80, 255));
+                new Color(242, 230, 207),
+                new Color(218, 197, 155), new Color(218, 197, 155));
         btnView.setBounds(baseX + 2 * spacing, 10, 50, 50);
         btnView.addActionListener(e -> handleViewAction());
         add(btnView);
 
         btnExit = ComponentFactory.createCircularButton(new ImageIcon(InterfaceStyle.URL_ICON_EXIT),
-                new Color(100, 100, 255),
-                new Color(120, 120, 255), new Color(80, 80, 255));
+                new Color(242, 230, 207),
+                new Color(218, 197, 155), new Color(218, 197, 155));
         btnExit.setBounds(baseX + 3 * spacing, 10, 50, 50);
         btnExit.addActionListener(e -> handleExitAction());
         add(btnExit);
 
         btnGuardar = ComponentFactory.createCircularButton(new ImageIcon(InterfaceStyle.URL_ICON_SAVE),
-                new Color(100, 255, 100),
+                new Color(168, 255, 170),
                 new Color(120, 255, 120), new Color(80, 255, 80));
         btnGuardar.setBounds(baseX + 2 * spacing, 10, 50, 50);
         btnGuardar.setVisible(false);
