@@ -17,40 +17,35 @@ public class AutorizacionSalida extends JPanel {
         setLayout(null); // Usar Layout nulo para control absoluto sobre los componentes
 
         // Título principal
+        JPanel panelTitle = ComponentFactory.createRoundedPanel(new Color(17, 76, 95), 20, 20, true);
+        panelTitle.setBounds(240, 40, 300, 40);
         JLabel jLTitle = new JLabel("APROBACION DE SALIDA");
+        jLTitle.setForeground(Color.WHITE);
         jLTitle.setFont(new Font("Arial", Font.BOLD, 18));
-        jLTitle.setBounds(180, 20, 400, 30);
-        add(jLTitle);
-
-        // Panel para "Validación"
-        JPanel panelValidacion = ComponentFactory.createRoundedPanel(new Color(255, 182, 193), 20, 20, true);
-        panelValidacion.setBounds(260, 60, 180, 50);
-        JLabel jLValidacion = new JLabel("Validacion");
-        jLValidacion.setFont(new Font("Arial", Font.BOLD, 16));
-        jLValidacion.setHorizontalAlignment(SwingConstants.CENTER);
-        panelValidacion.add(jLValidacion);
-        add(panelValidacion);
+        jLTitle.setHorizontalAlignment(SwingConstants.CENTER);
+        panelTitle.add(jLTitle);
+        add(panelTitle);
 
         // Estado del chofer
-        JLabel jLEstado = new JLabel("Estado");
+        JLabel jLEstado = new JLabel("Estado:");
         jLEstado.setFont(new Font("Arial", Font.PLAIN, 14));
-        jLEstado.setBounds(50, 140, 250, 30);
+        jLEstado.setBounds(350, 140, 400, 30);
         add(jLEstado);
 
         jLResEst = new JLabel("Estado etílico");
         jLResEst.setFont(new Font("Arial", Font.PLAIN, 14));
-        jLResEst.setBounds(50, 170, 300, 30);
+        jLResEst.setBounds(350, 170, 300, 30);
         add(jLResEst);
 
         // Aprobación de la salida
-        JLabel jLAprobacion = new JLabel("Aprobación");
+        JLabel jLAprobacion = new JLabel("Aprobación:");
         jLAprobacion.setFont(new Font("Arial", Font.PLAIN, 14));
-        jLAprobacion.setBounds(50, 230, 250, 30);
+        jLAprobacion.setBounds(350, 230, 250, 30);
         add(jLAprobacion);
 
         jLResApr = new JLabel("Salida denegada");
         jLResApr.setFont(new Font("Arial", Font.PLAIN, 14));
-        jLResApr.setBounds(50, 260, 300, 30);
+        jLResApr.setBounds(350, 260, 300, 30);
         jLResApr.setForeground(new Color(139, 0, 0)); // Color rojo para denegación
         add(jLResApr);
     }
